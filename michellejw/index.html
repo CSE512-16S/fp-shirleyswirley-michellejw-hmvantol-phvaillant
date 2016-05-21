@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Test Interactive Globe</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://mbostock.github.com/d3/d3.js"></script>
+    <!-- <script src="http://mbostock.github.com/d3/d3.geo.js"></script> -->
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+    <link type="text/css" rel="stylesheet" href="colorbrewer.css"/>
+  </head>
+
+  <body>
+
+      <div class="container-fluid">
+
+        <div id="map">
+        </div>
+
+        <div id="header">
+          d3.geo.azimuthal
+          <div><label for="proj">Projection: </label><select id="proj">
+            <option value="equalarea">equalarea</option>
+            <option value="equidistant">equidistant</option>
+            <option value="gnomonic">gnomonic</option>
+            <option value="orthographic" selected>orthographic</option>
+            <option value="stereographic">stereographic</option>
+          </select></div>
+          <div class="tip">drag to rotate the origin</div>
+          <div><label for="animate">animate:</label>
+            <input id="animate" type="checkbox" checked>
+          </div>
+        </div>
+
+      </div>
+
+    <script src="viz.js"></script>
+    
+  </body>
+
+</html>
