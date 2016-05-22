@@ -1,0 +1,23 @@
+html, body, .container-fluid, #map, .row { height: 100%; }
+
+#map { width: 70%;
+		margin:10px;}
+
+#header {
+	position: absolute;
+	left: 60%;
+	top: 5%;
+}
+
+svg {
+  pointer-events: all;
+}
+
+.water {
+  fill: #dbe4f0;
+}
+
+.land {
+  fill: #aaa;
+  stroke: #fff;
+}
