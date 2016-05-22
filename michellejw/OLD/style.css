@@ -1,7 +1,6 @@
 html, body, .container-fluid, #map, .row { height: 100%; }
 
-#map { width: 70%;
-		margin:10px;}
+#map { width: 70%;}
 
 #header {
 	position: absolute;
@@ -13,11 +12,11 @@ svg {
   pointer-events: all;
 }
 
-.water {
+circle {
   fill: #dbe4f0;
 }
 
-.land {
+path {
   fill: #aaa;
   stroke: #fff;
 }

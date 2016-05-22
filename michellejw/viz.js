@@ -1,127 +1,227 @@
 
+//compute the dimensions of the current div - #map
 var margin = {top: 10, left: 10, bottom: 10, right: 10}
   , width = parseInt(d3.select('#map').style('width'))
   , height = parseInt(d3.select('#map').style('height'));
 
+//set the size of the svg to be the minimum of width and height - map ratio is 1
 var width = Math.min(width - margin.left - margin.right, height - margin.top - margin.bottom)
   , height = width;
 
+//create the svg element
 var svg = d3.select("#map").append("svg")
-    .attr("width",  width)
-    .attr("height", height)
-    .on("mousedown", mousedown);
+    .attr("width", width)
+    .attr("height", height);
 
-var projection = d3.geo.azimuthal()
+//different d3 projections. https://github.com/d3/d3/wiki/Geo-Projections
+var projection = d3.geo.orthographic()
+    //If scale is specified, sets the projection’s scale factor to the specified value and returns the projection. If scale is not specified, returns the current scale factor which defaults to 150. The scale factor corresponds linearly to the distance between projected points.
+    //A scale of 1 projects the whole world onto a 1x1 pixel.  So a scale of 400 projects onto a 400x400 square. 
     .scale(width/2)
-    .origin([-71.03,42.37])
-    .mode("orthographic")
-    .translate([width / 2, height / 2]);
+    //If angle is specified, sets the projection’s clipping circle radius to the specified angle in degrees and returns the projection.
+    .clipAngle(90)
+    //The translate parameter simply refers to where the centre of this square should be in pixels.  So a translate of [200, 200] projects the origin onto [200, 200] in pixel-space. 
+    //If point is specified, sets the projection’s translation offset to the specified two-element array [x, y] and returns the projection.
+    .translate([width / 2, height / 2])
+    //If precision is specified, sets the threshold for the projection’s adaptive resampling to the specified value in pixels and returns the projection.
+    //D3 3.0’s projections use adaptive resampling to increase the accuracy of projected lines and polygons while still performing efficiently (http://bl.ocks.org/mbostock/3795544).
+    .precision(0.6);
 
-var circle = d3.geo.greatCircle()
-    .origin(projection.origin());
-
-// TODO fix d3.geo.azimuthal to be consistent with scale
-var scale =
-	{ orthographic: width / 2
-	, stereographic: width / 2
-	, gnomonic: width / 2
-	, equidistant: width / 2 / Math.PI * 2
-	, equalarea: width / 2 / Math.SQRT2
-	};
-
+//create path variable
 var path = d3.geo.path()
     .projection(projection);
 
-d3.json("world-countries.json", function(collection) {
-    feature = svg.selectAll("path")
-        .data(collection.features)
+//adding water
+//in the style sheet change color of class water
+svg.append("path")
+  //The type "Sphere" is also supported, which is useful for rendering the outline of the globe. A sphere has no coordinates.
+  .datum({type: "Sphere"})
+  .attr("class", "water")
+  .attr("d", path);
+
+//load the files
+//read more about queue() tasks: https://github.com/d3/d3-queue
+queue()
+    .defer(d3.json, "world.json")
+    .defer(d3.csv, "locations.csv")
+    .await(ready);
+
+
+
+
+
+
+////////////////////
+// Adding T/S image (michelle: I don't know what I'm doing! eep!)
+var canvas = d3.select("body").append("canvas")
+    .attr("width", width)
+    .attr("height", height);
+
+var context = canvas.node().getContext("2d");
+
+var image = new Image;
+image.onload = onload;
+image.src = "tempmap1979.jpeg"
+////////////////////
+
+
+
+
+
+
+
+//When a task completes, it must call the provided callback. The first argument to the callback should be null if the task is successfull, or the error if the task failed.
+function ready(error, world, locations) {
+
+  if (error) throw error;
+
+  //the world file is a topojson files
+  //Returns the GeoJSON Feature or FeatureCollection for the specified object in the given topology. If the specified object is a GeometryCollection, a FeatureCollection is returned, and each geometry in the collection is mapped to a Feature. Otherwise, a Feature is returned.
+  //https://github.com/mbostock/topojson/wiki/API-Reference
+  var countries = topojson.feature(world, world.objects.countries).features;
+
+  //sens for dragging call
+  sens = 0.25
+  //draw the countries paths
+  var world = svg.selectAll("path.land")
+    .data(countries)
       .enter().append("path")
-      //function clip defined to get path from circle.clip
-        .attr("d", clip);
+      .attr("class", "land")
+      .attr("d", path);
 
-    feature.append("title")
-        .text(function(d) { return d.properties.name; });
-
-    startAnimation();
-    d3.select('#animate').on('click', function () {
-      if (done) startAnimation(); else stopAnimation();
-    });
- });
-
-function clip(d) {
-  return path(circle.clip(d));
-}
-
-
-function stopAnimation() {
-  done = true;
-  d3.select('#animate').node().checked = false;
-}
-
-function startAnimation() {
-  done = false;
-  d3.timer(function() {
-    var origin = projection.origin();
-    origin = [origin[0] + .18, origin[1] + .06];
-    projection.origin(origin);
-    circle.origin(origin);
-    refresh();
-    return done;
+    //draw the locations path
+  locations.forEach(function(d) {
+    svg.append("path")
+        //from the csv take lat long to create a path object
+        .datum({type: "Point", coordinates: [d.lon, d.lat]})
+        .attr("class", "locations")
+        .attr("d", path.pointRadius(5));
   });
-}
 
-function refresh(duration) {
-  (duration ? feature.transition().duration(duration) : feature).attr("d", clip);
-}
 
-d3.select(window)
-    .on("mousemove", mousemove)
-    .on("mouseup", mouseup);
 
-function animationState() {
-  return 'animation: '+ (done ? 'off' : 'on');
-}
+  
 
-d3.select("select").on("change", function() {
-  stopAnimation();
-  projection.mode(this.value).scale(scale[this.value]);
-  refresh(750);
-});
 
-var m0
-  , o0
-  , done
-  ;
 
-function mousedown() {
-  stopAnimation();
-  m0 = [d3.event.pageX, d3.event.pageY];
-  o0 = projection.origin();
-  d3.event.preventDefault();
-}
+  ////////////////////
+  // More image stuff I'm not sure about
+    var dx = image.width,
+      dy = image.height;
 
-function mousemove() {
-  if (m0) {
-    var m1 = [d3.event.pageX, d3.event.pageY]
-      , o1 = [o0[0] + (m0[0] - m1[0]) / 8, o0[1] + (m1[1] - m0[1]) / 8];
-    projection.origin(o1);
-    circle.origin(o1);
-    refresh();
+  context.drawImage(image, 0, 0, dx, dy);
+
+  console.log(context);
+
+  var sourceData = context.getImageData(0, 0, dx, dy).data,
+      target = context.createImageData(width, height),
+      targetData = target.data;
+
+
+
+  for (var y = 0, i = -1; y < height; ++y) {
+    for (var x = 0; x < width; ++x) {
+      var p = projection.invert([x, y]), λ = p[0], φ = p[1];
+      if (λ > 180 || λ < -180 || φ > 90 || φ < -90) { i += 4; continue; }
+      var q = ((90 - φ) / 180 * dy | 0) * dx + ((180 + λ) / 360 * dx | 0) << 2;
+      targetData[++i] = sourceData[q];
+      targetData[++i] = sourceData[++q];
+      targetData[++i] = sourceData[++q];
+      targetData[++i] = 255;
+    }
   }
+
+  context.clearRect(0, 0, width, height);
+  context.putImageData(target, 0, 0);
+  ////////////////////
+
+
+
+
+
+
+
+
+
+
+
+  //Drag event
+  svg.selectAll("path").call(d3.behavior.drag()
+        .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
+        .on("drag", function() {
+          //make sure that the rotate event stops when you start draging
+          d3.select('#animate').node().checked=false;
+          var rotate = projection.rotate();
+          projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
+          svg.selectAll("path.land").attr("d", path)
+          svg.selectAll("path.locations").attr("d", path);
+        }))
+
+
+
+  //start spinning_globe
+  spinning_globe();
+
+  d3.timer.flush();
+
 }
 
-function mouseup() {
-  if (m0) {
-    mousemove();
-    m0 = null;
-  }
+//prepare values for spinning effect
+//If rotation is specified, sets the projection’s three-axis rotation to the specified angles λ, φ and γ (yaw, pitch and roll, or equivalently longitude, latitude and roll) in degrees and returns the projection. If rotation is not specified, returns the current rotation which defaults [0, 0, 0]. If the specified rotation has only two values, rather than three, the roll is assumed to be 0°.
+var time = Date.now();
+var rotate = [0, 0];
+var velocity = [0.015,-0];
+function spinning_globe() {
+
+  //for more information on transition and timer: https://github.com/d3/d3/wiki/Transitions#d3_timer
+  //Start a custom animation timer, invoking the specified function repeatedly until it returns true.  
+   d3.timer(function() {
+
+      // get current time
+      var dt = Date.now() - time;
+
+      //console.log(dt);
+
+      // get the new position from modified projection function
+      projection.rotate([rotate[0] + velocity[0] * dt, rotate[1] + velocity[1] * dt]);
+
+      // update countries and locations position = redraw
+      svg.selectAll("path.land").attr("d", path);
+      svg.selectAll("path.locations").attr("d", path);
+
+      //that would be pretty to stop animating when we uncheck rotating checkbox, but I don't know how to restart the rotation!
+      if(d3.select('#animate').node().checked==false) {
+        return true;
+      }
+
+   });
+
 }
 
+//stop or start rotating - this piece of code is extremely ugly I want to ask during office hours how to make that prettier
+//does not work because sets everything on initial position
+// d3.select('#animate')
+//       .on("change", function() {
+//           if (velocity[0]==0.015) {
+//             velocity[0]=0;
+//           }
+//           else {
+//             velocity[0]=0.015;
+//           }
+//       });
+
+//when change, check if rotating is checked and if so, restart the rotation
+d3.select('#animate')
+      .on("change", function() {
+          if (d3.select('#animate').node().checked) {
+            spinning_globe();
+          }
+      });
 
 d3.select(window).on('resize', resize);
 
 function resize() {
-    // adjust things when the window size changes
+    // adjust width and height when the window size changes
    width = parseInt(d3.select('#map').style('width'))
     , height = parseInt(d3.select('#map').style('height'))
     , width = Math.min(width - margin.left - margin.right, height - margin.top - margin.bottom)
@@ -138,5 +238,5 @@ function resize() {
         .style('height', height + 'px');
 
     // resize the map
-    svg.selectAll('path').attr('d', clip);
+    svg.selectAll('path').attr('d', path);
 }
