@@ -51,18 +51,18 @@ queue()
 
 
 
-////////////////////
-// Adding T/S image (michelle: I don't know what I'm doing! eep!)
-var canvas = d3.select("body").append("canvas")
-    .attr("width", width)
-    .attr("height", height);
+// ////////////////////
+// // Adding T/S image (michelle: I don't know what I'm doing! eep!)
+// var canvas = d3.select("body").append("canvas")
+//     .attr("width", width)
+//     .attr("height", height);
 
-var context = canvas.node().getContext("2d");
+// var context = canvas.node().getContext("2d");
 
-var image = new Image;
-image.onload = onload;
-image.src = "tempmap1979.jpeg"
-////////////////////
+// var image = new Image;
+// image.onload = onload;
+// image.src = "tempmap1979.jpeg"
+// ////////////////////
 
 
 
@@ -104,36 +104,36 @@ function ready(error, world, locations) {
 
 
 
-  ////////////////////
-  // More image stuff I'm not sure about
-    var dx = image.width,
-      dy = image.height;
+  // ////////////////////
+  // // More image stuff I'm not sure about
+  //   var dx = image.width,
+  //     dy = image.height;
 
-  context.drawImage(image, 0, 0, dx, dy);
+  // context.drawImage(image, 0, 0, dx, dy);
 
-  console.log(context);
+  // console.log(context);
 
-  var sourceData = context.getImageData(0, 0, dx, dy).data,
-      target = context.createImageData(width, height),
-      targetData = target.data;
+  // var sourceData = context.getImageData(0, 0, dx, dy).data,
+  //     target = context.createImageData(width, height),
+  //     targetData = target.data;
 
 
 
-  for (var y = 0, i = -1; y < height; ++y) {
-    for (var x = 0; x < width; ++x) {
-      var p = projection.invert([x, y]), λ = p[0], φ = p[1];
-      if (λ > 180 || λ < -180 || φ > 90 || φ < -90) { i += 4; continue; }
-      var q = ((90 - φ) / 180 * dy | 0) * dx + ((180 + λ) / 360 * dx | 0) << 2;
-      targetData[++i] = sourceData[q];
-      targetData[++i] = sourceData[++q];
-      targetData[++i] = sourceData[++q];
-      targetData[++i] = 255;
-    }
-  }
+  // for (var y = 0, i = -1; y < height; ++y) {
+  //   for (var x = 0; x < width; ++x) {
+  //     var p = projection.invert([x, y]), λ = p[0], φ = p[1];
+  //     if (λ > 180 || λ < -180 || φ > 90 || φ < -90) { i += 4; continue; }
+  //     var q = ((90 - φ) / 180 * dy | 0) * dx + ((180 + λ) / 360 * dx | 0) << 2;
+  //     targetData[++i] = sourceData[q];
+  //     targetData[++i] = sourceData[++q];
+  //     targetData[++i] = sourceData[++q];
+  //     targetData[++i] = 255;
+  //   }
+  // }
 
-  context.clearRect(0, 0, width, height);
-  context.putImageData(target, 0, 0);
-  ////////////////////
+  // context.clearRect(0, 0, width, height);
+  // context.putImageData(target, 0, 0);
+  // ////////////////////
 
 
 
