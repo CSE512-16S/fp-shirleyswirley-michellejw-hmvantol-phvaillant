@@ -156,7 +156,7 @@ d3.csv("flooding.csv", function(data) {
 		.style("font-weight", "bold")
 		.style("opacity",0);
 
-
+	var click = 0;
 
 	svg.on({
 		"mouseover":function(d) {
@@ -172,7 +172,25 @@ d3.csv("flooding.csv", function(data) {
 			d3.select("path").style("opacity",0);
 			d3.selectAll("#label").style("opacity",0)
 			d3.selectAll("circle").style("opacity",0);
-		} 
+		},
+		"click": function(d) {
+			if (click == 0) {
+				d3.select("image").style("opacity",0.5);
+				d3.selectAll("g").style("opacity",1);
+				d3.select("path").style("opacity",1);
+				d3.selectAll("#label").style("opacity",1)
+				d3.selectAll("circle").style("opacity",1);
+				click++;
+			}
+			else {
+				d3.select("image").style("opacity",1);
+				d3.selectAll("g").style("opacity",0);
+				d3.select("path").style("opacity",0);
+				d3.selectAll("#label").style("opacity",0)
+				d3.selectAll("circle").style("opacity",0);
+				click = 0;
+			}
+		}
 	});
 
 });
