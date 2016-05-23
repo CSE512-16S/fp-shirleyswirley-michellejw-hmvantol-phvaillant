@@ -232,6 +232,17 @@ d3.csv("flooding_alt.csv", function(data) {
 	});
 
 
+	d3.select("body").on({
+		keydown: function(d,i) {
+			if (d3.event.keyCode == 39) {
+				return console.log("right");
+			}
+			if (d3.event.keyCode == 37) {
+				return console.log("left");
+			}
+		}
+	});
+
 });
 
 </script>
