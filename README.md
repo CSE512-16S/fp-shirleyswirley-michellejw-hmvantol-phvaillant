@@ -1,18 +1,18 @@
 # fp-shirleyswirley-michellejw-hmvantol-phvaillant
 
-Map stuff:
+**Map stuff:**
 
-Philippe's latest changes:
+*Philippe's latest changes:*
 
 http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/pvaillant_0521/
 
-Michelle's latest changes:
+*Michelle's latest changes:*
 
 http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/michellejw/
 
 
-Image/plot stuff:
+**Image/plot stuff:**
 
-Helena's latest changes:
+*Helena's latest changes:*
 
 http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/hmvantol/
