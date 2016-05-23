@@ -190,28 +190,213 @@ function resize() {
 var active = null; // variable to record which point has been clicked
 var isclicked = 0; // variable to record if a point has been clicked (for controlling hovering)
 
+var thissvg = [];
+
+
+
+
+
 function mouseClick() {
-  //console.log("mouseClick")
   d3.select(active).style("fill","yellow")
   isclicked = 0;
+  // Clear html within modal div container
+  $("#imgdivID").html("")
   active = this;
   d3.select(active).style("fill","green")
     .attr("data-toggle","modal")
     .attr("data-target","#myModal")
+
+
+
+
+
+
+  //Insert image/plot stuff
+
+  // should be able to extract dimensions directly from image, right? 
+  var w = 720,
+      h = 480/2;
+
+  var width = .8*w,
+      height = .8*h;
+
+  //d3.select("#imgdivID").remove()
+
+  var svg = d3.select("#imgdivID")
+    .append("svg")
+    .attr("id", "satellite")
+    .attr("width", width)
+    .attr("height", height);
+    // .classed("svg-container",true)
+    // .classed("svg-content-responsive", true);
+    // .attr("viewBox", "0 0 " + width + " " + height);
+
+  var image = svg.append("image")
+    .attr("xlink:href","flooding.png")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("id","flooding")
+    .style("opacity",1);
+
+
+  svg.append("text")
+    .text("November 7, 1984")
+    .attr("x",10)
+    .attr("y",25)
+    .style("font-size", "24px")
+    .style("fill","white");
+
+  svg.append("text")
+    .text("October 12, 2015")
+    .attr("x",.5*width+10)
+    .attr("y",25)
+    .style("font-size", "24px")
+    .style("fill","white");
+
+  var margin = {top:40, right:20, bottom:10, left:50};
+
+  var x = d3.time.scale()
+    .range([0,width - margin.left - margin.right]);
+
+  var y = d3.scale.linear()
+    .range([height - margin.top - margin.bottom, margin.top]);
+
+  var x_axis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+  var y_axis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+  var line = d3.svg.line()
+    .x(function(d) { return x(d.year); })
+    .y(function(d) { return y(d.fake_data); });
+
+  // d3.csv("flooding.csv", function(data) {
+    
+  //   var parseDate = d3.time.format("%Y").parse;
+
+  //   data.forEach(function(d) {
+  //     d.year = parseDate(d.year);
+  //     d.fake_data = +d.fake_data;
+  //   });
+
+  //   x.domain(d3.extent(data, function(d) { return d.year; }));
+
+  //   y.domain(d3.extent(data, function(d) { return d.fake_data; }));
+
+  //   svg.append("path")
+  //     .datum(data)
+  //     .attr("class", "line")
+  //     .attr("transform", "translate(" + margin.left + ",0)")
+  //     .attr("d",line)
+  //     .style("opacity",0);
+
+  //   svg.selectAll("circle")
+  //     .data(data).enter()
+  //     .append("circle")
+  //     .filter(function(d) { return (d.year.getTime() == parseDate("1984").getTime() || d.year.getTime() == parseDate("2015").getTime()) ; })
+  //     .attr("cx", function(d) { return x(d.year); })
+  //     .attr("cy", function(d) { return y(d.fake_data); })
+  //     .attr("transform", "translate("+margin.left+",0)")
+  //     .attr("r", "6px")
+  //     .style("opacity",0);
+
+  //   svg.selectAll("text")
+  //     .data(data).enter()
+  //     .append("text")
+  //     .filter(function(d) { return (d.year.getTime() == parseDate("1984").getTime() || d.year.getTime() == parseDate("2015").getTime()) ; })
+  //     .attr("id", "label")
+  //     .text(function(d) { return d.year.getFullYear(); })
+  //     .attr("x", function(d) { return x(d.year)+5; })
+  //     .attr("y", function(d) { return y(d.fake_data)-5; })
+  //     .attr("transform", "translate("+margin.left+",0)")
+  //     .style("font-size", "14px")
+  //     .style("opacity",0);
+
+  //   svg.append("g")
+  //     .attr("class", "x axis")
+  //     .attr("transform", "translate(" + margin.left + "," + [height - margin.top - margin.bottom] + ")")
+  //     .call(x_axis)
+  //     .style("opacity",0);
+
+  //   svg.append("g")
+  //     .attr("class", "y axis")
+  //     .attr("transform", "translate(" + margin.left + ",0)")
+  //     .call(y_axis)
+  //     .style("opacity",0);
+
+  //   svg.append("text")
+  //     .attr("class", "x label")
+  //     .attr("id", "label")
+  //     .attr("text-anchor", "middle")
+  //     .attr("x", width/2)
+  //     .attr("y", height - margin.bottom)
+  //     .attr("font-size", "14px")
+  //     .text("Year")
+  //     .style("font-weight", "bold")
+  //     .style("opacity",0);
+
+  //   svg.append("text")
+  //     .attr("class", "y label")
+  //     .attr("id", "label")
+  //     .attr("text-anchor", "middle")
+  //     .attr("transform", "translate("+margin.left/3+","+(height-margin.top-margin.bottom)/2+")rotate(-90)")
+  //     .attr("font-size", "14px")
+  //     .text("Flooding (m)")
+  //     .style("font-weight", "bold")
+  //     .style("opacity",0);
+
+  //   var click = 0;
+
+  //   svg.on({
+  //     "mouseover":function(d) {
+  //       d3.select("image").style("opacity",0.5);
+  //       d3.selectAll("g").style("opacity",1);
+  //       d3.select("path").style("opacity",1);
+  //       d3.selectAll("#label").style("opacity",1)
+  //       d3.selectAll("circle").style("opacity",1);
+  //     },
+
+  //     "mouseout": function(d) {
+  //       d3.select("image").style("opacity",1);
+  //       d3.selectAll("g").style("opacity",0);
+  //       d3.select("path").style("opacity",0);
+  //       d3.selectAll("#label").style("opacity",0)
+  //       d3.selectAll("circle").style("opacity",0);
+  //     },
+
+  //     "click": function(d) {
+  //       if (click == 0) {
+  //         d3.select("image").style("opacity",0.5);
+  //         d3.selectAll("g").style("opacity",1);
+  //         d3.select("path").style("opacity",1);
+  //         d3.selectAll("#label").style("opacity",1)
+  //         d3.selectAll("circle").style("opacity",1);
+  //         click++;
+  //       }
+  //       else {
+  //         d3.select("image").style("opacity",1);
+  //         d3.selectAll("g").style("opacity",0);
+  //         d3.select("path").style("opacity",0);
+  //         d3.selectAll("#label").style("opacity",0)
+  //         d3.selectAll("circle").style("opacity",0);
+  //         click = 0;
+  //       }
+        
+  //     }
+  //   });
+  // });
+
+
+
+
+
 }
 
-// function mouseEnter(d) {
-//   //console.log("mouseEnter")
-//   //d3.select(this).style("fill","lightgreen")
-// }
 
-// function mouseLeave(d) {
-//   //console.log("mouseLeave")
-//   //d3.select(this).style("fill","yellow")
-// }
 
-// %('#myModal').on('shown.bs.modal',function() {
-//   $('#myInput').focus()
-// })
+
 
 
