@@ -4,7 +4,7 @@
 //var width = .7*w,
 //	height = .7*h;
 
-var modalsvg = d3.select("#imgdivID")
+var svg = d3.select("#imgdivID")
 		.append("svg")
 		.attr("id", "satellite");
 		//.attr("width", width)
@@ -13,7 +13,7 @@ var modalsvg = d3.select("#imgdivID")
 		//.classed("svg-content-responsive", true);
 		//.attr("viewBox", "0 0 " + width + " " + height);
 
-var image = modalsvg.append("image")
+var image = svg.append("image")
 	.attr("xlink:href","flooding.png")
 	//.attr("width", width)
 	//.attr("height", height)
