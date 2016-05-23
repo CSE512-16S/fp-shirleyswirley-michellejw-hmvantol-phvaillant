@@ -41,7 +41,7 @@ var svg = d3.select("body")
 		.attr("height", height);
 
 var image = svg.append("image")
-	.attr("xlink:href","/sprites/flooding.png")
+	.attr("xlink:href","flooding.png")
 	.attr("width", width)
 	.attr("height", height)
 	.attr("id","flooding")
@@ -91,8 +91,6 @@ d3.csv("flooding.csv", function(data) {
 		d.fake_data = +d.fake_data;
 	});
 
-	console.log(data);
-
 	x.domain(d3.extent(data, function(d) { return d.year; }));
 	y.domain(d3.extent(data, function(d) { return d.fake_data; }));
 
@@ -103,15 +101,26 @@ d3.csv("flooding.csv", function(data) {
 		.attr("d",line)
 		.style("opacity",0);
 
-	svg.selectAll("dot")
+	svg.selectAll("circle")
 		.data(data).enter()
 		.append("circle")
-		// .filter(function(d) { return (d.year > parseDate("1983") && d.year < parseDate("1985") ); })
 		.filter(function(d) { return (d.year.getTime() == parseDate("1984").getTime() || d.year.getTime() == parseDate("2015").getTime()) ; })
 		.attr("cx", function(d) { return x(d.year); })
 		.attr("cy", function(d) { return y(d.fake_data); })
 		.attr("transform", "translate("+margin.left+",0)")
 		.attr("r", "6px")
+		.style("opacity",0);
+
+	svg.selectAll("text")
+		.data(data).enter()
+		.append("text")
+		.filter(function(d) { return (d.year.getTime() == parseDate("1984").getTime() || d.year.getTime() == parseDate("2015").getTime()) ; })
+		.attr("id", "label")
+		.text(function(d) { return d.year.getFullYear(); })
+		.attr("x", function(d) { return x(d.year)+5; })
+		.attr("y", function(d) { return y(d.fake_data)-5; })
+		.attr("transform", "translate("+margin.left+",0)")
+		.style("font-size", "14px")
 		.style("opacity",0);
 
 	svg.append("g")
@@ -147,9 +156,9 @@ d3.csv("flooding.csv", function(data) {
 		.style("font-weight", "bold")
 		.style("opacity",0);
 
+	var click = 0;
 
-
-	image.on({
+	svg.on({
 		"mouseover":function(d) {
 			d3.select("image").style("opacity",0.5);
 			d3.selectAll("g").style("opacity",1);
@@ -163,7 +172,25 @@ d3.csv("flooding.csv", function(data) {
 			d3.select("path").style("opacity",0);
 			d3.selectAll("#label").style("opacity",0)
 			d3.selectAll("circle").style("opacity",0);
-		} 
+		},
+		"click": function(d) {
+			if (click == 0) {
+				d3.select("image").style("opacity",0.5);
+				d3.selectAll("g").style("opacity",1);
+				d3.select("path").style("opacity",1);
+				d3.selectAll("#label").style("opacity",1)
+				d3.selectAll("circle").style("opacity",1);
+				click++;
+			}
+			else {
+				d3.select("image").style("opacity",1);
+				d3.selectAll("g").style("opacity",0);
+				d3.select("path").style("opacity",0);
+				d3.selectAll("#label").style("opacity",0)
+				d3.selectAll("circle").style("opacity",0);
+				click = 0;
+			}
+		}
 	});
 
 });
