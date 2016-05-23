@@ -21,7 +21,6 @@ body {
 	stroke-width: 3px;
 }
 
-
 </style>
 
 <body>
@@ -93,7 +92,9 @@ var svg = d3.select("body")
 	.append("svg")
 	.attr("id", "plot")
 	.attr("width", width.total)
-	.attr("height", height.plot);
+	.attr("height", height.plot)
+	.attr("x",0)
+	.attr("y",height.image);
 
 svg.append("text")
 	.attr("class", "x label")
