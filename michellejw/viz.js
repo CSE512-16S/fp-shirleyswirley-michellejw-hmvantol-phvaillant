@@ -51,24 +51,6 @@ queue()
 
 
 
-// ////////////////////
-// // Adding T/S image (michelle: I don't know what I'm doing! eep!)
-// var canvas = d3.select("body").append("canvas")
-//     .attr("width", width)
-//     .attr("height", height);
-
-// var context = canvas.node().getContext("2d");
-
-// var image = new Image;
-// image.onload = onload;
-// image.src = "tempmap1979.jpeg"
-// ////////////////////
-
-
-
-
-
-
 
 //When a task completes, it must call the provided callback. The first argument to the callback should be null if the task is successfull, or the error if the task failed.
 function ready(error, world, locations) {
@@ -89,56 +71,20 @@ function ready(error, world, locations) {
       .attr("class", "land")
       .attr("d", path);
 
+  var thispoint = [];
+
     //draw the locations path
   locations.forEach(function(d) {
-    svg.append("path")
+    thispoint = svg.append("path")
         //from the csv take lat long to create a path object
         .datum({type: "Point", coordinates: [d.lon, d.lat]})
         .attr("class", "locations")
-        .attr("d", path.pointRadius(5));
+        .attr("fill","yellow")
+        .attr("d", path.pointRadius(8))
+        //.on("mouseenter",mouseEnter)
+        //.on("mouseleave",mouseLeave)
+        .on("click",mouseClick);
   });
-
-
-
-  
-
-
-
-  // ////////////////////
-  // // More image stuff I'm not sure about
-  //   var dx = image.width,
-  //     dy = image.height;
-
-  // context.drawImage(image, 0, 0, dx, dy);
-
-  // console.log(context);
-
-  // var sourceData = context.getImageData(0, 0, dx, dy).data,
-  //     target = context.createImageData(width, height),
-  //     targetData = target.data;
-
-
-
-  // for (var y = 0, i = -1; y < height; ++y) {
-  //   for (var x = 0; x < width; ++x) {
-  //     var p = projection.invert([x, y]), λ = p[0], φ = p[1];
-  //     if (λ > 180 || λ < -180 || φ > 90 || φ < -90) { i += 4; continue; }
-  //     var q = ((90 - φ) / 180 * dy | 0) * dx + ((180 + λ) / 360 * dx | 0) << 2;
-  //     targetData[++i] = sourceData[q];
-  //     targetData[++i] = sourceData[++q];
-  //     targetData[++i] = sourceData[++q];
-  //     targetData[++i] = 255;
-  //   }
-  // }
-
-  // context.clearRect(0, 0, width, height);
-  // context.putImageData(target, 0, 0);
-  // ////////////////////
-
-
-
-
-
 
 
 
@@ -240,3 +186,32 @@ function resize() {
     // resize the map
     svg.selectAll('path').attr('d', path);
 }
+
+var active = null; // variable to record which point has been clicked
+var isclicked = 0; // variable to record if a point has been clicked (for controlling hovering)
+
+function mouseClick() {
+  //console.log("mouseClick")
+  d3.select(active).style("fill","yellow")
+  isclicked = 0;
+  active = this;
+  d3.select(active).style("fill","green")
+    .attr("data-toggle","modal")
+    .attr("data-target","#myModal")
+}
+
+// function mouseEnter(d) {
+//   //console.log("mouseEnter")
+//   //d3.select(this).style("fill","lightgreen")
+// }
+
+// function mouseLeave(d) {
+//   //console.log("mouseLeave")
+//   //d3.select(this).style("fill","yellow")
+// }
+
+// %('#myModal').on('shown.bs.modal',function() {
+//   $('#myInput').focus()
+// })
+
+
