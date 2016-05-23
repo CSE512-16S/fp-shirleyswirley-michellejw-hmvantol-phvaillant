@@ -6,7 +6,7 @@
 
 var modalsvg = d3.select("#imgdivID")
 		.append("svg")
-		.attr("id", "satellite")
+		.attr("id", "satellite");
 		//.attr("width", width)
 		//.attr("height", height)
 		//.classed("svg-container",true)
@@ -20,4 +20,5 @@ var image = modalsvg.append("image")
 	.attr("id","flooding")
 	.style("opacity",1);
 
+// is this script even being read?
 console.log("hello from inside imageblock.js")
