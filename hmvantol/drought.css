@@ -1,0 +1,149 @@
+/* glue: 0.11.1 hash: 363c1f249a */
+        .sprite-drought-lakepowell_19990325,
+.sprite-drought-lakepowell_20000420,
+.sprite-drought-lakepowell_20010423,
+.sprite-drought-lakepowell_20020512,
+.sprite-drought-lakepowell_20030413,
+.sprite-drought-lakepowell_20040501,
+.sprite-drought-lakepowell_20050402,
+.sprite-drought-lakepowell_20060426,
+.sprite-drought-lakepowell_20070517,
+.sprite-drought-lakepowell_20080426,
+.sprite-drought-lakepowell_20090413,
+.sprite-drought-lakepowell_20100407,
+.sprite-drought-lakepowell_20110505,
+.sprite-drought-lakepowell_20120420,
+.sprite-drought-lakepowell_20130426,
+.sprite-drought-lakepowell_20140513,
+.sprite-drought-lakepowell_20150414 {
+            background-image: url('drought.png');
+            background-repeat: no-repeat;
+        }
+        
+        .sprite-drought-lakepowell_19990325 {
+            background-position: 0 0;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20000420 {
+            background-position: -720px 0;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20010423 {
+            background-position: 0 -480px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20020512 {
+            background-position: -720px -480px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20030413 {
+            background-position: 0 -960px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20040501 {
+            background-position: -720px -960px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20050402 {
+            background-position: -1440px 0;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20060426 {
+            background-position: -1440px -480px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20070517 {
+            background-position: -1440px -960px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20080426 {
+            background-position: 0 -1440px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20090413 {
+            background-position: -720px -1440px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20100407 {
+            background-position: -1440px -1440px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20110505 {
+            background-position: -2160px 0;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20120420 {
+            background-position: -2160px -480px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20130426 {
+            background-position: -2160px -960px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20140513 {
+            background-position: -2160px -1440px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-drought-lakepowell_20150414 {
+            background-position: 0 -1920px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        @media screen and (-webkit-min-device-pixel-ratio: 1.0), screen and (min--moz-device-pixel-ratio: 1.0), screen and (-o-min-device-pixel-ratio: 100/100), screen and (min-device-pixel-ratio: 1.0), screen and (min-resolution: 1.0dppx) {
+            .sprite-drought-lakepowell_19990325,
+    .sprite-drought-lakepowell_20000420,
+    .sprite-drought-lakepowell_20010423,
+    .sprite-drought-lakepowell_20020512,
+    .sprite-drought-lakepowell_20030413,
+    .sprite-drought-lakepowell_20040501,
+    .sprite-drought-lakepowell_20050402,
+    .sprite-drought-lakepowell_20060426,
+    .sprite-drought-lakepowell_20070517,
+    .sprite-drought-lakepowell_20080426,
+    .sprite-drought-lakepowell_20090413,
+    .sprite-drought-lakepowell_20100407,
+    .sprite-drought-lakepowell_20110505,
+    .sprite-drought-lakepowell_20120420,
+    .sprite-drought-lakepowell_20130426,
+    .sprite-drought-lakepowell_20140513,
+    .sprite-drought-lakepowell_20150414 {
+                background-image: url('drought.png');
+                -webkit-background-size: 2880px 2400px;
+                -moz-background-size: 2880px 2400px;
+                background-size: 2880px 2400px;
+            }
+        }
+        
