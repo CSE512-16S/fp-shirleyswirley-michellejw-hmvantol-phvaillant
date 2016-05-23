@@ -4,7 +4,7 @@
 //var width = .7*w,
 //	height = .7*h;
 
-var svg = d3.select("myModal")
+var modalsvg = d3.select("#imgdivID")
 		.append("svg")
 		.attr("id", "satellite")
 		//.attr("width", width)
@@ -13,9 +13,11 @@ var svg = d3.select("myModal")
 		//.classed("svg-content-responsive", true);
 		//.attr("viewBox", "0 0 " + width + " " + height);
 
-var image = svg.append("image")
+var image = modalsvg.append("image")
 	.attr("xlink:href","flooding.png")
 	//.attr("width", width)
 	//.attr("height", height)
 	.attr("id","flooding")
 	.style("opacity",1);
+
+console.log("hello from inside imageblock.js")
