@@ -290,16 +290,12 @@ function mouseClick() {
 
     y.domain(d3.extent(data, function(d) { return d.fake_data; }));
 
-    console.log(data);
-
     svg.append("path")
       .datum(data)
       .attr("class", "line")
       .attr("transform", "translate(" + margin.left + ",0)")
       .attr("d",line)
       .style("opacity",0);
-
-    console.log(d3.selectAll("path.line"))
 
     svg.selectAll("circle")
       .data(data).enter()
