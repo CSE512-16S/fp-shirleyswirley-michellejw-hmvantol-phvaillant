@@ -1,15 +1,13 @@
 # fp-shirleyswirley-michellejw-hmvantol-phvaillant
 
-(temporary message to our group:)
-If you want to see your page, just go to
-
-http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/V2/
-
-Except change the /V2/ part to the path to your folder or html file
-
+Map stuff:
+Philippe's latest changes:
+http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/pvaillant_0521/
 
 Michelle's latest changes:
 http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/michellejw/
 
+
+Image/plot stuff:
 Helena's latest changes:
 http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/hmvantol/
