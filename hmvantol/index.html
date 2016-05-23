@@ -21,6 +21,22 @@ body {
 	stroke-width: 3px;
 }
 
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+  
+    overflow: hidden;
+}
+
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
 
 </style>
 
@@ -38,7 +54,10 @@ var svg = d3.select("body")
 		.append("svg")
 		.attr("id", "satellite")
 		.attr("width", width)
-		.attr("height", height);
+		.attr("height", height)
+		.classed("svg-container",true)
+		.classed("svg-content-responsive", true)
+		.attr("viewBox", "0 0 " + width + " " + height);
 
 var image = svg.append("image")
 	.attr("xlink:href","flooding.png")
