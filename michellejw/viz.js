@@ -81,14 +81,13 @@ function ready(error, world, locations) {
         .attr("class", "locations")
         .attr("fill","yellow")
         .attr("d", path.pointRadius(8))
-        //.on("mouseenter",mouseEnter)
-        //.on("mouseleave",mouseLeave)
+        //add the attribute for location id
+        .attr("id",d.location_id)
+        //.attr("boobooo","hello")
         .on("click",mouseClick);
   });
 
-
-
-
+//console.log(d3.selectAll("path.locations").attr("boobooo"));
 
 
   //Drag event
@@ -188,7 +187,6 @@ function resize() {
 }
 
 var active = null; // variable to record which point has been clicked
-var isclicked = 0; // variable to record if a point has been clicked (for controlling hovering)
 
 var thissvg = [];
 
@@ -198,13 +196,16 @@ var thissvg = [];
 
 function mouseClick() {
   d3.select(active).style("fill","yellow")
-  isclicked = 0;
   // Clear html within modal div container
   $("#imgdivID").html("")
   active = this;
   d3.select(active).style("fill","green")
     .attr("data-toggle","modal")
     .attr("data-target","#myModal")
+
+  currentlocation = d3.select(active).attr("id");
+
+  //draw_modal(current_location);
 
 
 
@@ -214,6 +215,7 @@ function mouseClick() {
   //Insert image/plot stuff
 
   // should be able to extract dimensions directly from image, right? 
+  //think about responsive modal (dimensions)
   var w = 720,
       h = 480/2;
 
@@ -231,6 +233,8 @@ function mouseClick() {
     // .classed("svg-content-responsive", true);
     // .attr("viewBox", "0 0 " + width + " " + height);
 
+//current_img = location_img_ + current_location
+//location_img_ + (1,2,3,4)
   var image = svg.append("image")
     .attr("xlink:href","flooding.png")
     .attr("width", width)
@@ -273,121 +277,121 @@ function mouseClick() {
     .x(function(d) { return x(d.year); })
     .y(function(d) { return y(d.fake_data); });
 
-  // d3.csv("flooding.csv", function(data) {
+  d3.csv("flooding.csv", function(data) {
     
-  //   var parseDate = d3.time.format("%Y").parse;
+    var parseDate = d3.time.format("%Y").parse;
 
-  //   data.forEach(function(d) {
-  //     d.year = parseDate(d.year);
-  //     d.fake_data = +d.fake_data;
-  //   });
+    data.forEach(function(d) {
+      d.year = parseDate(d.year);
+      d.fake_data = +d.fake_data;
+    });
 
-  //   x.domain(d3.extent(data, function(d) { return d.year; }));
+    x.domain(d3.extent(data, function(d) { return d.year; }));
 
-  //   y.domain(d3.extent(data, function(d) { return d.fake_data; }));
+    y.domain(d3.extent(data, function(d) { return d.fake_data; }));
 
-  //   svg.append("path")
-  //     .datum(data)
-  //     .attr("class", "line")
-  //     .attr("transform", "translate(" + margin.left + ",0)")
-  //     .attr("d",line)
-  //     .style("opacity",0);
+    svg.append("path")
+      .data(data)
+      .attr("class", "line")
+      .attr("transform", "translate(" + margin.left + ",0)")
+      .attr("d",line)
+      .style("opacity",0);
 
-  //   svg.selectAll("circle")
-  //     .data(data).enter()
-  //     .append("circle")
-  //     .filter(function(d) { return (d.year.getTime() == parseDate("1984").getTime() || d.year.getTime() == parseDate("2015").getTime()) ; })
-  //     .attr("cx", function(d) { return x(d.year); })
-  //     .attr("cy", function(d) { return y(d.fake_data); })
-  //     .attr("transform", "translate("+margin.left+",0)")
-  //     .attr("r", "6px")
-  //     .style("opacity",0);
+    svg.selectAll("circle")
+      .data(data).enter()
+      .append("circle")
+      .filter(function(d) { return (d.year.getTime() == parseDate("1984").getTime() || d.year.getTime() == parseDate("2015").getTime()) ; })
+      .attr("cx", function(d) { return x(d.year); })
+      .attr("cy", function(d) { return y(d.fake_data); })
+      .attr("transform", "translate("+margin.left+",0)")
+      .attr("r", "6px")
+      .style("opacity",0);
 
-  //   svg.selectAll("text")
-  //     .data(data).enter()
-  //     .append("text")
-  //     .filter(function(d) { return (d.year.getTime() == parseDate("1984").getTime() || d.year.getTime() == parseDate("2015").getTime()) ; })
-  //     .attr("id", "label")
-  //     .text(function(d) { return d.year.getFullYear(); })
-  //     .attr("x", function(d) { return x(d.year)+5; })
-  //     .attr("y", function(d) { return y(d.fake_data)-5; })
-  //     .attr("transform", "translate("+margin.left+",0)")
-  //     .style("font-size", "14px")
-  //     .style("opacity",0);
+    svg.selectAll("text")
+      .data(data).enter()
+      .append("text")
+      .filter(function(d) { return (d.year.getTime() == parseDate("1984").getTime() || d.year.getTime() == parseDate("2015").getTime()) ; })
+      .attr("id", "label")
+      .text(function(d) { return d.year.getFullYear(); })
+      .attr("x", function(d) { return x(d.year)+5; })
+      .attr("y", function(d) { return y(d.fake_data)-5; })
+      .attr("transform", "translate("+margin.left+",0)")
+      .style("font-size", "14px")
+      .style("opacity",0);
 
-  //   svg.append("g")
-  //     .attr("class", "x axis")
-  //     .attr("transform", "translate(" + margin.left + "," + [height - margin.top - margin.bottom] + ")")
-  //     .call(x_axis)
-  //     .style("opacity",0);
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(" + margin.left + "," + [height - margin.top - margin.bottom] + ")")
+      .call(x_axis)
+      .style("opacity",0);
 
-  //   svg.append("g")
-  //     .attr("class", "y axis")
-  //     .attr("transform", "translate(" + margin.left + ",0)")
-  //     .call(y_axis)
-  //     .style("opacity",0);
+    svg.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate(" + margin.left + ",0)")
+      .call(y_axis)
+      .style("opacity",0);
 
-  //   svg.append("text")
-  //     .attr("class", "x label")
-  //     .attr("id", "label")
-  //     .attr("text-anchor", "middle")
-  //     .attr("x", width/2)
-  //     .attr("y", height - margin.bottom)
-  //     .attr("font-size", "14px")
-  //     .text("Year")
-  //     .style("font-weight", "bold")
-  //     .style("opacity",0);
+    svg.append("text")
+      .attr("class", "x label")
+      .attr("id", "label")
+      .attr("text-anchor", "middle")
+      .attr("x", width/2)
+      .attr("y", height - margin.bottom)
+      .attr("font-size", "14px")
+      .text("Year")
+      .style("font-weight", "bold")
+      .style("opacity",0);
 
-  //   svg.append("text")
-  //     .attr("class", "y label")
-  //     .attr("id", "label")
-  //     .attr("text-anchor", "middle")
-  //     .attr("transform", "translate("+margin.left/3+","+(height-margin.top-margin.bottom)/2+")rotate(-90)")
-  //     .attr("font-size", "14px")
-  //     .text("Flooding (m)")
-  //     .style("font-weight", "bold")
-  //     .style("opacity",0);
+    svg.append("text")
+      .attr("class", "y label")
+      .attr("id", "label")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate("+margin.left/3+","+(height-margin.top-margin.bottom)/2+")rotate(-90)")
+      .attr("font-size", "14px")
+      .text("Flooding (m)")
+      .style("font-weight", "bold")
+      .style("opacity",0);
 
-  //   var click = 0;
+    var click = 0;
 
-  //   svg.on({
-  //     "mouseover":function(d) {
-  //       d3.select("image").style("opacity",0.5);
-  //       d3.selectAll("g").style("opacity",1);
-  //       d3.select("path").style("opacity",1);
-  //       d3.selectAll("#label").style("opacity",1)
-  //       d3.selectAll("circle").style("opacity",1);
-  //     },
+    svg.on({
+      "mouseover":function(d) {
+        d3.select("image").style("opacity",0.5);
+        d3.selectAll("g").style("opacity",1);
+        d3.select("path").style("opacity",1);
+        d3.selectAll("#label").style("opacity",1)
+        d3.selectAll("circle").style("opacity",1);
+      },
 
-  //     "mouseout": function(d) {
-  //       d3.select("image").style("opacity",1);
-  //       d3.selectAll("g").style("opacity",0);
-  //       d3.select("path").style("opacity",0);
-  //       d3.selectAll("#label").style("opacity",0)
-  //       d3.selectAll("circle").style("opacity",0);
-  //     },
+      "mouseout": function(d) {
+        d3.select("image").style("opacity",1);
+        d3.selectAll("g").style("opacity",0);
+        d3.select("path").style("opacity",0);
+        d3.selectAll("#label").style("opacity",0)
+        d3.selectAll("circle").style("opacity",0);
+      },
 
-  //     "click": function(d) {
-  //       if (click == 0) {
-  //         d3.select("image").style("opacity",0.5);
-  //         d3.selectAll("g").style("opacity",1);
-  //         d3.select("path").style("opacity",1);
-  //         d3.selectAll("#label").style("opacity",1)
-  //         d3.selectAll("circle").style("opacity",1);
-  //         click++;
-  //       }
-  //       else {
-  //         d3.select("image").style("opacity",1);
-  //         d3.selectAll("g").style("opacity",0);
-  //         d3.select("path").style("opacity",0);
-  //         d3.selectAll("#label").style("opacity",0)
-  //         d3.selectAll("circle").style("opacity",0);
-  //         click = 0;
-  //       }
+      "click": function(d) {
+        if (click == 0) {
+          d3.select("image").style("opacity",0.5);
+          d3.selectAll("g").style("opacity",1);
+          d3.select("path").style("opacity",1);
+          d3.selectAll("#label").style("opacity",1)
+          d3.selectAll("circle").style("opacity",1);
+          click++;
+        }
+        else {
+          d3.select("image").style("opacity",1);
+          d3.selectAll("g").style("opacity",0);
+          d3.select("path").style("opacity",0);
+          d3.selectAll("#label").style("opacity",0)
+          d3.selectAll("circle").style("opacity",0);
+          click = 0;
+        }
         
-  //     }
-  //   });
-  // });
+      }
+    });
+  });
 
 
 
