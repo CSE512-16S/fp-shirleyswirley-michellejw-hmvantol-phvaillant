@@ -290,12 +290,16 @@ function mouseClick() {
 
     y.domain(d3.extent(data, function(d) { return d.fake_data; }));
 
+    console.log(data);
+
     svg.append("path")
-      .data(data)
+      .datum(data)
       .attr("class", "line")
       .attr("transform", "translate(" + margin.left + ",0)")
       .attr("d",line)
       .style("opacity",0);
+
+    console.log(d3.selectAll("path.line"))
 
     svg.selectAll("circle")
       .data(data).enter()
@@ -358,7 +362,7 @@ function mouseClick() {
       "mouseover":function(d) {
         d3.select("image").style("opacity",0.5);
         d3.selectAll("g").style("opacity",1);
-        d3.select("path").style("opacity",1);
+        d3.selectAll("path.line").style("opacity",1);
         d3.selectAll("#label").style("opacity",1)
         d3.selectAll("circle").style("opacity",1);
       },
@@ -366,7 +370,7 @@ function mouseClick() {
       "mouseout": function(d) {
         d3.select("image").style("opacity",1);
         d3.selectAll("g").style("opacity",0);
-        d3.select("path").style("opacity",0);
+        d3.selectAll("path.line").style("opacity",0);
         d3.selectAll("#label").style("opacity",0)
         d3.selectAll("circle").style("opacity",0);
       },
