@@ -17,8 +17,14 @@ body {
 
 .line {
 	fill: none;
-	stroke: black;
+	/* stroke: black; */
 	stroke-width: 3px;
+}
+
+.legend {
+        font-size: 16px;         
+        font-weight: bold;         
+        text-anchor: start;
 }
 
 </style>
@@ -29,11 +35,11 @@ body {
 <script>
 
 var margin = {top:40, right:20, bottom:10, left:50};
-var width = {image: 720, total:720*2};
+var width = {image: 720, plot:720*2-30, total: 720*2};
 var height = {image: 480, plot:480};
 
 var defs = d3.select("body")
-	.append("svg")
+        .append("svg")
 	.attr("class", "defs")
 	.attr("x",0)
 	.attr("y",0)
@@ -72,22 +78,33 @@ var after = d3.select("body")
 	.attr("y",0);
 
 var x = d3.time.scale()
-	.range([0,width.total - margin.left - margin.right]);
+	.range([0,width.plot - margin.left - margin.right]);
 
-var y = d3.scale.linear()
+var yl = d3.scale.linear()
+	.range([height.plot - margin.top - margin.bottom, margin.top]);
+        
+var yg = d3.scale.linear()
 	.range([height.plot - margin.top - margin.bottom, margin.top]);
 
 var x_axis = d3.svg.axis()
 	.scale(x)
 	.orient("bottom");
 
-var y_axis = d3.svg.axis()
-	.scale(y)
+var y_axisl = d3.svg.axis()
+	.scale(yl)
 	.orient("left");
+        
+var y_axisg = d3.svg.axis()
+	.scale(yg)
+	.orient("right");
 
-var line = d3.svg.line()
+var linel = d3.svg.line()
 	.x(function(d) { return x(d.date); })
-	.y(function(d) { return y(d.fake_data); });
+	.y(function(d) { return yl(d.fakelocaldata); });
+        
+var lineg = d3.svg.line()
+	.x(function(d) { return x(d.date); })
+	.y(function(d) { return yg(d.fakeglobaldata); });
 
 var svg = d3.select("body")
 	.append("svg")
@@ -101,7 +118,7 @@ svg.append("text")
 	.attr("class", "x label")
 	.attr("id", "label")
 	.attr("text-anchor", "middle")
-	.attr("x", (width.total)/2)
+	.attr("x", (width.plot)/2)
 	.attr("y", height.plot - margin.bottom/3)
 	.text("Year")
 	.style("font-weight", "bold");
@@ -114,15 +131,18 @@ svg.append("text")
 	.text("Flooding (m)")
 	.style("font-weight", "bold");
 
-var activekb = null;
-var active = null;
+// define global variables for keyboard and mouse input
+var alldots = null;
+var activeidx = 0;
+var activemouse = null;
 
 d3.csv("flooding_alt.csv", function(data) {
 
 	var parseDate = d3.time.format("%m/%d/%Y").parse;
 
 	data.forEach(function(d) {
-		d.fake_data = +d.fake_data;
+		d.fakelocaldata = +d.fakelocaldata;
+		d.fakeglobaldata = +d.fakeglobaldata;
 		d.date = parseDate(d.date);
 		d.x = +d.x;
 		d.y = +d.y;
@@ -140,7 +160,8 @@ d3.csv("flooding_alt.csv", function(data) {
 			.attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
 
 	x.domain(d3.extent(data, function(d) { return d.date; }));
-	y.domain(d3.extent(data, function(d) { return d.fake_data; }));
+	yl.domain(d3.extent(data, function(d) { return d.fakelocaldata; }));
+	yg.domain(d3.extent(data, function(d) { return d.fakeglobaldata; }));
 
 	svg.append("g")
 		.attr("class", "x axis")
@@ -148,22 +169,80 @@ d3.csv("flooding_alt.csv", function(data) {
 		.call(x_axis);
 
 	svg.append("g")
-		.attr("class", "y axis")
+                .attr("class", "y axis")
+                .style("fill", "ForestGreen")
+                .attr("id", "localAxis")
 		.attr("transform", "translate(" + margin.left + ",0)")
-		.call(y_axis);
+		.call(y_axisl);
+
+	svg.append("g")
+                .attr("class", "y axis")
+                .style("fill", "OrangeRed")
+		.style("opacity", 0)
+		.attr("id", "globalAxis")
+		.attr("transform", "translate(" + width.plot + ",0)")
+                .call(y_axisg);
 
 	svg.append("path")
 		.datum(data)
-		.attr("class", "line")
+                .attr("class", "line")
+                .attr("stroke", "ForestGreen")
+                .attr("id","localLine")
 		.attr("transform", "translate(" + margin.left + ",0)")
-		.attr("d",line);
+		.attr("d",linel);
+
+	svg.append("path")
+		.datum(data)
+                .attr("class", "line")
+                .style("stroke", "OrangeRed")
+		.style("opacity", 0)
+		.attr("id", "globalLine")
+		.attr("transform", "translate(" + margin.left + ",0)")
+                .attr("d",lineg);
+
+	// Add local data legend title
+        svg.append("text")
+		.attr("x", 0)
+		.attr("y", height.plot)
+		.attr("class", "legend")
+		.style("fill", "ForestGreen")
+		/*.on("click", function() {
+		    // Determine if current line is visible
+		    var activeline = localLine.active ? false : true,
+			newOpacity = activeline ? 0 : 1;
+		    // Hide or show the elements
+		    d3.select("#localLine").style("opacity", newOpacity);
+		    d3.select("#localAxis").style("opacity", newOpacity);
+		    // Update whether or not the elements are active
+		    localLine.active = activeline;
+		})*/
+		.text("Local time series");
+	
+	// Add global data legend title (clickable to appear/disappear)
+        svg.append("text")
+		.attr("x", 300)
+		.attr("y", height.plot)
+		.attr("class", "legend")
+		.style("fill", "OrangeRed")
+                .style("cursor", "pointer")
+		.on("click", function() {
+		    // Determine if current line is visible
+		    var activeline = globalLine.active ? false : true,
+			newOpacity = activeline ? 0 : 1;
+		    // Hide or show the elements
+		    d3.select("#globalLine").style("opacity", newOpacity);
+		    d3.select("#globalAxis").style("opacity", newOpacity);
+		    // Update whether or not the elements are active
+		    globalLine.active = activeline;
+		})
+		.text("Global time series");
 
 	var dots = svg.selectAll("circle")
 			.data(data).enter()
 		.append("circle")
 			.attr("id", function(d) { return "y" + d.date.getFullYear(); })
 			.attr("cx", function(d) { return x(d.date); })
-			.attr("cy", function(d) { return y(d.fake_data); })
+			.attr("cy", function(d) { return yl(d.fakelocaldata); })
 			.attr("transform", "translate("+margin.left+",0)")
 			.attr("r", "10px")
 			.style("stroke", "black")
@@ -210,54 +289,70 @@ d3.csv("flooding_alt.csv", function(data) {
 		.style("font-size", "24px")
 		.style("fill","white");
 
-        activekb = d3.select("circle#y1984");
+        alldots = d3.selectAll("circle");
 
-	dots.on({
+        //---------------------------------
+        // MOUSE INTERACTIVITY
+        //---------------------------------
+        dots.on({
 		mouseover: function(d) {
                     d3.select(this).style("fill", "steelblue");
                     this.style.cursor = "pointer";
 		},
 		mouseout: function(d) {
-			if (this != active) {
+			if (this != activemouse) {
 				d3.select(this).style("fill", "white");
 			}
 		},
 		click: function(d) {
-			d3.select("circle#y1984").style("fill", "white");
-			d3.select(active).style("fill", "white");
-			d3.select("circle#y2015").style("fill", "steelblue");
-			active = this;
-                        activekb = this;
-                        d3.select(active).style("fill", "steelblue");
-			d3.select("use#image1").attr("xlink:href", "#" + this.id.substring(1,5));
-                        d3.select("#before-text").text(this.id.substring(1,5));
+			d3.selectAll("circle").style("fill", "white");
+			d3.select("circle#y2015").style("fill", "steelblue"); // this is needed to keep last dot blue after clicking on it
+			activemouse = this;
+                        activeidx = findindexbyid(alldots,activemouse.id); 
+                        d3.select(activemouse).style("fill", "steelblue");
+			d3.select("use#image1").attr("xlink:href", "#" + activemouse.id.substring(1,5));
+                        d3.select("#before-text").text(activemouse.id.substring(1,5));
 		}
 
 	});
 
-        kbidx = 0;
-        
-	d3.select("body").on({
+        //---------------------------------
+        // RIGHT-LEFT ARROW KEY STEPTHROUGH
+        //---------------------------------
+        d3.select("body").on({
 		keydown: function(d,i) {
-			if (d3.event.keyCode == 39) {
-			    // return console.log("right");
-                            // activekb.style("fill", "white");
-                            //activekb = d3.select("circle#y1996").style("fill", "steelblue");
-                            d3.select(activekb[0][kbidx]).style("fill", "white");
-                            kbidx++; 
-                            activekb = d3.selectAll("circle");
-                            d3.select(activekb[0][kbidx]).style("fill", "steelblue");
-			    d3.select("use#image1").attr("xlink:href", "#" + activekb[0][kbidx].id.substring(1,5));
-			    d3.select("#before-text").text(activekb[0][kbidx].id.substring(1,5));
-                            // if kbidx
+			if (d3.event.keyCode == 39) { // when you click the right arrow key...
+                            if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
+                            d3.selectAll("circle").style("fill", "white");
+                            d3.select("circle#y2015").style("fill", "steelblue");
+                            d3.select(alldots[0][activeidx]).style("fill", "steelblue");
+			    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
+			    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
                         }
-			if (d3.event.keyCode == 37) {
-				return console.log("left");
-			}
+			if (d3.event.keyCode == 37) { // when you click the left arrow key...
+                            if (activeidx>0) {activeidx--;} // don't go further left than there are pts
+                            d3.selectAll("circle").style("fill", "white");
+                            d3.select("circle#y2015").style("fill", "steelblue");
+                            d3.select(alldots[0][activeidx]).style("fill", "steelblue");
+			    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
+			    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
+                        }
 		}
 	});
 
 });
+
+//-----------------
+// DEFINE FUNCTIONS
+//-----------------
+function findindexbyid(arraytosearch, idtosearch) {
+    for (var i = 0; i < arraytosearch.size(); i++) {
+        if (arraytosearch[0][i].id == idtosearch) {
+        return i;
+        }
+    }
+    return null;
+}
 
 </script>
 </body>
