@@ -114,8 +114,10 @@ svg.append("text")
 	.text("Flooding (m)")
 	.style("font-weight", "bold");
 
-var activekb = null;
-var active = null;
+// define global variables for keyboard and mouse input
+var alldots = null;
+var activeidx = 0;
+var activemouse = null;
 
 d3.csv("flooding_alt.csv", function(data) {
 
@@ -210,54 +212,67 @@ d3.csv("flooding_alt.csv", function(data) {
 		.style("font-size", "24px")
 		.style("fill","white");
 
-        activekb = d3.select("circle#y1984");
-
-	dots.on({
+        alldots = d3.selectAll("circle");
+        //---------------------------------
+        // MOUSE INTERACTIVITY
+        //---------------------------------
+        dots.on({
 		mouseover: function(d) {
                     d3.select(this).style("fill", "steelblue");
                     this.style.cursor = "pointer";
 		},
 		mouseout: function(d) {
-			if (this != active) {
+			if (this != activemouse) {
 				d3.select(this).style("fill", "white");
 			}
 		},
 		click: function(d) {
-			d3.select("circle#y1984").style("fill", "white");
-			d3.select(active).style("fill", "white");
-			d3.select("circle#y2015").style("fill", "steelblue");
-			active = this;
-                        activekb = this;
-                        d3.select(active).style("fill", "steelblue");
-			d3.select("use#image1").attr("xlink:href", "#" + this.id.substring(1,5));
-                        d3.select("#before-text").text(this.id.substring(1,5));
+			d3.selectAll("circle").style("fill", "white");
+			d3.select("circle#y2015").style("fill", "steelblue"); // this is needed to keep last dot blue after clicking on it
+			activemouse = this;
+                        activeidx = findindexbyid(alldots,activemouse.id); 
+                        d3.select(activemouse).style("fill", "steelblue");
+			d3.select("use#image1").attr("xlink:href", "#" + activemouse.id.substring(1,5));
+                        d3.select("#before-text").text(activemouse.id.substring(1,5));
 		}
 
 	});
 
-        kbidx = 0;
-        
-	d3.select("body").on({
+        //---------------------------------
+        // RIGHT-LEFT ARROW KEY STEPTHROUGH
+        //---------------------------------
+        d3.select("body").on({
 		keydown: function(d,i) {
-			if (d3.event.keyCode == 39) {
-			    // return console.log("right");
-                            // activekb.style("fill", "white");
-                            //activekb = d3.select("circle#y1996").style("fill", "steelblue");
-                            d3.select(activekb[0][kbidx]).style("fill", "white");
-                            kbidx++; 
-                            activekb = d3.selectAll("circle");
-                            d3.select(activekb[0][kbidx]).style("fill", "steelblue");
-			    d3.select("use#image1").attr("xlink:href", "#" + activekb[0][kbidx].id.substring(1,5));
-			    d3.select("#before-text").text(activekb[0][kbidx].id.substring(1,5));
-                            // if kbidx
+			if (d3.event.keyCode == 39) { // when you click the right arrow key...
+                            if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
+                            d3.selectAll("circle").style("fill", "white");
+                            d3.select("circle#y2015").style("fill", "steelblue");
+                            d3.select(alldots[0][activeidx]).style("fill", "steelblue");
+			    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
+			    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
                         }
-			if (d3.event.keyCode == 37) {
-				return console.log("left");
-			}
+			if (d3.event.keyCode == 37) { // when you click the left arrow key...
+                            if (activeidx>0) {activeidx--;} // don't go further left than there are pts
+                            d3.selectAll("circle").style("fill", "white");
+                            d3.select("circle#y2015").style("fill", "steelblue");
+                            d3.select(alldots[0][activeidx]).style("fill", "steelblue");
+			    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
+			    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
+                        }
 		}
 	});
 
 });
+
+
+function findindexbyid(arraytosearch, idtosearch) {
+    for (var i = 0; i < arraytosearch.size(); i++) {
+        if (arraytosearch[0][i].id == idtosearch) {
+        return i;
+        }
+    }
+    return null;
+}
 
 </script>
 </body>
