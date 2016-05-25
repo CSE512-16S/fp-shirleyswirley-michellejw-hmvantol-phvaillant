@@ -79,7 +79,7 @@ function ready(error, world, locations) {
         //from the csv take lat long to create a path object
         .datum({type: "Point", coordinates: [d.lon, d.lat]})
         .attr("class", "locations")
-        .attr("fill","yellow")
+        .attr("fill","#435D7C")
         .attr("d", path.pointRadius(8))
         //add the attribute for location id
         .attr("id",d.location_id)
@@ -195,11 +195,11 @@ var thissvg = [];
 
 
 function mouseClick() {
-  d3.select(active).style("fill","yellow")
+  d3.select(active).style("fill","#435D7C")
   // Clear html within modal div container
   $("#imgdivID").html("")
   active = this;
-  d3.select(active).style("fill","green")
+  d3.select(active).style("fill","#EF7903")
     .attr("data-toggle","modal")
     .attr("data-target","#myModal")
 
@@ -236,7 +236,7 @@ function mouseClick() {
 //current_img = location_img_ + current_location
 //location_img_ + (1,2,3,4)
   var image = svg.append("image")
-    .attr("xlink:href","flooding.png")
+    .attr("xlink:href","images/flooding.png")
     .attr("width", width)
     .attr("height", height)
     .attr("id","flooding")
