@@ -207,7 +207,12 @@ function mouseClick() {
 
   //draw_modal(current_location);
 
+  var viewportWidth = [];
 
+  $('#myModal').on('shown.bs.modal',function(){
+    viewportWidth = $(window).width();
+    console.log('viewportWidth (inside function) = ' + viewportWidth);
+  })
 
 
 
@@ -222,16 +227,21 @@ function mouseClick() {
   var width = .8*w,
       height = .8*h;
 
-  //d3.select("#imgdivID").remove()
+
+  //var width = parseInt(d3.select("#imgdivID").style("width"));
+  console.log('manual width: ' + width);
+  console.log('viewport width: ' + viewportWidth);
+  // width = 600;
+  // height = 100;
+
+  //console.log(d3.select("#imgdivID").style("width"));
 
   var svg = d3.select("#imgdivID")
     .append("svg")
     .attr("id", "satellite")
-    .attr("width", width)
-    .attr("height", height);
-    // .classed("svg-container",true)
-    // .classed("svg-content-responsive", true);
-    // .attr("viewBox", "0 0 " + width + " " + height);
+    .attr("width", '100%')
+    .attr("height", '100%');
+
 
 //current_img = location_img_ + current_location
 //location_img_ + (1,2,3,4)
@@ -398,7 +408,6 @@ function mouseClick() {
 
 
 }
-
 
 
 
