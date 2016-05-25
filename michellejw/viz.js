@@ -44,6 +44,7 @@ svg.append("path")
 queue()
     .defer(d3.json, "world.json")
     .defer(d3.csv, "locations.csv")
+    .defer(d3.json, "raster_anomalies_temp_polygons.json")
     .await(ready);
 
 
@@ -53,7 +54,7 @@ queue()
 
 
 //When a task completes, it must call the provided callback. The first argument to the callback should be null if the task is successfull, or the error if the task failed.
-function ready(error, world, locations) {
+function ready(error, world, locations, raster_anomalies_temp_polygons) {
 
   if (error) throw error;
 
@@ -61,6 +62,11 @@ function ready(error, world, locations) {
   //Returns the GeoJSON Feature or FeatureCollection for the specified object in the given topology. If the specified object is a GeometryCollection, a FeatureCollection is returned, and each geometry in the collection is mapped to a Feature. Otherwise, a Feature is returned.
   //https://github.com/mbostock/topojson/wiki/API-Reference
   var countries = topojson.feature(world, world.objects.countries).features;
+  var temp_poly = topojson.feature(raster_anomalies_temp_polygons, raster_anomalies_temp_polygons.objects.stdin).features;
+
+  var color_scale = d3.scale.linear()
+                  .domain([155,255])
+                  .range(["white","red"]);
 
   //sens for dragging call
   sens = 0.25
@@ -70,6 +76,17 @@ function ready(error, world, locations) {
       .enter().append("path")
       .attr("class", "land")
       .attr("d", path);
+
+  var world = svg.selectAll("path.temp")
+    .data(temp_poly)
+      .enter().append("path")
+      .attr("class", "temp")
+      .attr("d", path)
+      .attr("opacity",0.7)
+      .attr("fill", function(d) { 
+        if (d.properties.GRIDCODE == 255) {return 'black'}
+        else {return color_scale(d.properties.GRIDCODE)}
+        });
 
   var thispoint = [];
 
@@ -100,6 +117,7 @@ function ready(error, world, locations) {
           projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
           svg.selectAll("path.land").attr("d", path)
           svg.selectAll("path.locations").attr("d", path);
+          svg.selectAll("path.temp").attr("d", path);
         }))
 
 
@@ -133,6 +151,7 @@ function spinning_globe() {
       // update countries and locations position = redraw
       svg.selectAll("path.land").attr("d", path);
       svg.selectAll("path.locations").attr("d", path);
+      svg.selectAll("path.temp").attr("d", path);
 
       //that would be pretty to stop animating when we uncheck rotating checkbox, but I don't know how to restart the rotation!
       if(d3.select('#animate').node().checked==false) {
