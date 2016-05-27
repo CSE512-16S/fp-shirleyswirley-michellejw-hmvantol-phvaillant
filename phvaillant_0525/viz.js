@@ -1,4 +1,3 @@
-
 //compute the dimensions of the current div - #map
 var margin = {top: 10, left: 10, bottom: 10, right: 10}
   , width = parseInt(d3.select('#map').style('width'))
@@ -44,17 +43,16 @@ svg.append("path")
 queue()
     .defer(d3.json, "world.json")
     .defer(d3.csv, "locations.csv")
-    .defer(d3.json, "raster_anomalies_temp_polygons.json")
     .await(ready);
 
 
 
 
-
+var coordinates_locations = {};
 
 
 //When a task completes, it must call the provided callback. The first argument to the callback should be null if the task is successfull, or the error if the task failed.
-function ready(error, world, locations, raster_anomalies_temp_polygons) {
+function ready(error, world, locations) {
 
   if (error) throw error;
 
@@ -62,7 +60,6 @@ function ready(error, world, locations, raster_anomalies_temp_polygons) {
   //Returns the GeoJSON Feature or FeatureCollection for the specified object in the given topology. If the specified object is a GeometryCollection, a FeatureCollection is returned, and each geometry in the collection is mapped to a Feature. Otherwise, a Feature is returned.
   //https://github.com/mbostock/topojson/wiki/API-Reference
   var countries = topojson.feature(world, world.objects.countries).features;
-  var temp_poly = topojson.feature(raster_anomalies_temp_polygons, raster_anomalies_temp_polygons.objects.stdin).features;
 
   var color_scale = d3.scale.linear()
                   .domain([155,255])
@@ -77,17 +74,6 @@ function ready(error, world, locations, raster_anomalies_temp_polygons) {
       .attr("class", "land")
       .attr("d", path);
 
-  var world = svg.selectAll("path.temp")
-    .data(temp_poly)
-      .enter().append("path")
-      .attr("class", "temp")
-      .attr("d", path)
-      .attr("opacity",0.7)
-      .attr("fill", function(d) { 
-        if (d.properties.GRIDCODE == 255) {return 'black'}
-        else {return color_scale(d.properties.GRIDCODE)}
-        });
-
   var thispoint = [];
 
     //draw the locations path
@@ -99,13 +85,11 @@ function ready(error, world, locations, raster_anomalies_temp_polygons) {
         .attr("fill","#435D7C")
         .attr("d", path.pointRadius(8))
         //add the attribute for location id
-        .attr("id",d.location_id)
+        .attr("id","location_" + d.location_id)
         //.attr("boobooo","hello")
         .on("click",mouseClick);
+    coordinates_locations[d.location_id] = [d.lon,d.lat];
   });
-
-//console.log(d3.selectAll("path.locations").attr("boobooo"));
-
 
   //Drag event
   svg.selectAll("path").call(d3.behavior.drag()
@@ -117,7 +101,6 @@ function ready(error, world, locations, raster_anomalies_temp_polygons) {
           projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
           svg.selectAll("path.land").attr("d", path)
           svg.selectAll("path.locations").attr("d", path);
-          svg.selectAll("path.temp").attr("d", path);
         }))
 
 
@@ -129,11 +112,50 @@ function ready(error, world, locations, raster_anomalies_temp_polygons) {
 
 }
 
+var tour_stop = 1;
+
+function start_tour(tour_stop) {
+
+    // (function transition() {
+      console.log("function transition")
+      console.log([-coordinates_locations[tour_stop][0],-coordinates_locations[tour_stop][1]])
+      d3.transition()
+          .duration(1250)
+          .each("start", function() {
+          console.log(tour_stop);
+        })
+          .tween("rotate", function() {
+            var r = d3.interpolate(projection.rotate(), [-coordinates_locations[tour_stop][0],-coordinates_locations[tour_stop][1]]);
+            return function(t) {
+              projection.rotate(r(t));
+              svg.selectAll("path.land").attr("d", path);
+              svg.selectAll("path.locations").attr("d", path);
+            };
+          })
+  }
+
+d3.select("body").on({
+        keydown: function(d) {
+          if(d3.event.keyCode == 39) {
+            console.log("not working?")
+            start_tour(tour_stop);
+            tour_stop += 1;
+            if (tour_stop > 4) {tour_stop=1};
+          }
+          if (d3.event.keyCode == 37) {
+            start_tour(tour_stop);
+            tour_stop -= 1;
+            if (tour_stop > 4) {tour_stop=1};
+          }
+        }
+      })
+
 //prepare values for spinning effect
 //If rotation is specified, sets the projection’s three-axis rotation to the specified angles λ, φ and γ (yaw, pitch and roll, or equivalently longitude, latitude and roll) in degrees and returns the projection. If rotation is not specified, returns the current rotation which defaults [0, 0, 0]. If the specified rotation has only two values, rather than three, the roll is assumed to be 0°.
 var time = Date.now();
 var rotate = [0, 0];
 var velocity = [0.015,-0];
+var stop_spinning = false;
 function spinning_globe() {
 
   //for more information on transition and timer: https://github.com/d3/d3/wiki/Transitions#d3_timer
@@ -151,10 +173,9 @@ function spinning_globe() {
       // update countries and locations position = redraw
       svg.selectAll("path.land").attr("d", path);
       svg.selectAll("path.locations").attr("d", path);
-      svg.selectAll("path.temp").attr("d", path);
 
       //that would be pretty to stop animating when we uncheck rotating checkbox, but I don't know how to restart the rotation!
-      if(d3.select('#animate').node().checked==false) {
+      if(d3.select('#animate').node().checked==false || stop_spinning) {
         return true;
       }
 
@@ -162,19 +183,6 @@ function spinning_globe() {
 
 }
 
-//stop or start rotating - this piece of code is extremely ugly I want to ask during office hours how to make that prettier
-//does not work because sets everything on initial position
-// d3.select('#animate')
-//       .on("change", function() {
-//           if (velocity[0]==0.015) {
-//             velocity[0]=0;
-//           }
-//           else {
-//             velocity[0]=0.015;
-//           }
-//       });
-
-//when change, check if rotating is checked and if so, restart the rotation
 d3.select('#animate')
       .on("change", function() {
           if (d3.select('#animate').node().checked) {
@@ -262,8 +270,6 @@ function mouseClick() {
     .attr("height", '100%');
 
 
-//current_img = location_img_ + current_location
-//location_img_ + (1,2,3,4)
   var image = svg.append("image")
     .attr("xlink:href","images/flooding.png")
     .attr("width", width)
@@ -422,11 +428,17 @@ function mouseClick() {
     });
   });
 
-
-
-
-
 }
+
+$('.tour').on('click', function () {
+    $('#home_info').toggleClass('col-md-5 col-md-0');
+    $('#location_info').toggleClass('col-md-5 col-md-0');
+    start_tour(tour_stop);
+    tour_stop += 1;
+    if (tour_stop > 4) {tour_stop=1};
+});
+
+
 
 
 
