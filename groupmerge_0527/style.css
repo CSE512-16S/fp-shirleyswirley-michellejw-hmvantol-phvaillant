@@ -1,0 +1,17 @@
+
+html, body, .container-fluid, #map, #information_pane { height: 100%; }
+
+#map {
+	padding: 10px;
+}
+
+.water {
+	fill: blue;
+}
+
+.land {
+	fill: green;
+}
+
+@import url(css_images/athabasca.css);
+
