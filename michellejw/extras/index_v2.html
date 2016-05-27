@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Test Interactive Globe</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+
+    <!-- just testing, want to try this sliding window thing -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!-- testing testing testing -->
+
+
+    <link type="text/css" rel="stylesheet" href="style_v2.css"/>
+  </head>
+
+  <body>
+
+      <div class="container-fluid">
+
+          <div id="map" class="col-md-7">
+
+          </div>
+
+          <div id="home_info" class="col-md-5">
+
+              <div class="h1">Exploring climate change</div>
+              <p>click highlighted locations to get more information</p>
+              <div><label for="animate">animate:</label>
+                <input id="animate" type="checkbox" checked>
+              </div>
+              <!-- where is tour class defined?  -->
+              <a href="#" class="tour btn btn-link toggle-sidebar">Start tour</a>
+
+
+          </div>
+
+          <div id="location_info" class="col-md-0"> 
+
+            <a href="#" class="tour btn btn-link toggle-sidebar">End tour</a>
+
+          </div>
+
+
+          <!-- testing testing  -->
+          <div id="toggle" class="col-md-2"></div>
+          <!-- testing testing -->
+
+        </div>
+
+
+    <script src="viz.js"></script>
+    
+  </body>
+
+</html>

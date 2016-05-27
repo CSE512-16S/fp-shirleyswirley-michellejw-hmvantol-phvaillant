@@ -35,8 +35,8 @@ a:hover {
 
 
 .modal-dialog {
-  width: 700px;
-  min-width: 400px;
+  width: 60%;
+  /*min-width: 400px;*/
 }
 
 .center-block() {
