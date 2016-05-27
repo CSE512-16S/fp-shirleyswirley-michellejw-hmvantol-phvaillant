@@ -74,7 +74,7 @@ var after = d3.select("body")
 	.attr("id", "after")
 	.attr("width", width.image)
 	.attr("height", height.image)
-	.attr("x",720)
+	.attr("x", width.image)
 	.attr("y",0);
 
 var x = d3.time.scale()
@@ -131,7 +131,7 @@ svg.append("text")
 	.text("Flooding (m)")
 	.style("font-weight", "bold");
 
-// define global variables for keyboard and mouse input
+// Define global variables for keyboard and mouse input
 var alldots = null;
 var activeidx = 0;
 var activemouse = null;
@@ -291,9 +291,9 @@ d3.csv("flooding_alt.csv", function(data) {
 
         alldots = d3.selectAll("circle");
 
-        //---------------------------------
+        //--------------------
         // MOUSE INTERACTIVITY
-        //---------------------------------
+        //--------------------
         dots.on({
 		mouseover: function(d) {
                     d3.select(this).style("fill", "steelblue");
@@ -312,6 +312,7 @@ d3.csv("flooding_alt.csv", function(data) {
                         d3.select(activemouse).style("fill", "steelblue");
 			d3.select("use#image1").attr("xlink:href", "#" + activemouse.id.substring(1,5));
                         d3.select("#before-text").text(activemouse.id.substring(1,5));
+                        d3.select("#timeline-text").text(activemouse.timelinetext);
 		}
 
 	});
