@@ -170,7 +170,7 @@ d3.csv("athabasca.csv", function(data) {
 
 	svg.append("g")
                 .attr("class", "y axis")
-                .style("fill", "ForestGreen")
+                .style("fill", "steelblue")
                 .attr("id", "localAxis")
 		.attr("transform", "translate(" + margin.left + ",0)")
 		.call(y_axisl);
@@ -186,7 +186,7 @@ d3.csv("athabasca.csv", function(data) {
 	svg.append("path")
 		.datum(data)
                 .attr("class", "line")
-                .attr("stroke", "ForestGreen")
+                .attr("stroke", "steelblue")
                 .attr("id","localLine")
 		.attr("transform", "translate(" + margin.left + ",0)")
 		.attr("d",linel);
@@ -205,7 +205,7 @@ d3.csv("athabasca.csv", function(data) {
 		.attr("x", 0)
 		.attr("y", height.plot)
 		.attr("class", "legend")
-		.style("fill", "ForestGreen")
+		.style("fill", "steelblue")
 		/*.on("click", function() {
 		    // Determine if current line is visible
 		    var activeline = localLine.active ? false : true,
@@ -245,12 +245,12 @@ d3.csv("athabasca.csv", function(data) {
 			.attr("cy", function(d) { return yl(d.fakelocaldata); })
 			.attr("transform", "translate("+margin.left+",0)")
 			.attr("r", "10px")
-			.style("stroke", "black")
+			.style("stroke", "steelblue")
 			.style("stroke-width", "3px")
-			.style("fill", "white");
+			.style("fill", "steelblue");
 
-	d3.select("circle#y1984").style("fill", "steelblue");
-	d3.select("circle#y2015").style("fill", "steelblue");
+	d3.select("circle#y1984").style("fill", "white");
+	d3.select("circle#y2011").style("fill", "white");
 
 	var before = d3.select("#before")
 		.append("svg")
@@ -296,20 +296,20 @@ d3.csv("athabasca.csv", function(data) {
         //---------------------------------
         dots.on({
 		mouseover: function(d) {
-                    d3.select(this).style("fill", "steelblue");
+                    d3.select(this).style("fill", "white");
                     this.style.cursor = "pointer";
 		},
 		mouseout: function(d) {
 			if (this != activemouse) {
-				d3.select(this).style("fill", "white");
+				d3.select(this).style("fill", "steelblue");
 			}
 		},
 		click: function(d) {
-			d3.selectAll("circle").style("fill", "white");
-			d3.select("circle#y2015").style("fill", "steelblue"); // this is needed to keep last dot blue after clicking on it
+			d3.selectAll("circle").style("fill", "steelblue");
+			d3.select("circle#y2011").style("fill", "white"); // this is needed to keep last dot blue after clicking on it
 			activemouse = this;
                         activeidx = findindexbyid(alldots,activemouse.id); 
-                        d3.select(activemouse).style("fill", "steelblue");
+                        d3.select(activemouse).style("fill", "white");
 			d3.select("use#image1").attr("xlink:href", "#" + activemouse.id.substring(1,5));
                         d3.select("#before-text").text(activemouse.id.substring(1,5));
 		}
@@ -323,17 +323,17 @@ d3.csv("athabasca.csv", function(data) {
 		keydown: function(d,i) {
 			if (d3.event.keyCode == 39) { // when you click the right arrow key...
                             if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
-                            d3.selectAll("circle").style("fill", "white");
-                            d3.select("circle#y2015").style("fill", "steelblue");
-                            d3.select(alldots[0][activeidx]).style("fill", "steelblue");
+                            d3.selectAll("circle").style("fill", "steelblue");
+                            d3.select("circle#y2011").style("fill", "white");
+                            d3.select(alldots[0][activeidx]).style("fill", "white");
 			    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
 			    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
                         }
 			if (d3.event.keyCode == 37) { // when you click the left arrow key...
                             if (activeidx>0) {activeidx--;} // don't go further left than there are pts
-                            d3.selectAll("circle").style("fill", "white");
-                            d3.select("circle#y2015").style("fill", "steelblue");
-                            d3.select(alldots[0][activeidx]).style("fill", "steelblue");
+                            d3.selectAll("circle").style("fill", "steelblue");
+                            d3.select("circle#y2011").style("fill", "white");
+                            d3.select(alldots[0][activeidx]).style("fill", "white");
 			    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
 			    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
                         }
