@@ -1,0 +1,55 @@
+
+html, body, .container-fluid, #map, #information_pane { height: 100%; }
+
+#map {
+	padding: 10px;
+}
+
+.water {
+	fill: blue;
+}
+
+.land {
+	fill: green;
+}
+
+
+
+/* -- Modal Stuff -- */
+
+#myModal {
+left:58%; 
+min-width:400px;
+}
+
+
+.modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin-top: 0px;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100%;
+  /*left: 27%;*/
+}
+
+.modal-body {
+  width: 100%;
+  /*left: 27%;*/
+}
+
+
+.modal-backdrop {
+  background: none;
+}
+
+
+
+/* -- -- -- -- -- --*/
+
+
+
+@import url(css_images/athabasca.css);
+
