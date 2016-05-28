@@ -126,6 +126,7 @@ $( document ).ready(function() {
   }
 
     current_location = 1;
+
     $("#start_tour").on('click', function() {
       current_location =1;
       show_information(current_location);
@@ -134,15 +135,17 @@ $( document ).ready(function() {
 
     d3.select("body").on({
         keydown: function(d) {
-          if(d3.event.keyCode == 33) {
+          if(d3.event.keyCode == 38) {
             current_location += 1;
+            current_location = current_location % 5;
+            if (current_location==0) {current_location=1};
             center_on_location(current_location);
-            if (tour_stop > 4) {tour_stop=1};
           }
-          if (d3.event.keyCode == 34) {
+          if (d3.event.keyCode == 40) {
             current_location -= 1;
+            current_location = current_location % 5;
+            if (current_location==0) {current_location=4};
             center_on_location(current_location);
-            if (tour_stop > 4) {tour_stop=1};
           }
         }
       })
@@ -150,9 +153,6 @@ $( document ).ready(function() {
     function center_on_location(current_location) {
       d3.transition()
           .duration(1250)
-          .each("start", function() {
-              console.log(current_location);
-          })
           .tween("rotate", function() {
               var r = d3.interpolate(projection.rotate(), [-coordinates_locations[current_location][0],-coordinates_locations[current_location][1]]);
               return function(t) {
