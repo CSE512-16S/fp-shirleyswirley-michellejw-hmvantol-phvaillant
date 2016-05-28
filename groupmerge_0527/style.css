@@ -4,6 +4,10 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
   white-space:nowrap;
 }*/
 
+body.modal-open {
+    overflow: hidden;
+}
+
 #map {
   padding: 10px;
 }
@@ -26,15 +30,17 @@ left:58%;
 min-width:400px;
 }*/
 
+#myModal{
+  height: 100%;
+  left: 58%;
+  width: 40%;
+  overflow: hidden;
+}
+
 
 .modal-dialog {
-  margin-top: 10px;
-  margin-right: 0px;
-/*  margin-bottom: 15px;
-  margin-left: 0px;
-  margin-right: 0px;
-  left: 30%;
-  width: 80%;*/
+  width: 100%;
+  height: 90%;
 }
 
 /*.modal-content {
@@ -42,9 +48,18 @@ min-width:400px;
   width: 80%;
 }*/
 
-/*.modal-body {
-  height: 600px;
+/*.modal-header {
+  height: 5%;
 }*/
+
+.modal-content {
+  height: 90%;
+}
+
+.modal-body {
+  height: 70%;
+  overflow-y: auto;
+}
 
 
 .modal-backdrop {

@@ -173,16 +173,15 @@ $( document ).ready(function() {
 
 
     // Set the height of the modal based on the information pane
-    $("#myModal").on('show.bs.modal', function (){
-    $('.modal-body').css('height',parseInt($( information_pane ).height()*.75) + "px");
-    $('.modal-body').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    $('.modal-header').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    $('.modal-footer').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    $('.modal-content').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    $('.modal-dialog').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    $('.modal-content').css('position.left',parseInt($( information_pane ).position().left) + "px");
-    
-    })
+    // $("#myModal").on('show.bs.modal', function (){
+    // $('.modal-body').css('height',parseInt($( information_pane ).height()*.75) + "px");
+    // $('.modal-body').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    // $('.modal-header').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    // $('.modal-footer').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    // $('.modal-content').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    // $('.modal-dialog').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    // $('.modal-content').css('position.left',parseInt($( information_pane ).position().left) + "px");
+    // })
 
 
     // Show the modal
