@@ -6,11 +6,11 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 }
 
 .water {
-	fill: blue;
+  fill: LightGrey;
 }
 
 .land {
-	fill: green;
+  fill: Gray;
 }
 
 
