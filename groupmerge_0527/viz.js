@@ -125,11 +125,43 @@ $( document ).ready(function() {
 	    svg.selectAll('path').attr('d', path);
   }
 
-  current_location = 1;
-  $("#start_tour").on('click', function() {
-  	current_location =1;
-  	show_information(current_location);
-  });
+    current_location = 1;
+    $("#start_tour").on('click', function() {
+      current_location =1;
+      show_information(current_location);
+      center_on_location(current_location);
+    });
+
+    d3.select("body").on({
+        keydown: function(d) {
+          if(d3.event.keyCode == 33) {
+            current_location += 1;
+            center_on_location(current_location);
+            if (tour_stop > 4) {tour_stop=1};
+          }
+          if (d3.event.keyCode == 34) {
+            current_location -= 1;
+            center_on_location(current_location);
+            if (tour_stop > 4) {tour_stop=1};
+          }
+        }
+      })
+
+    function center_on_location(current_location) {
+      d3.transition()
+          .duration(1250)
+          .each("start", function() {
+              console.log(current_location);
+          })
+          .tween("rotate", function() {
+              var r = d3.interpolate(projection.rotate(), [-coordinates_locations[current_location][0],-coordinates_locations[current_location][1]]);
+              return function(t) {
+                projection.rotate(r(t));
+                svg.selectAll("path.land").attr("d", path);
+                svg.selectAll("path.locations").attr("d", path);
+              };
+            })
+    }
 
   function show_information(current_location) {
 
@@ -155,9 +187,6 @@ $( document ).ready(function() {
 
     // Show the modal
     $("#myModal").modal('show');
-
-
-
 
 
 	  //CHANGE THAT. NEEDS TO BE DETERMINED BY CSS
