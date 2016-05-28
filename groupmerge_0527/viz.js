@@ -221,7 +221,7 @@ $( document ).ready(function() {
 			.x(function(d) { return x(d.date); })
 			.y(function(d) { return yg(d.fakeglobaldata); });
 
-		var svg = d3.select("body")
+		var svg = d3.select("#imgdivID")
 			.append("svg")
 			.attr("id", "plot")
 			.attr("width", width.total)
@@ -435,7 +435,7 @@ $( document ).ready(function() {
 			//---------------------------------
 	        // RIGHT-LEFT ARROW KEY STEPTHROUGH
 	        //---------------------------------
-	        d3.select("body").on({
+	        d3.select("#imgdivID").on({
 
 				keydown: function(d,i) {
 					if (d3.event.keyCode == 39) { // when you click the right arrow key...
