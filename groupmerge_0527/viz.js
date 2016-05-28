@@ -100,7 +100,6 @@ $( document ).ready(function() {
 	          svg.selectAll("path.land").attr("d", path)
 	          svg.selectAll("path.locations").attr("d", path);
 	        }))
-
 	}
 
 	d3.select(window).on('resize', resize);
@@ -124,14 +123,13 @@ $( document ).ready(function() {
 
 	    // resize the map
 	    svg.selectAll('path').attr('d', path);
-
-    }
+  }
 
     current_location = 1;
     $("#start_tour").on('click', function() {
-    	current_location =1;
-    	show_information(current_location);
-    	center_on_location(current_location);
+      current_location =1;
+      show_information(current_location);
+      center_on_location(current_location);
     });
 
     d3.select("body").on({
@@ -150,348 +148,366 @@ $( document ).ready(function() {
       })
 
     function center_on_location(current_location) {
-    	d3.transition()
+      d3.transition()
           .duration(1250)
           .each("start", function() {
-          		console.log(current_location);
-        	})
+              console.log(current_location);
+          })
           .tween("rotate", function() {
-	            var r = d3.interpolate(projection.rotate(), [-coordinates_locations[current_location][0],-coordinates_locations[current_location][1]]);
-	            return function(t) {
-	              projection.rotate(r(t));
-	              svg.selectAll("path.land").attr("d", path);
-	              svg.selectAll("path.locations").attr("d", path);
-	            };
-          	})
+              var r = d3.interpolate(projection.rotate(), [-coordinates_locations[current_location][0],-coordinates_locations[current_location][1]]);
+              return function(t) {
+                projection.rotate(r(t));
+                svg.selectAll("path.land").attr("d", path);
+                svg.selectAll("path.locations").attr("d", path);
+              };
+            })
     }
 
-    function show_information(current_location) {
+  function show_information(current_location) {
 
-		  // Clear html within modal div container
-		  $("#imgdivID").html("");
+    // Clear html within modal div container
+    $("#imgdivID").html("");
 
-		  $("#myModal").modal('show');
-		  
-		  //LOTS OF WORK FOR MICHELLE TO RESIZE MODAL
 
-		  //CHANGE THAT. NEEDS TO BE DETERMINED BY CSS
+    //LOTS OF WORK FOR MICHELLE TO RESIZE MODAL
+
+
+    // Set the height of the modal based on the information pane
+    $("#myModal").on('show.bs.modal', function (){
+    $('.modal-body').css('height',parseInt($( information_pane ).height()*.75) + "px");
+    $('.modal-body').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    $('.modal-header').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    $('.modal-footer').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    $('.modal-content').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    $('.modal-dialog').css('width',parseInt($( information_pane ).width()*.9) + "px");
+    $('.modal-content').css('position.left',parseInt($( information_pane ).position().left) + "px");
+    
+    })
+
+
+    // Show the modal
+    $("#myModal").modal('show');
+
+
+	  //CHANGE THAT. NEEDS TO BE DETERMINED BY CSS
 		var margin = {top:40, right:20, bottom:10, left:50};
 		var width = {image: 720, plot:720*2-30, total: 720*2};
 		var height = {image: 480, plot:480};
 
-		//ALL THESE LINES OF CODES WILL NEED TO DEPEND ON current_location
-    	var defs = d3.select("#myModal")
-	      .append("svg")
-			.attr("class", "defs")
-			.attr("x",0)
-			.attr("y",0)
-			.attr("width",0)
-			.attr("height",0)
-			.append("defs");
+		  //ALL THESE LINES OF CODES WILL NEED TO DEPEND ON current_location
+    // 	var defs = d3.select("#myModal")
+  	 //   .append("svg")
+  		//   .attr("class", "defs")
+  		// 	.attr("x",0)
+  		// 	.attr("y",0)
+  		// 	.attr("width",0)
+  		// 	.attr("height",0)
+  		// 	.append("defs");
 
-		defs.append("image")
-			.attr("id", "satellite")
-			//THAT NEEDS TO BE DETERMINED BY current_location
-			//FOLDER images/
-			//instead of athabasca.png you will call "img/"" + current_location
-			.attr("xlink:href", "img/athabasca.png")
-			//Count number of images in file so that 5 and 6 are not arbitrary
-			.attr("width", width.image*5)
-			.attr("height", height.image*6);
+  		// defs.append("image")
+  		// 	.attr("id", "satellite")
+  		// 	//THAT NEEDS TO BE DETERMINED BY current_location
+  		// 	//FOLDER images/
+  		// 	//instead of athabasca.png you will call "img/"" + current_location
+  		// 	.attr("xlink:href", "img/athabasca.png")
+  		// 	//Count number of images in file so that 5 and 6 are not arbitrary
+  		// 	.attr("width", width.image*5)
+  		// 	.attr("height", height.image*6);
 
-		defs.append("clipPath")
-			.attr("id", "satellite-cp")
-			.append("rect")
-			.attr("x",0)
-			.attr("y",0)
-			.attr("height", height.image)
-			.attr("width", width.image);
+  		// defs.append("clipPath")
+  		// 	.attr("id", "satellite-cp")
+  		// 	.append("rect")
+  		// 	.attr("x",0)
+  		// 	.attr("y",0)
+  		// 	.attr("height", height.image)
+  		// 	.attr("width", width.image);
 
-		var before = d3.select("#imgdivID")
-			.append("svg")
-			.attr("id", "before")
-			.attr("width", width.image)
-			.attr("height", height.image)
-			.attr("x",0)
-			.attr("y",0);
+  		// var before = d3.select("#imgdivID")
+  		// 	.append("svg")
+  		// 	.attr("id", "before")
+  		// 	.attr("width", width.image)
+  		// 	.attr("height", height.image)
+  		// 	.attr("x",0)
+  		// 	.attr("y",0);
 
-		var after = d3.select("#imgdivID")
-			.append("svg")
-			.attr("id", "after")
-			.attr("width", width.image)
-			.attr("height", height.image)
-			//TO BE CHANGED
-			.attr("x",720)
-			.attr("y",0);
+  		// var after = d3.select("#imgdivID")
+  		// 	.append("svg")
+  		// 	.attr("id", "after")
+  		// 	.attr("width", width.image)
+  		// 	.attr("height", height.image)
+  		// 	//TO BE CHANGED
+  		// 	.attr("x",720)
+  		// 	.attr("y",0);
 
-		var x = d3.time.scale()
-			.range([0,width.plot - margin.left - margin.right]);
 
-		var yl = d3.scale.linear()
-			.range([height.plot - margin.top - margin.bottom, margin.top]);
-		        
-		var yg = d3.scale.linear()
-			.range([height.plot - margin.top - margin.bottom, margin.top]);
+      // Add line plot  
 
-		var x_axis = d3.svg.axis()
-			.scale(x)
-			.orient("bottom");
+  		// var x = d3.time.scale()
+  		// 	.range([0,width.plot - margin.left - margin.right]);
 
-		var y_axisl = d3.svg.axis()
-			.scale(yl)
-			.orient("left");
-		        
-		var y_axisg = d3.svg.axis()
-			.scale(yg)
-			.orient("right");
+  		// var yl = d3.scale.linear()
+  		// 	.range([height.plot - margin.top - margin.bottom, margin.top]);
+  		        
+  		// var yg = d3.scale.linear()
+  		// 	.range([height.plot - margin.top - margin.bottom, margin.top]);
 
-		var linel = d3.svg.line()
-			.x(function(d) { return x(d.date); })
-			.y(function(d) { return yl(d.fakelocaldata); });
-		        
-		var lineg = d3.svg.line()
-			.x(function(d) { return x(d.date); })
-			.y(function(d) { return yg(d.fakeglobaldata); });
+  		// var x_axis = d3.svg.axis()
+  		// 	.scale(x)
+  		// 	.orient("bottom");
 
-		var svg = d3.select("body")
-			.append("svg")
-			.attr("id", "plot")
-			.attr("width", width.total)
-			.attr("height", height.plot)
-			.attr("x",0)
-			.attr("y",height.image);
+  		// var y_axisl = d3.svg.axis()
+  		// 	.scale(yl)
+  		// 	.orient("left");
+  		        
+  		// var y_axisg = d3.svg.axis()
+  		// 	.scale(yg)
+  		// 	.orient("right");
 
-		svg.append("text")
-			.attr("class", "x label")
-			.attr("id", "label")
-			.attr("text-anchor", "middle")
-			.attr("x", (width.plot)/2)
-			.attr("y", height.plot - margin.bottom/3)
-			.text("Year")
-			.style("font-weight", "bold");
+  		// var linel = d3.svg.line()
+  		// 	.x(function(d) { return x(d.date); })
+  		// 	.y(function(d) { return yl(d.fakelocaldata); });
+  		        
+  		// var lineg = d3.svg.line()
+  		// 	.x(function(d) { return x(d.date); })
+  		// 	.y(function(d) { return yg(d.fakeglobaldata); });
 
-		svg.append("text")
-			.attr("class", "y label")
-			.attr("id", "label")
-			.attr("text-anchor", "middle")
-			.attr("transform", "translate("+margin.left/3+","+(height.plot-margin.top-margin.bottom)/2+")rotate(-90)")
-			.text("Y VARIABLE")
-			.style("font-weight", "bold");
+  		// var svg = d3.select("#imgdivID")
+  		// 	.append("svg")
+  		// 	.attr("id", "plot")
+  		// 	.attr("width", width.total)
+  		// 	.attr("height", height.plot)
+  		// 	.attr("x",0)
+  		// 	.attr("y",height.image);
 
-		// define global variables for keyboard and mouse input
-		var alldots = null;
-		var activeidx = 0;
-		var activemouse = null;
+  		// svg.append("text")
+  		// 	.attr("class", "x label")
+  		// 	.attr("id", "label")
+  		// 	.attr("text-anchor", "middle")
+  		// 	.attr("x", (width.plot)/2)
+  		// 	.attr("y", height.plot - margin.bottom/3)
+  		// 	.text("Year")
+  		// 	.style("font-weight", "bold");
 
-		//depend of current_location
-		d3.csv("timeline/athabasca.csv", function(data) {
+  		// svg.append("text")
+  		// 	.attr("class", "y label")
+  		// 	.attr("id", "label")
+  		// 	.attr("text-anchor", "middle")
+  		// 	.attr("transform", "translate("+margin.left/3+","+(height.plot-margin.top-margin.bottom)/2+")rotate(-90)")
+  		// 	.text("Y VARIABLE")
+  		// 	.style("font-weight", "bold");
 
-			var parseDate = d3.time.format("%m/%d/%Y").parse;
+  		// // define global variables for keyboard and mouse input
+  		// var alldots = null;
+  		// var activeidx = 0;
+  		// var activemouse = null;
 
-			data.forEach(function(d) {
-				d.fakelocaldata = +d.fakelocaldata;
-				d.fakeglobaldata = +d.fakeglobaldata;
-				d.date = parseDate(d.date);
-				d.x = +d.x;
-				d.y = +d.y;
-			});
+		//   //depend of current_location
+  // 		d3.csv("timeline/athabasca.csv", function(data) {
 
-			defs.selectAll("g")
-				.data(data).enter()
-				.append("g")
-					.attr("id", function(d) { return d.date.getFullYear(); })
-					.attr("clip-path", "url(#satellite-cp)")
-				.append("use")
-					//id of image
-					.attr("xlink:href", "#satellite")
-					.attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
+  // 			var parseDate = d3.time.format("%m/%d/%Y").parse;
 
-			x.domain(d3.extent(data, function(d) { return d.date; }));
-			yl.domain(d3.extent(data, function(d) { return d.fakelocaldata; }));
-			yg.domain(d3.extent(data, function(d) { return d.fakeglobaldata; }));
+  // 			data.forEach(function(d) {
+  // 				d.fakelocaldata = +d.fakelocaldata;
+  // 				d.fakeglobaldata = +d.fakeglobaldata;
+  // 				d.date = parseDate(d.date);
+  // 				d.x = +d.x;
+  // 				d.y = +d.y;
+  // 			});
 
-			svg.append("g")
-				.attr("class", "x axis")
-				.attr("transform", "translate(" + margin.left + "," + [height.plot - margin.top - margin.bottom] + ")")
-				.call(x_axis);
+  // 			defs.selectAll("g")
+  // 				.data(data).enter()
+  // 				.append("g")
+  // 					.attr("id", function(d) { return d.date.getFullYear(); })
+  // 					.attr("clip-path", "url(#satellite-cp)")
+  // 				.append("use")
+  // 					//id of image
+  // 					.attr("xlink:href", "#satellite")
+  // 					.attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
 
-			svg.append("g")
-		                .attr("class", "y axis")
-		                .style("fill", "steelblue")
-		                .attr("id", "localAxis")
-				.attr("transform", "translate(" + margin.left + ",0)")
-				.call(y_axisl);
+  // 			x.domain(d3.extent(data, function(d) { return d.date; }));
+  // 			yl.domain(d3.extent(data, function(d) { return d.fakelocaldata; }));
+  // 			yg.domain(d3.extent(data, function(d) { return d.fakeglobaldata; }));
 
-			svg.append("g")
-		                .attr("class", "y axis")
-		                .style("fill", "OrangeRed")
-				.style("opacity", 0)
-				.attr("id", "globalAxis")
-				.attr("transform", "translate(" + width.plot + ",0)")
-		                .call(y_axisg);
+  // 			svg.append("g")
+  // 				.attr("class", "x axis")
+  // 				.attr("transform", "translate(" + margin.left + "," + [height.plot - margin.top - margin.bottom] + ")")
+  // 				.call(x_axis);
 
-			svg.append("path")
-				.datum(data)
-		                .attr("class", "line")
-		                .attr("stroke", "steelblue")
-		                .attr("id","localLine")
-				.attr("transform", "translate(" + margin.left + ",0)")
-				.attr("d",linel);
+  // 			svg.append("g")
+  //         .attr("class", "y axis")
+  //         .style("fill", "steelblue")
+  //         .attr("id", "localAxis")
+  // 				.attr("transform", "translate(" + margin.left + ",0)")
+  // 				.call(y_axisl);
 
-			svg.append("path")
-				.datum(data)
-		                .attr("class", "line")
-		                .style("stroke", "OrangeRed")
-				.style("opacity", 0)
-				.attr("id", "globalLine")
-				.attr("transform", "translate(" + margin.left + ",0)")
-		                .attr("d",lineg);
+  // 			svg.append("g")
+  //         .attr("class", "y axis")
+  //         .style("fill", "OrangeRed")
+  // 				.style("opacity", 0)
+  // 				.attr("id", "globalAxis")
+  // 				.attr("transform", "translate(" + width.plot + ",0)")
+  // 		                .call(y_axisg);
 
-			// Add local data legend title
-		    svg.append("text")
-				.attr("x", 0)
-				.attr("y", height.plot)
-				.attr("class", "legend")
-				.style("fill", "steelblue")
-				/*.on("click", function() {
-				    // Determine if current line is visible
-				    var activeline = localLine.active ? false : true,
-					newOpacity = activeline ? 0 : 1;
-				    // Hide or show the elements
-				    d3.select("#localLine").style("opacity", newOpacity);
-				    d3.select("#localAxis").style("opacity", newOpacity);
-				    // Update whether or not the elements are active
-				    localLine.active = activeline;
-				})*/
-				.text("Local time series");
-			
-			// Add global data legend title (clickable to appear/disappear)
-		    svg.append("text")
-				.attr("x", 300)
-				.attr("y", height.plot)
-				.attr("class", "legend")
-				.style("fill", "OrangeRed")
-		                .style("cursor", "pointer")
-				.on("click", function() {
-				    // Determine if current line is visible
-				    var activeline = globalLine.active ? false : true,
-					newOpacity = activeline ? 0 : 1;
-				    // Hide or show the elements
-				    d3.select("#globalLine").style("opacity", newOpacity);
-				    d3.select("#globalAxis").style("opacity", newOpacity);
-				    // Update whether or not the elements are active
-				    globalLine.active = activeline;
-				})
-				.text("Global time series");
+  // 			svg.append("path")
+  // 				.datum(data)
+  //         .attr("class", "line")
+  //         .attr("stroke", "steelblue")
+  //         .attr("id","localLine")
+  // 				.attr("transform", "translate(" + margin.left + ",0)")
+  // 				.attr("d",linel);
 
-			var dots = svg.selectAll("circle")
-					.data(data).enter()
-				.append("circle")
-					.attr("id", function(d) { return "y" + d.date.getFullYear(); })
-					.attr("cx", function(d) { return x(d.date); })
-					.attr("cy", function(d) { return yl(d.fakelocaldata); })
-					.attr("transform", "translate("+margin.left+",0)")
-					.attr("r", "10px")
-					.style("stroke", "steelblue")
-					.style("stroke-width", "3px")
-					.style("fill", "steelblue");
+  // 			svg.append("path")
+  // 				.datum(data)
+  //           .attr("class", "line")
+  //           .style("stroke", "OrangeRed")
+  // 				.style("opacity", 0)
+  // 				.attr("id", "globalLine")
+  // 				.attr("transform", "translate(" + margin.left + ",0)")
+  // 		                .attr("d",lineg);
 
-			d3.select("circle#y1984").style("fill", "white");
-			d3.select("circle#y2011").style("fill", "white");
+		// 	  // Add local data legend title
+  // 		  svg.append("text")
+  // 				.attr("x", 0)
+  // 				.attr("y", height.plot)
+  // 				.attr("class", "legend")
+  // 				.style("fill", "steelblue")
+  // 				/*.on("click", function() {
+  // 				    // Determine if current line is visible
+  // 				    var activeline = localLine.active ? false : true,
+  // 					newOpacity = activeline ? 0 : 1;
+  // 				    // Hide or show the elements
+  // 				    d3.select("#localLine").style("opacity", newOpacity);
+  // 				    d3.select("#localAxis").style("opacity", newOpacity);
+  // 				    // Update whether or not the elements are active
+  // 				    localLine.active = activeline;
+  // 				})*/
+  // 				.text("Local time series");
+  			
+  // 			// Add global data legend title (clickable to appear/disappear)
+  // 		  svg.append("text")
+  // 				.attr("x", 300)
+  // 				.attr("y", height.plot)
+  // 				.attr("class", "legend")
+  // 				.style("fill", "OrangeRed")
+  // 		                .style("cursor", "pointer")
+  // 				.on("click", function() {
+		// 		    // Determine if current line is visible
+		// 		    var activeline = globalLine.active ? false : true,
+  // 					newOpacity = activeline ? 0 : 1;
+		// 		    // Hide or show the elements
+		// 		    d3.select("#globalLine").style("opacity", newOpacity);
+		// 		    d3.select("#globalAxis").style("opacity", newOpacity);
+		// 		    // Update whether or not the elements are active
+		// 		    globalLine.active = activeline;
+  // 				})
+  // 				.text("Global time series");
 
-			var before = d3.select("#before")
-				.append("svg")
-					.attr("viewBox", "0 0 " + width.image + " " + height.image)
-					.style("display", "inline")
-					.style("height", "1em")
-					.style("width", (width.image/height.image) + "em")
-				.append("use")
-					.attr("id", "image1")
-					//depends on current_location
-					.attr("xlink:href", "#1984");
+  // 			var dots = svg.selectAll("circle")
+		// 			.data(data).enter()
+  // 				.append("circle")
+		// 			.attr("id", function(d) { return "y" + d.date.getFullYear(); })
+		// 			.attr("cx", function(d) { return x(d.date); })
+		// 			.attr("cy", function(d) { return yl(d.fakelocaldata); })
+		// 			.attr("transform", "translate("+margin.left+",0)")
+		// 			.attr("r", "10px")
+		// 			.style("stroke", "steelblue")
+		// 			.style("stroke-width", "3px")
+		// 			.style("fill", "steelblue");
 
-			var after = d3.select("#after")
-				.append("svg")
-					.attr("viewBox", "0 0 " + width.image + " " + height.image)
-					.style("display", "inline")
-					.style("height", "1em")
-					.style("width", (width.image/height.image) + "em")
-				.append("use")
-					.attr("id", "image2")
-					.attr("xlink:href", "#2011");
+  // 			d3.select("circle#y1984").style("fill", "white");
+  // 			d3.select("circle#y2011").style("fill", "white");
 
-			d3.select("#before")
-				.append("text")
-				.attr("id", "before-text")
-				.text("1984")
-				.attr("x",10)
-				.attr("y",30)
-				.style("font-size", "24px")
-				.style("fill","white");
+  // 			var before = d3.select("#before")
+  // 				.append("svg")
+  // 					.attr("viewBox", "0 0 " + width.image + " " + height.image)
+  // 					.style("display", "inline")
+  // 					.style("height", "1em")
+  // 					.style("width", (width.image/height.image) + "em")
+  // 				.append("use")
+  // 					.attr("id", "image1")
+  // 					//depends on current_location
+  // 					.attr("xlink:href", "#1984");
 
-			d3.select("#after")
-				.append("text")
-				.text("2011")
-				.attr("x",10)
-				.attr("y",30)
-				.style("font-size", "24px")
-				.style("fill","white");
+  // 			var after = d3.select("#after")
+  // 				.append("svg")
+  // 					.attr("viewBox", "0 0 " + width.image + " " + height.image)
+  // 					.style("display", "inline")
+  // 					.style("height", "1em")
+  // 					.style("width", (width.image/height.image) + "em")
+  // 				.append("use")
+  // 					.attr("id", "image2")
+  // 					.attr("xlink:href", "#2011");
 
-		    alldots = d3.selectAll("circle");
+  // 			d3.select("#before")
+  // 				.append("text")
+  // 				.attr("id", "before-text")
+  // 				.text("1984")
+  // 				.attr("x",10)
+  // 				.attr("y",30)
+  // 				.style("font-size", "24px")
+  // 				.style("fill","white");
 
-		        //---------------------------------
-		        // MOUSE INTERACTIVITY
-		        //---------------------------------
-			dots.on({
-						mouseover: function(d) {
-				                    d3.select(this).style("fill", "white");
-				                    this.style.cursor = "pointer";
-						},
-						mouseout: function(d) {
-							if (this != activemouse) {
-								d3.select(this).style("fill", "steelblue");
-							}
-						},
-						click: function(d) {
-							d3.selectAll("circle").style("fill", "steelblue");
-							d3.select("circle#y2011").style("fill", "white"); // this is needed to keep last dot blue after clicking on it
-							activemouse = this;
-				                        activeidx = findindexbyid(alldots,activemouse.id); 
-				                        d3.select(activemouse).style("fill", "white");
-							d3.select("use#image1").attr("xlink:href", "#" + activemouse.id.substring(1,5));
-				                        d3.select("#before-text").text(activemouse.id.substring(1,5));
-						}
+  // 			d3.select("#after")
+  // 				.append("text")
+  // 				.text("2011")
+  // 				.attr("x",10)
+  // 				.attr("y",30)
+  // 				.style("font-size", "24px")
+  // 				.style("fill","white");
 
-					});
+  // 		    alldots = d3.selectAll("circle");
 
-			//---------------------------------
-	        // RIGHT-LEFT ARROW KEY STEPTHROUGH
-	        //---------------------------------
-	        d3.select("body").on({
+  //       //---------------------------------
+  //       // MOUSE INTERACTIVITY
+  //       //---------------------------------
+  // 			dots.on({
+  // 						mouseover: function(d) {
+  // 				                    d3.select(this).style("fill", "white");
+  // 				                    this.style.cursor = "pointer";
+  // 						},
+  // 						mouseout: function(d) {
+  // 							if (this != activemouse) {
+  // 								d3.select(this).style("fill", "steelblue");
+  // 							}
+  // 						},
+  // 						click: function(d) {
+  // 							d3.selectAll("circle").style("fill", "steelblue");
+  // 							d3.select("circle#y2011").style("fill", "white"); // this is needed to keep last dot blue after clicking on it
+  // 							activemouse = this;
+  // 				                        activeidx = findindexbyid(alldots,activemouse.id); 
+  // 				                        d3.select(activemouse).style("fill", "white");
+  // 							d3.select("use#image1").attr("xlink:href", "#" + activemouse.id.substring(1,5));
+  // 				                        d3.select("#before-text").text(activemouse.id.substring(1,5));
+  // 						}
+  // 					});
 
-				keydown: function(d,i) {
-					if (d3.event.keyCode == 39) { // when you click the right arrow key...
-		                            if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
-		                            d3.selectAll("circle").style("fill", "steelblue");
-		                            d3.select("circle#y2011").style("fill", "white");
-		                            d3.select(alldots[0][activeidx]).style("fill", "white");
-					    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
-					    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
-		                        }
-					if (d3.event.keyCode == 37) { // when you click the left arrow key...
-		                            if (activeidx>0) {activeidx--;} // don't go further left than there are pts
-		                            d3.selectAll("circle").style("fill", "steelblue");
-		                            d3.select("circle#y2011").style("fill", "white");
-		                            d3.select(alldots[0][activeidx]).style("fill", "white");
-					    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
-					    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
-		                        }
-				}
-			});
+  // 			//---------------------------------
+  //       // RIGHT-LEFT ARROW KEY STEPTHROUGH
+  //       //---------------------------------
+  //       d3.select("#imgdivID").on({
+		// 		  keydown: function(d,i) {
+  // 					if (d3.event.keyCode == 39) { // when you click the right arrow key...
+  // 		                            if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
+  // 		                            d3.selectAll("circle").style("fill", "steelblue");
+  // 		                            d3.select("circle#y2011").style("fill", "white");
+  // 		                            d3.select(alldots[0][activeidx]).style("fill", "white");
+  // 					    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
+  // 					    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
+  // 		                        }
+  // 					if (d3.event.keyCode == 37) { // when you click the left arrow key...
+  // 		                            if (activeidx>0) {activeidx--;} // don't go further left than there are pts
+  // 		                            d3.selectAll("circle").style("fill", "steelblue");
+  // 		                            d3.select("circle#y2011").style("fill", "white");
+  // 		                            d3.select(alldots[0][activeidx]).style("fill", "white");
+  // 					    d3.select("use#image1").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
+  // 					    d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
+  // 		                        }
+  // 				}
+		// 	  });
 
-		});
+		// }); //end d3.csv -> load data file for line plot
 
-    }
+    } // end function show_information
 
 
 });

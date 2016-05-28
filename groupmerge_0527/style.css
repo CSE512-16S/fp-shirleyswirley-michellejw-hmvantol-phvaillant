@@ -1,17 +1,61 @@
-
 html, body, .container-fluid, #map, #information_pane { height: 100%; }
 
+/*.container-fluid {
+  white-space:nowrap;
+}*/
+
 #map {
-	padding: 10px;
+  padding: 10px;
 }
 
 .water {
-	fill: blue;
+  fill: LightGrey;
 }
 
 .land {
-	fill: green;
+  fill: Gray;
 }
+
+
+
+
+/* -- Modal Stuff -- */
+
+/*#myModal {
+left:58%; 
+min-width:400px;
+}*/
+
+
+.modal-dialog {
+  margin-top: 10px;
+  margin-right: 0px;
+/*  margin-bottom: 15px;
+  margin-left: 0px;
+  margin-right: 0px;
+  left: 30%;
+  width: 80%;*/
+}
+
+/*.modal-content {
+  left: 0%;
+  width: 80%;
+}*/
+
+/*.modal-body {
+  height: 600px;
+}*/
+
+
+.modal-backdrop {
+  background: none;
+}
+
+
+
+/* -- -- -- -- -- --*/
+
+
 
 @import url(css_images/athabasca.css);
 

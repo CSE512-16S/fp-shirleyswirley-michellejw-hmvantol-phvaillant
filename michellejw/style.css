@@ -1,104 +1,62 @@
-html, body, .container-fluid, #map, .row { height: 100%; }
 
+html, body, .container-fluid, #map, #information_pane { height: 100%; }
 
-body {
-    background: url(images/bg-test.png) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
+/*.container-fluid {
+  white-space:nowrap;
+}*/
 
-.btn-link {
-  font-size: 30px;
-  color: #33343A;
-  position: absolute;
-  left: 70%;
-  top: 30%;
-}
-
-a {
-  color:#33343A;
-  font-size: 30px;  
-  position: absolute;
-  left: 70%;
-  top: 30%;
-}
-
-a:hover {
-  color:#EF7903;
-}
-
-.btn-link:hover {
-  color: #EF7903;
-}
-
-
-.modal-dialog {
-  width: 700px;
-  min-width: 400px;
-}
-
-.center-block() {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#imgdivID {
-  width: 100%;
-}
-
-
-#map { width: 70%;
-    margin:10px;}
-
-#header {
-  position: absolute;
-  left: 60%;
-  top: 5%;
-}
-
-svg {
-  pointer-events: all;
+#map {
+	padding: 10px;
 }
 
 .water {
-  fill: #dbe4f0;
+	fill: LightGrey;
 }
 
 .land {
-  fill: #aaa;
-  stroke: #fff;
+	fill: Gray;
 }
 
-body {
-  font-family: sans-serif;
-  font-size: 12px;
+
+
+
+/* -- Modal Stuff -- */
+
+/*#myModal {
+left:58%; 
+min-width:400px;
+}*/
+
+
+.modal-dialog {
+  margin-top: 10px;
+  margin-right: 0px;
+/*  margin-bottom: 15px;
+  margin-left: 0px;
+  margin-right: 0px;
+  left: 30%;
+  width: 80%;*/
 }
-.axis path,
-.axis line {
-  fill: none;
-  stroke: black;
-  shape-rendering: crispEdges;
+
+/*.modal-content {
+  left: 0%;
+  width: 80%;
+}*/
+
+/*.modal-body {
+  height: 600px;
+}*/
+
+
+.modal-backdrop {
+  background: none;
 }
-.line {
-  fill: none;
-  stroke: white;
-  stroke-width: 3px;
-}
-.svg-container {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%; /* aspect ratio */
-    vertical-align: top;
-  
-    overflow: hidden;
-}
-.svg-content-responsive {
-    display: inline-block;
-    position: absolute;
-    top: 10px;
-    left: 0;
-}
+
+
+
+/* -- -- -- -- -- --*/
+
+
+
+@import url(css_images/athabasca.css);
+
