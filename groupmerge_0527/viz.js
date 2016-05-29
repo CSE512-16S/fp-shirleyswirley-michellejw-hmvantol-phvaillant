@@ -186,12 +186,15 @@ $( document ).ready(function() {
 
     // Show the modal
     $("#myModal").modal('show');
-
+        
+    
 
 	  //CHANGE THAT. NEEDS TO BE DETERMINED BY CSS
 		var margin = {top:40, right:20, bottom:10, left:50};
 		var width = {image: 720, plot:720*2-30, total: 720*2};
 		var height = {image: 480, plot:480};
+
+/*
 
 		  //ALL THESE LINES OF CODES WILL NEED TO DEPEND ON current_location
      	var defs = d3.select("#myModal")
@@ -370,16 +373,6 @@ $( document ).ready(function() {
   			.attr("y", height.plot)
   			.attr("class", "legend")
   			.style("fill", "steelblue")
-  			/*.on("click", function() {
-  			    // Determine if current line is visible
-  			    var activeline = localLine.active ? false : true,
-  				newOpacity = activeline ? 0 : 1;
-  			    // Hide or show the elements
-  			    d3.select("#localLine").style("opacity", newOpacity);
-  			    d3.select("#localAxis").style("opacity", newOpacity);
-  			    // Update whether or not the elements are active
-  			    localLine.active = activeline;
-  			})*/
   			.text("Local time series");
   		
   		// Add global data legend title (clickable to appear/disappear)
@@ -506,7 +499,9 @@ $( document ).ready(function() {
 
 		 }); //end d3.csv -> load data file for line plot
 
-    } // end function show_information
+*/ 
+
+  } // end function show_information
 
 
 });
