@@ -166,6 +166,8 @@ $( document ).ready(function() {
   function show_information(current_location) {
 
     // Clear html within modal div container
+    // NOTE: If you change the name of the modal div container here,
+    // you must change it in show_info_inside_modal.js as well
     $("#imgdivID").html("");
 
     //LOTS OF WORK FOR MICHELLE TO RESIZE MODAL
@@ -182,8 +184,8 @@ $( document ).ready(function() {
     // })
 
     // Show the modal
-    // NOTE: If you change the name of the modal here, you must change it in
-    // show_info_inside_modal.js as well
+    // NOTE: If you change the name of the modal here,
+    // you must change it in show_info_inside_modal.js as well
     $("#myModal").modal('show');
         
     // Display all the contents of the modal
