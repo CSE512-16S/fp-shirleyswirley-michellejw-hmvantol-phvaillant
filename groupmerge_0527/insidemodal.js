@@ -307,7 +307,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     });
     
     // --- Right-left arrow key stepthrough
-    d3.select("#imgdivID").on({
+    d3.select("#myModal").on({
         keydown: function(d,i) {
             if (d3.event.keyCode == 39) { // when you click the right arrow key...
                 if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
