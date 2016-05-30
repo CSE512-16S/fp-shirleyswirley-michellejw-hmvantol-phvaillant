@@ -21,10 +21,7 @@ body.modal-open {
 }
 
 
-
-
 /* -- Modal Stuff -- */
-
 /*#myModal {
 left:58%; 
 min-width:400px;
@@ -66,11 +63,28 @@ min-width:400px;
   background: none;
 }
 
-
-
 /* -- -- -- -- -- --*/
 
+/* -- Styles orignally defined for info inside modal -- */
 
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
 
-@import url(css_images/athabasca.css);
+.line {
+    fill: none;
+    /* stroke: black; */
+    stroke-width: 3px;
+}
+
+.legend {
+    font-size: 16px;
+    font-weight: bold;
+    text-anchor: start;
+}
+
+/* -- -- -- -- -- --*/
 
