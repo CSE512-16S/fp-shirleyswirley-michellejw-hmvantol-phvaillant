@@ -186,6 +186,8 @@ $( document ).ready(function() {
     // show_info_inside_modal.js as well
     $("#myModal").modal('show');
         
+    // Display all the contents of the modal
+    // This function defined in insidemodal.js
     show_info_inside_modal(current_location);
 
   } // end function show_information
