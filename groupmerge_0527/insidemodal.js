@@ -10,8 +10,8 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
 
     // --- Make data into numbers    
     data.forEach(function(d) {
-    	d.fakelocaldata = +d.fakelocaldata;
-    	d.fakeglobaldata = +d.fakeglobaldata;
+    	d.localdata = +d.localdata;
+    	d.globaldata = +d.globaldata;
     	d.date = parseDate(d.date);
     	d.x = +d.x;
     	d.y = +d.y;
@@ -37,13 +37,13 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
 
     // --- Set up image display features  
     var defs = d3.select("#myModal")
-            .append("svg")
-            .attr("class", "defs")
-            .attr("x",0)
-            .attr("y",0)
-            .attr("width",0)
-            .attr("height",0)
-            .append("defs");
+        .append("svg")
+        .attr("class", "defs")
+        .attr("x",0)
+        .attr("y",0)
+        .attr("width",0)
+        .attr("height",0)
+        .append("defs");
     
     defs.append("image")
     	.attr("id", "satellite")
@@ -101,11 +101,11 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     
     var linel = d3.svg.line()
     	.x(function(d) { return x(d.date); })
-    	.y(function(d) { return yl(d.fakelocaldata); });
+    	.y(function(d) { return yl(d.localdata); });
          
     var lineg = d3.svg.line()
     	.x(function(d) { return x(d.date); })
-    	.y(function(d) { return yg(d.fakeglobaldata); });
+    	.y(function(d) { return yg(d.globaldata); });
     
     var svg = d3.select("#imgdivID")
     	.append("svg")
@@ -150,8 +150,8 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
 
     // --- Plot line plot
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    yl.domain(d3.extent(data, function(d) { return d.fakelocaldata; }));
-    yg.domain(d3.extent(data, function(d) { return d.fakeglobaldata; }));
+    yl.domain(d3.extent(data, function(d) { return d.localdata; }));
+    yg.domain(d3.extent(data, function(d) { return d.globaldata; }));
     
     svg.append("g")
     	.attr("class", "x axis")
@@ -234,7 +234,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.append("circle")
     		.attr("id", function(d) { return "y" + d.date.getFullYear(); })
     		.attr("cx", function(d) { return x(d.date); })
-    		.attr("cy", function(d) { return yl(d.fakelocaldata); })
+    		.attr("cy", function(d) { return yl(d.localdata); })
     		.attr("transform", "translate("+margin.left+",0)")
     		.attr("r", "10px")
     		.style("stroke", "steelblue")
@@ -307,7 +307,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     });
     
     // --- Right-left arrow key stepthrough
-    d3.select("#imgdivID").on({
+    d3.select("#myModal").on({
         keydown: function(d,i) {
             if (d3.event.keyCode == 39) { // when you click the right arrow key...
                 if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
