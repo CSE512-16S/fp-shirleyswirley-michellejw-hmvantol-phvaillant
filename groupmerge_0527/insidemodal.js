@@ -1,15 +1,15 @@
-// NOTE: myModal is so named in viz.js; must change name here if name is changed there 
-
-var years;
+// NOTE: myModal, imgdivID are so named in viz.js; must change names here if names are changed there 
 
 var show_info_inside_modal = function(current_location) {
 
 d3.csv("timeline/location" + current_location + ".csv", function(data) {
 
-    var parseDate = d3.time.format("%m/%d/%Y").parse;
+    // --- Just for data reference clarity later
+    fulldata = data;
 
     // --- Make data into numbers    
-    data.forEach(function(d) {
+    var parseDate = d3.time.format("%m/%d/%Y").parse;
+    fulldata.forEach(function(d) {
     	d.localdata = +d.localdata;
     	d.globaldata = +d.globaldata;
     	d.date = parseDate(d.date);
@@ -17,18 +17,30 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	d.y = +d.y;
     });
 
-    // --- Calculate begin and end years of time series 
-    years = data.map(function(d) { return d.date.getFullYear(); });
-    minyear = Math.min.apply(null,years);
-    maxyear = Math.max.apply(null,years);
+    // --- Subselect the data associated with images
+    var id = 0;
+    for (var i = 0; i < fulldata.length; i++) {fulldata[i].id = id++;}
+    var imgdata = fulldata.filter(filterByX);
+    console.log('imgdata=',imgdata);
+    console.log('fulldata=',fulldata);
+
+    // --- Calculate begin and end IDs of image time series 
+    imgIDarray = imgdata.map(function(d) { return +d.id; });
+    min_imgID = Math.min.apply(null,imgIDarray);
+    max_imgID = Math.max.apply(null,imgIDarray);
+    console.log('imgIDarray=',imgIDarray);
+    console.log('min_imgID=',min_imgID);
+    console.log('max_imgID=',max_imgID);
 
     // --- Calculate image size attributes
-    imgxpos = data.map(function(d) { return Math.abs(d.x); });
-    imgypos = data.map(function(d) { return Math.abs(d.y); });
+    imgxpos = imgdata.map(function(d) { return Math.abs(d.x); });
+    imgypos = imgdata.map(function(d) { return Math.abs(d.y); });
     single_img_width = Math.min.apply(0, imgxpos.filter(Number));
     single_img_height = Math.min.apply(0, imgypos.filter(Number));
     total_img_width = Math.max.apply(0, imgxpos.filter(Number)) + single_img_width;
     total_img_height = Math.max.apply(0, imgypos.filter(Number)) + single_img_height;
+    console.log('single_img_width=',single_img_width);
+    console.log('total_img_height=',total_img_height);
 
     // --- Define margins + plot and image widths/heights
     var margin = {top:40, right:20, bottom:10, left:50};
@@ -132,26 +144,10 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.text("Y VARIABLE")
     	.style("font-weight", "bold");
 
-    // --- Define global variables for keyboard and mouse input
-    var alldots = null;
-    var activeidx = 0;
-    var activemouse = null;
-
-    // --- Append/enter data
-    defs.selectAll("g")
-    	.data(data).enter()
-    	.append("g")
-    		.attr("id", function(d) { return d.date.getFullYear(); })
-    		.attr("clip-path", "url(#satellite-cp)")
-    	.append("use")
-    		//id of image
-    		.attr("xlink:href", "#satellite")
-    		.attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
-
     // --- Plot line plot
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    yl.domain(d3.extent(data, function(d) { return d.localdata; }));
-    yg.domain(d3.extent(data, function(d) { return d.globaldata; }));
+    x.domain(d3.extent(fulldata, function(d) { return d.date; }));
+    yl.domain(d3.extent(fulldata, function(d) { return d.localdata; }));
+    yg.domain(d3.extent(fulldata, function(d) { return d.globaldata; }));
     
     svg.append("g")
     	.attr("class", "x axis")
@@ -174,7 +170,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
             .call(y_axisg);
     
     svg.append("path")
-    	.datum(data)
+    	.datum(fulldata)
             .attr("class", "line")
             .attr("stroke", "steelblue")
             .attr("id","localLine")
@@ -182,10 +178,10 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.attr("d",linel);
     
     svg.append("path")
-    	.datum(data)
+    	.datum(fulldata)
             .attr("class", "line")
             .style("stroke", "OrangeRed")
-            .style("opacity", 0)
+            .style("opacity", 0) // don't show global data initially by default
             .attr("id", "globalLine")
             .attr("transform", "translate(" + margin.left + ",0)")
             .attr("d",lineg);
@@ -196,7 +192,8 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
             .attr("y", height.plot)
             .attr("class", "legend")
             .style("fill", "steelblue")
-            // Uncomment the following block to allow clickable title --> appear/disappear local data
+            // Uncomment the following block to allow clickable title
+            // that appears/disappears local data line plot
             /*.on("click", function() {
                 // Determine if current line is visible
                 var activeline = globalLine.active ? false : true,
@@ -228,11 +225,22 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
             })
             .text("Global time series");
 
+    // --- Append/enter image data
+    defs.selectAll("g")
+    	.data(imgdata).enter()
+    	.append("g")
+    		.attr("id", function(d) { return "imgID" + d.id; })
+    		.attr("clip-path", "url(#satellite-cp)")
+    	.append("use")
+    		//id of image
+    		.attr("xlink:href", "#satellite")
+    		.attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
+
     // --- Plot the line plot dots
     var dots = svg.selectAll("circle")
-    		.data(data).enter()
+    		.data(imgdata).enter()
     	.append("circle")
-    		.attr("id", function(d) { return "y" + d.date.getFullYear(); })
+    		.attr("id", function(d) { return "circID" + d.id; })
     		.attr("cx", function(d) { return x(d.date); })
     		.attr("cy", function(d) { return yl(d.localdata); })
     		.attr("transform", "translate("+margin.left+",0)")
@@ -242,9 +250,10 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     		.style("fill", "steelblue");
 
     // --- Differently color the dots at the very beginning and end of the time series
-    d3.select("circle#y" + minyear).style("fill", "white");
-    d3.select("circle#y" + maxyear).style("fill", "white");
-    
+    d3.select("circle#circID" + min_imgID).style("fill", "white");
+    d3.select("circle#circID" + max_imgID).style("fill", "white");
+
+    // --- Initially display the earliest image on the left by default
     var before = d3.select("#before")
     	.append("svg")
     		.attr("viewBox", "0 0 " + width.image + " " + height.image)
@@ -253,8 +262,18 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     		.style("width", (width.image/height.image) + "em")
     	.append("use")
     		.attr("id", "imagebefore")
-    		.attr("xlink:href", "#" + minyear);
+    		.attr("xlink:href", "#imgID" + min_imgID);
     
+    d3.select("#before")
+    	.append("text")
+    	.attr("id", "before-text")
+    	.text(fulldata[min_imgID].date.getFullYear())
+    	.attr("x",10)
+    	.attr("y",30)
+    	.style("font-size", "24px")
+    	.style("fill","white");
+    
+    // --- Initially display the most recent image on the right by default 
     var after = d3.select("#after")
     	.append("svg")
     		.attr("viewBox", "0 0 " + width.image + " " + height.image)
@@ -263,28 +282,22 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     		.style("width", (width.image/height.image) + "em")
     	.append("use")
     		.attr("id", "imageafter")
-    		.attr("xlink:href", "#" + maxyear);
-    
-    d3.select("#before")
-    	.append("text")
-    	.attr("id", "before-text")
-    	.text(minyear)
-    	.attr("x",10)
-    	.attr("y",30)
-    	.style("font-size", "24px")
-    	.style("fill","white");
+    		.attr("xlink:href", "#imgID" + max_imgID);
     
     d3.select("#after")
     	.append("text")
-    	.text(maxyear)
+    	.text(fulldata[max_imgID].date.getFullYear())
     	.attr("x",10)
     	.attr("y",30)
     	.style("font-size", "24px")
     	.style("fill","white");
-    
-    alldots = d3.selectAll("circle");
-    
-    // --- Add mouse interactivity
+
+    // --- Define global variables for keyboard and mouse input
+    var activeidx = 0;
+    var activemouse = null;
+    var alldots = d3.selectAll("circle");
+
+    // --- Mouse-dot interactivity
     dots.on({
             mouseover: function(d) {
                 d3.select(this).style("fill", "white");
@@ -297,33 +310,40 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
             },
             click: function(d) {
             	d3.selectAll("circle").style("fill", "steelblue");
-            	d3.select("circle#y" + maxyear).style("fill", "white"); // this is needed to keep last dot white after clicking on it
+            	d3.select("circle#circID" + max_imgID).style("fill", "white"); // this is needed to keep last dot white after clicking on it
             	activemouse = this;
                 activeidx = findindexbyid(alldots,activemouse.id); 
                 d3.select(activemouse).style("fill", "white");
-            	d3.select("use#imagebefore").attr("xlink:href", "#" + activemouse.id.substring(1,5));
-                d3.select("#before-text").text(activemouse.id.substring(1,5));
+                // activemouse.id.substring(6) is the selected
+                // circle's id number following "circID" 
+                d3.select("use#imagebefore").attr("xlink:href", "#imgID" + activemouse.id.substring(6));
+                d3.select("#before-text").text(fulldata[activemouse.id.substring(6)].date.getFullYear());
+                console.log('activemouse.id.substring(6)=',activemouse.id.substring(6));
+                console.log('activemouse=',activemouse);
             }
     });
     
     // --- Right-left arrow key stepthrough
-    d3.select("#myModal").on({
+    d3.select("body").on({
+    //d3.select("#imgdivID").on({
         keydown: function(d,i) {
             if (d3.event.keyCode == 39) { // when you click the right arrow key...
+                //console.log('right');
                 if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
                 d3.selectAll("circle").style("fill", "steelblue");
-                d3.select("circle#" + maxyear).style("fill", "white");
+                d3.select("circle#circID" + max_imgID).style("fill", "white");
                 d3.select(alldots[0][activeidx]).style("fill", "white");
-        	d3.select("use#imagebefore").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
-        	d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
+        	d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
+        	d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
             }
             if (d3.event.keyCode == 37) { // when you click the left arrow key...
+                //console.log('left');
                 if (activeidx>0) {activeidx--;} // don't go further left than there are pts
                 d3.selectAll("circle").style("fill", "steelblue");
-                d3.select("circle#y" + maxyear).style("fill", "white");
+                d3.select("circle#circID" + max_imgID).style("fill", "white");
                 d3.select(alldots[0][activeidx]).style("fill", "white");
-        	d3.select("use#imagebefore").attr("xlink:href", "#" + alldots[0][activeidx].id.substring(1,5));
-        	d3.select("#before-text").text(alldots[0][activeidx].id.substring(1,5));
+        	d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
+        	d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
             }
           }
     });
@@ -342,3 +362,12 @@ function findindexbyid(arraytosearch, idtosearch) {
     return null;
 }
 
+function filterByX(obj,invalidEntries) {
+   if ('x' in obj && typeof(obj.x) === 'number' && !isNaN(obj.x)) {
+      return true;
+   }
+   else {
+      invalidEntries++;
+      return false;
+   }
+}
