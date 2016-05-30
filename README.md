@@ -18,7 +18,7 @@ http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/mic
 
 *Helena's latest changes:*
 
-http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/hmvantol/oil_sands/
+http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/hmvantol/merged_copy/
 
 *Shirley's lastest changes:*
 
