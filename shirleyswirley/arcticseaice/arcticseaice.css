@@ -1,162 +1,170 @@
-/* glue: 0.11.1 hash: 54f7583de4 */
-        .sprite-arcticseaice-arcticseaice_1979,
-.sprite-arcticseaice-arcticseaice_1981,
-.sprite-arcticseaice-arcticseaice_1983,
-.sprite-arcticseaice-arcticseaice_1985,
-.sprite-arcticseaice-arcticseaice_1987,
-.sprite-arcticseaice-arcticseaice_1989,
-.sprite-arcticseaice-arcticseaice_1991,
-.sprite-arcticseaice-arcticseaice_1993,
-.sprite-arcticseaice-arcticseaice_1995,
-.sprite-arcticseaice-arcticseaice_1997,
-.sprite-arcticseaice-arcticseaice_1999,
-.sprite-arcticseaice-arcticseaice_2001,
-.sprite-arcticseaice-arcticseaice_2003,
-.sprite-arcticseaice-arcticseaice_2005,
-.sprite-arcticseaice-arcticseaice_2007,
-.sprite-arcticseaice-arcticseaice_2009,
-.sprite-arcticseaice-arcticseaice_2011,
-.sprite-arcticseaice-arcticseaice_2013,
-.sprite-arcticseaice-arcticseaice_2015 {
-            background-image: url('arcticseaice.png');
+/* glue: 0.11.1 hash: f46fe01a03 */
+        .sprite-origimages-arcticseaice_1979,
+.sprite-origimages-arcticseaice_1981,
+.sprite-origimages-arcticseaice_1983,
+.sprite-origimages-arcticseaice_1985,
+.sprite-origimages-arcticseaice_1987,
+.sprite-origimages-arcticseaice_1989,
+.sprite-origimages-arcticseaice_1991,
+.sprite-origimages-arcticseaice_1993,
+.sprite-origimages-arcticseaice_1995,
+.sprite-origimages-arcticseaice_1997,
+.sprite-origimages-arcticseaice_1999,
+.sprite-origimages-arcticseaice_2001,
+.sprite-origimages-arcticseaice_2003,
+.sprite-origimages-arcticseaice_2005,
+.sprite-origimages-arcticseaice_2007,
+.sprite-origimages-arcticseaice_2009,
+.sprite-origimages-arcticseaice_2011,
+.sprite-origimages-arcticseaice_2012,
+.sprite-origimages-arcticseaice_2013,
+.sprite-origimages-arcticseaice_2015 {
+            background-image: url('origimages.png');
             background-repeat: no-repeat;
         }
         
-        .sprite-arcticseaice-arcticseaice_1979 {
+        .sprite-origimages-arcticseaice_1979 {
             background-position: 0 0;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1981 {
+        .sprite-origimages-arcticseaice_1981 {
             background-position: -720px 0;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1983 {
+        .sprite-origimages-arcticseaice_1983 {
             background-position: 0 -405px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1985 {
+        .sprite-origimages-arcticseaice_1985 {
             background-position: -720px -405px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1987 {
+        .sprite-origimages-arcticseaice_1987 {
             background-position: 0 -810px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1989 {
+        .sprite-origimages-arcticseaice_1989 {
             background-position: -720px -810px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1991 {
+        .sprite-origimages-arcticseaice_1991 {
             background-position: -1440px 0;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1993 {
+        .sprite-origimages-arcticseaice_1993 {
             background-position: -1440px -405px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1995 {
+        .sprite-origimages-arcticseaice_1995 {
             background-position: -1440px -810px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1997 {
+        .sprite-origimages-arcticseaice_1997 {
             background-position: 0 -1215px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_1999 {
+        .sprite-origimages-arcticseaice_1999 {
             background-position: -720px -1215px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_2001 {
+        .sprite-origimages-arcticseaice_2001 {
             background-position: -1440px -1215px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_2003 {
+        .sprite-origimages-arcticseaice_2003 {
             background-position: 0 -1620px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_2005 {
+        .sprite-origimages-arcticseaice_2005 {
             background-position: -720px -1620px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_2007 {
+        .sprite-origimages-arcticseaice_2007 {
             background-position: -1440px -1620px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_2009 {
+        .sprite-origimages-arcticseaice_2009 {
             background-position: -2160px 0;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_2011 {
+        .sprite-origimages-arcticseaice_2011 {
             background-position: -2160px -405px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_2013 {
+        .sprite-origimages-arcticseaice_2012 {
             background-position: -2160px -810px;
             width: 720px;
             height: 405px;
         }
         
-        .sprite-arcticseaice-arcticseaice_2015 {
+        .sprite-origimages-arcticseaice_2013 {
             background-position: -2160px -1215px;
             width: 720px;
             height: 405px;
         }
         
+        .sprite-origimages-arcticseaice_2015 {
+            background-position: -2160px -1620px;
+            width: 720px;
+            height: 405px;
+        }
+        
         @media screen and (-webkit-min-device-pixel-ratio: 1.0), screen and (min--moz-device-pixel-ratio: 1.0), screen and (-o-min-device-pixel-ratio: 100/100), screen and (min-device-pixel-ratio: 1.0), screen and (min-resolution: 1.0dppx) {
-            .sprite-arcticseaice-arcticseaice_1979,
-    .sprite-arcticseaice-arcticseaice_1981,
-    .sprite-arcticseaice-arcticseaice_1983,
-    .sprite-arcticseaice-arcticseaice_1985,
-    .sprite-arcticseaice-arcticseaice_1987,
-    .sprite-arcticseaice-arcticseaice_1989,
-    .sprite-arcticseaice-arcticseaice_1991,
-    .sprite-arcticseaice-arcticseaice_1993,
-    .sprite-arcticseaice-arcticseaice_1995,
-    .sprite-arcticseaice-arcticseaice_1997,
-    .sprite-arcticseaice-arcticseaice_1999,
-    .sprite-arcticseaice-arcticseaice_2001,
-    .sprite-arcticseaice-arcticseaice_2003,
-    .sprite-arcticseaice-arcticseaice_2005,
-    .sprite-arcticseaice-arcticseaice_2007,
-    .sprite-arcticseaice-arcticseaice_2009,
-    .sprite-arcticseaice-arcticseaice_2011,
-    .sprite-arcticseaice-arcticseaice_2013,
-    .sprite-arcticseaice-arcticseaice_2015 {
-                background-image: url('arcticseaice.png');
+            .sprite-origimages-arcticseaice_1979,
+    .sprite-origimages-arcticseaice_1981,
+    .sprite-origimages-arcticseaice_1983,
+    .sprite-origimages-arcticseaice_1985,
+    .sprite-origimages-arcticseaice_1987,
+    .sprite-origimages-arcticseaice_1989,
+    .sprite-origimages-arcticseaice_1991,
+    .sprite-origimages-arcticseaice_1993,
+    .sprite-origimages-arcticseaice_1995,
+    .sprite-origimages-arcticseaice_1997,
+    .sprite-origimages-arcticseaice_1999,
+    .sprite-origimages-arcticseaice_2001,
+    .sprite-origimages-arcticseaice_2003,
+    .sprite-origimages-arcticseaice_2005,
+    .sprite-origimages-arcticseaice_2007,
+    .sprite-origimages-arcticseaice_2009,
+    .sprite-origimages-arcticseaice_2011,
+    .sprite-origimages-arcticseaice_2012,
+    .sprite-origimages-arcticseaice_2013,
+    .sprite-origimages-arcticseaice_2015 {
+                background-image: url('origimages.png');
                 -webkit-background-size: 2880px 2025px;
                 -moz-background-size: 2880px 2025px;
                 background-size: 2880px 2025px;
