@@ -140,12 +140,14 @@ $( document ).ready(function() {
             current_location = current_location % 5;
             if (current_location==0) {current_location=1};
             center_on_location(current_location);
+            show_information(current_location);
           }
           if (d3.event.keyCode == 40) {
             current_location -= 1;
             current_location = current_location % 5;
             if (current_location==0) {current_location=4};
             center_on_location(current_location);
+            show_information(current_location);
           }
         }
       })
@@ -173,15 +175,18 @@ $( document ).ready(function() {
     //LOTS OF WORK FOR MICHELLE TO RESIZE MODAL
 
     // Set the height of the modal based on the information pane
-    // $("#myModal").on('show.bs.modal', function (){
-    // $('.modal-body').css('height',parseInt($( information_pane ).height()*.75) + "px");
-    // $('.modal-body').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    // $('.modal-header').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    // $('.modal-footer').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    // $('.modal-content').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    // $('.modal-dialog').css('width',parseInt($( information_pane ).width()*.9) + "px");
-    // $('.modal-content').css('position.left',parseInt($( information_pane ).position().left) + "px");
-    // })
+    $("#myModal").on('show.bs.modal', function (){
+      // $('#myModal').css('left',parseInt($( information_pane ).position().left) + "px");
+      $('.modal-body').css('height',parseInt($( information_pane ).height()) + "px");
+      $('.modal-body').css('width',parseInt($( information_pane ).width()) + "px");
+      $('.modal-dialog').css('height',parseInt($( information_pane).height()) + "px");
+      $('.modal-dialog').css('width',parseInt($( information_pane ).width()) + "px");
+      $('.modal-content').css('height',parseInt($( information_pane).height()) + "px");
+      
+      // $('.modal-dialog').css('left',(parseInt($('.modal-dialog').css('width')) - parseInt($( myModal ).width()) ) + "px");
+    })
+
+    console.log('info pane left position: ' + (parseInt($('.modal-dialog').css('width')) - parseInt($( myModal ).width()) ) + "px");
 
     // Show the modal
     // NOTE: If you change the name of the modal here,
