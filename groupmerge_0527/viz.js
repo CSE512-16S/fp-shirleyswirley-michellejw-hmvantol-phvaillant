@@ -170,9 +170,11 @@ $( document ).ready(function() {
     // Clear html within modal div container
     // NOTE: If you change the name of the modal div container here,
     // you must change it in show_info_inside_modal.js as well
-    // $("#imgdivID").html("");
+    // NOW need to clear inner divs instead (div1, div2, etc)
+    // $("#imgdivID").html(""); 
+    $("#div1").html("");
+    $("#div2").html("");
 
-    //LOTS OF WORK FOR MICHELLE TO RESIZE MODAL
 
     modalwidth = (parseInt($('body').css('width'))-parseInt($('#map').css('width'))) + "px";
     modalheight = parseInt($('body').css('height')) + "px";
@@ -198,7 +200,6 @@ $( document ).ready(function() {
       $('.modal-body').css('width',modalwidth);
       $('#imgdivID').css('height',modal_body_ht);
       $('#imgdivID').css('width',modalwidth);
-      // $('#div1').css('width',modalwidth)
       $('.modal-dialog').css('height',modalheight);
       $('.modal-dialog').css('width',modalwidth);
       $('.modal-content').css('height',modalheight);
@@ -217,7 +218,7 @@ $( document ).ready(function() {
         
     // Display all the contents of the modal
     // This function defined in insidemodal.js
-    // show_info_inside_modal(current_location);
+    show_info_inside_modal(current_location);
 
   } // end function show_information
 
