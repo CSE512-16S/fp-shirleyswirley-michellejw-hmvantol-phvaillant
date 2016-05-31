@@ -1,0 +1,29 @@
+date needs to be in the format m(m)/d(d)/yyyy
+
+localdata should have numbers corresponding to date
+
+globaldata should have numbers corresponding to date
+
+x and y are from the css files created with glue
+
+glue instructions:
+- type "glue source output --ordering=filename" on the command line
+- source is a folder containing all the images you want to stitch together and output is the folder that the program puts the css and merged image (png) file in
+- the generated css contains the x and y positioning information required in the csv
+
+localylabel is how you want the local left-side y-axis to be labeled
+globalylabel is how you want the global right-side y-axis to be labeled
+
+annotation should have annotations written for all the data points you want an annotation for
+
+title will appear at the top of the modal
+
+intro is an introductory sentence that will appear at the top of the modal beneath the title
+
+imgsrc is the url from which the images came
+
+datasrc is the url from which the data came
+
+fastfacts appears right below the timeline
+
+moreinfo appears right beneath fastfacts; these will be clickable URLs with URLs corresponding to moreinfosrc
