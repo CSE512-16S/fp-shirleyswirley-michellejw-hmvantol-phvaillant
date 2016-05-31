@@ -18,52 +18,31 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 
 
 /* -- Modal Stuff -- */
-/*#myModal {
-left:58%; 
-min-width:400px;
-}*/
-
-/*#myModal{
-  position: absolute;  
-  left: 741px;
-}*/
 
 
 .modal-dialog {
   float: right;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  /*left:-45px;*/
+  margin: 0px;
 }
-/*
-.modal-dialog {
-  float: right;
-  width: 40%;
-  height: 100%;
-}*/
 
-
-/*.modal-content {
-  height: 100%;
-  width: 100%;
-}*/
-
-/*.modal-header {
-  height: 30px;
-}*/
+.modal-header {
+  height: 40px;
+}
 
 .modal-body {
   overflow-y: scroll;
+  padding: 0px;
 }
 
-/*.modal-footer {
-  height:30px;
-}*/
-
+.modal-footer {
+  height:60px;
+}
 
 .modal-backdrop {
   background: none;
 }
+
+
 
 /* -- -- -- -- -- --*/
 
@@ -89,4 +68,18 @@ min-width:400px;
 }
 
 /* -- -- -- -- -- --*/
+
+
+/* -- Testing divs within modals -- */
+
+/*#div1 {
+  background-color: green;
+}
+
+
+#imgdivID {
+  background-color: yellow;
+}*/
+/* -- -- -- -- -- --*/
+
 
