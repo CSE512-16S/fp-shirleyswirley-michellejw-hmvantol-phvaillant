@@ -174,19 +174,38 @@ $( document ).ready(function() {
 
     //LOTS OF WORK FOR MICHELLE TO RESIZE MODAL
 
+    modalwidth = (parseInt($('body').css('width'))-parseInt($('#map').css('width'))) + "px";
+    modalheight = parseInt($('body').css('height')) + "px";
+    // height of modal header + footer
+    modal_hf = parseInt($('.modal-header').css('height')) + parseInt($('.modal-footer').css('height'));
+    // Calculate modal body height 
+    modal_body_ht = parseInt($('body').css('height'))  - (modal_hf);
+
+
+    console.log("modal_hf=" + modal_hf)
+    console.log("modalheight=" + modalheight)
+    console.log("modal_body_ht=" + modal_body_ht)
+    console.log("modal_footer_ht=" + parseInt($('.modal-footer').css('height')))
+
+    // modalwidth = parseInt($( information_pane ).width()) + "px";
+    // modalheight = parseInt($( information_pane).height()) + "px";
+
     // Set the height of the modal based on the information pane
     $("#myModal").on('show.bs.modal', function (){
       // $('#myModal').css('left',parseInt($( information_pane ).position().left) + "px");
-      $('.modal-body').css('height',parseInt($( information_pane ).height()) + "px");
-      $('.modal-body').css('width',parseInt($( information_pane ).width()) + "px");
-      $('.modal-dialog').css('height',parseInt($( information_pane).height()) + "px");
-      $('.modal-dialog').css('width',parseInt($( information_pane ).width()) + "px");
-      $('.modal-content').css('height',parseInt($( information_pane).height()) + "px");
-      
+      $('.modal-body').css('height',modal_body_ht);
+      $('.modal-body').css('width',modalwidth);
+      $('.modal-dialog').css('height',modalheight);
+      $('.modal-dialog').css('width',modalwidth);
+      $('.modal-content').css('height',modalheight);
+
       // $('.modal-dialog').css('left',(parseInt($('.modal-dialog').css('width')) - parseInt($( myModal ).width()) ) + "px");
     })
 
-    console.log('info pane left position: ' + (parseInt($('.modal-dialog').css('width')) - parseInt($( myModal ).width()) ) + "px");
+
+    console.log("modal_footer_ht=" + parseInt($('.modal-footer').css('height')))
+
+
 
     // Show the modal
     // NOTE: If you change the name of the modal here,
@@ -195,7 +214,7 @@ $( document ).ready(function() {
         
     // Display all the contents of the modal
     // This function defined in insidemodal.js
-    show_info_inside_modal(current_location);
+    // show_info_inside_modal(current_location);
 
   } // end function show_information
 
