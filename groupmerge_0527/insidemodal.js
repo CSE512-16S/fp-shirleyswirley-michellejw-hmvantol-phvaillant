@@ -266,6 +266,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     		.style("fill", "red")
                 .style("opacity", 0);
 
+    /*
     // --- Add anno data legend title (clickable to appear/disappear)
     svg.append("text")
             .attr("x", 1000)
@@ -284,6 +285,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
                 console.log(anno.active);
             })
             .text("Annotations");
+    */
 
     // --- Differently color the dots at the very beginning and end of the time series
     d3.select("circle#circID" + min_imgID).style("fill", "white");
