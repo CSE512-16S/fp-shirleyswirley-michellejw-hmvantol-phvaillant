@@ -74,16 +74,20 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 
 #div1 {
   background-color: green;
-  position: relative;
+  /*position: relative;*/
 }
 
 #div2 {
   background-color: purple;
-  position: relative;
+  /*position: relative;*/
 }
 
 #div3 {
   background: gray;
+}
+
+#div4 {
+  background: steelblue;
 }
 
 

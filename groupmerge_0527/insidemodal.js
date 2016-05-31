@@ -73,21 +73,25 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.attr("height", height.image)
     	.attr("width", width.image);
     
-    var before = d3.select("#imgdivID")
+
+    // rather than before and after defined by position - maybe put these each in their own div?
+    var before = d3.select("#div1")
     	.append("svg")
     	.attr("id", "before")
     	.attr("width", width.image)
-    	.attr("height", height.image)
-    	.attr("x",0)
-    	.attr("y",0);
+    	.attr("height", height.image);
+    	// .attr("x",0)
+    	// .attr("y",0);
     
-    var after = d3.select("#imgdivID")
+    var after = d3.select("#div2")
     	.append("svg")
     	.attr("id", "after")
     	.attr("width", width.image)
-    	.attr("height", height.image)
-    	.attr("x",width.image)
-    	.attr("y",0);
+    	.attr("height", height.image);
+    	// .attr("x",width.image)
+    	// .attr("y",0);
+
+    console.log("height image = " + height.image);
     
     // --- Set up all line plot features 
     var x = d3.time.scale()
