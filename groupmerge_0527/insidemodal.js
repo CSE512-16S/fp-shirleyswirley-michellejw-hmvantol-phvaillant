@@ -4,6 +4,8 @@ var show_info_inside_modal = function(current_location) {
 
 d3.csv("timeline/location" + current_location + ".csv", function(data) {
 
+    console.log(data);
+
     // --- Just for data reference clarity later
     fulldata = data;
 
@@ -141,7 +143,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.attr("id", "label")
     	.attr("text-anchor", "middle")
     	.attr("transform", "translate("+margin.left/3+","+(height.plot-margin.top-margin.bottom)/2+")rotate(-90)")
-    	.text("Y VARIABLE")
+    	.text(fulldata[0].localylabel)
     	.style("font-weight", "bold");
 
     // --- Plot line plot
@@ -239,7 +241,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     // --- Plot the line plot dots
     var dots = svg.selectAll("circle")
     		.data(imgdata).enter()
-    	.append("circle")
+    	        .append("circle")
     		.attr("id", function(d) { return "circID" + d.id; })
     		.attr("cx", function(d) { return x(d.date); })
     		.attr("cy", function(d) { return yl(d.localdata); })
@@ -248,6 +250,40 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     		.style("stroke", "steelblue")
     		.style("stroke-width", "3px")
     		.style("fill", "steelblue");
+
+    // --- Add annotations (clickable to appear/disappear)
+    var anno = svg.selectAll("text#anno")
+                .data(imgdata).enter()
+                .append("text") 
+    		.attr("id", function(d) { return "annoID" + d.id; })
+    		.attr("class", "annoID")
+    		.attr("x", function(d) { return x(d.date); })
+    		.attr("y", function(d) { return yl(d.localdata); })
+    		.attr("transform", "translate("+margin.left+",0)")
+                .text(function(d) { return d.annotation; })
+    		.style("font-size", "20px")
+    		.style("font-family", "sans-serif")
+    		.style("fill", "red")
+                .style("opacity", 0);
+
+    // --- Add anno data legend title (clickable to appear/disappear)
+    svg.append("text")
+            .attr("x", 1000)
+            .attr("y", height.plot)
+            .attr("class", "legend")
+            .style("fill", "OrangeRed")
+            .style("cursor", "pointer")
+            .on("click", function() {
+                // Determine if annotations are visible
+                var activeanno = anno.active ? false : true,
+            	newOpacity = activeanno ? 0 : 1;
+                // Hide or show the elements
+                d3.selectAll("text.annoID").style("opacity", newOpacity);
+                // Update whether or not the elements are active
+                anno.active = activeanno;
+                console.log(anno.active);
+            })
+            .text("Annotations");
 
     // --- Differently color the dots at the very beginning and end of the time series
     d3.select("circle#circID" + min_imgID).style("fill", "white");
@@ -302,10 +338,12 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
             mouseover: function(d) {
                 d3.select(this).style("fill", "white");
                 this.style.cursor = "pointer";
+                d3.select("text#annoID" + this.id.substring(6)).style("opacity",1);
             },
             mouseout: function(d) {
             	if (this != activemouse) {
             	    d3.select(this).style("fill", "steelblue");
+                    d3.select("text#annoID" + this.id.substring(6)).style("opacity",0);
             	}
             },
             click: function(d) {
@@ -324,8 +362,8 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     });
     
     // --- Right-left arrow key stepthrough
-    d3.select("body").on({
-    //d3.select("#imgdivID").on({
+    //d3.select("body").on({
+    d3.select("#imgdivID").on({
         keydown: function(d,i) {
             if (d3.event.keyCode == 39) { // when you click the right arrow key...
                 //console.log('right');
