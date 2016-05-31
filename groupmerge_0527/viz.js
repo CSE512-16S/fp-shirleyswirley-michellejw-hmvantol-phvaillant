@@ -140,12 +140,14 @@ $( document ).ready(function() {
             current_location = current_location % 5;
             if (current_location==0) {current_location=1};
             center_on_location(current_location);
+            show_information(current_location);
           }
           if (d3.event.keyCode == 40) {
             current_location -= 1;
             current_location = current_location % 5;
             if (current_location==0) {current_location=4};
             center_on_location(current_location);
+            show_information(current_location);
           }
         }
       })
