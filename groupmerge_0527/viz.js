@@ -195,6 +195,8 @@ $( document ).ready(function() {
       // $('#myModal').css('left',parseInt($( information_pane ).position().left) + "px");
       $('.modal-body').css('height',modal_body_ht);
       $('.modal-body').css('width',modalwidth);
+      $('#imgdivID').css('height',modal_body_ht);
+      $('#imgdivID').css('width',modalwidth);
       $('.modal-dialog').css('height',modalheight);
       $('.modal-dialog').css('width',modalwidth);
       $('.modal-content').css('height',modalheight);
@@ -214,7 +216,7 @@ $( document ).ready(function() {
         
     // Display all the contents of the modal
     // This function defined in insidemodal.js
-    // show_info_inside_modal(current_location);
+    show_info_inside_modal(current_location);
 
   } // end function show_information
 

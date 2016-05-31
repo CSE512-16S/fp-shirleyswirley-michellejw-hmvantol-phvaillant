@@ -19,6 +19,7 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 
 /* -- Modal Stuff -- */
 
+
 .modal-dialog {
   float: right;
   margin: 0px;
@@ -30,6 +31,7 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 
 .modal-body {
   overflow-y: scroll;
+  padding: 0px;
 }
 
 .modal-footer {
@@ -39,6 +41,8 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 .modal-backdrop {
   background: none;
 }
+
+
 
 /* -- -- -- -- -- --*/
 
@@ -64,4 +68,18 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 }
 
 /* -- -- -- -- -- --*/
+
+
+/* -- Testing divs within modals -- */
+
+/*#div1 {
+  background-color: green;
+}
+
+
+#imgdivID {
+  background-color: yellow;
+}*/
+/* -- -- -- -- -- --*/
+
 
