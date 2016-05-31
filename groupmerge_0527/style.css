@@ -72,13 +72,23 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 
 /* -- Testing divs within modals -- */
 
-/*#div1 {
+#div1 {
   background-color: green;
+  position: relative;
+}
+
+#div2 {
+  background-color: purple;
+  position: relative;
+}
+
+#div3 {
+  background: gray;
 }
 
 
-#imgdivID {
-  background-color: yellow;
+/*#imgdivID {
+  background-color: gray;
 }*/
 /* -- -- -- -- -- --*/
 
