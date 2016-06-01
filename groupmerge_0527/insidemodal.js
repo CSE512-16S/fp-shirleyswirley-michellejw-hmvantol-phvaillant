@@ -26,6 +26,14 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     console.log('imgdata=',imgdata);
     console.log('fulldata=',fulldata);
 
+    // --- Subselect the data associated with local data non-null
+    var localdata = fulldata.filter(filterByLocalData);
+    console.log('localdata=',localdata);
+
+    // --- Subselect the data associated with global data non-null
+    var globaldata = fulldata.filter(filterByGlobalData);
+    console.log('globaldata=',globaldata);
+
     // --- Calculate begin and end IDs of image time series 
     imgIDarray = imgdata.map(function(d) { return +d.id; });
     min_imgID = Math.min.apply(null,imgIDarray);
@@ -37,6 +45,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     // --- Calculate image size attributes
     imgxpos = imgdata.map(function(d) { return Math.abs(d.x); });
     imgypos = imgdata.map(function(d) { return Math.abs(d.y); });
+    // MAYBE CAN REMOVE .FILTER(NUMBER) HERE NOW THAT IMGDATA HAS NO NULLS
     single_img_width = Math.min.apply(0, imgxpos.filter(Number));
     single_img_height = Math.min.apply(0, imgypos.filter(Number));
     total_img_width = Math.max.apply(0, imgxpos.filter(Number)) + single_img_width;
@@ -87,7 +96,6 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.attr("y",0)
     	.attr("height", height.image)
     	.attr("width", width.image);
-    
 
     // rather than before and after defined by position - maybe put these each in their own div?
     var before = d3.select("#div1")
@@ -172,7 +180,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.attr("transform", "translate("+width.plot+","+(height.plot-margin.top-margin.bottom)/2+")rotate(90)")
     	.text(fulldata[0].globalylabel)
     	.style("font-weight", "bold")
-        .style("opacity", 0);
+        .style("opacity", 1);
 
     // --- Plot line plot
     x.domain(d3.extent(fulldata, function(d) { return d.date; }));
@@ -194,13 +202,13 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     svg.append("g")
             .attr("class", "y axis")
             .style("fill", "OrangeRed")
-            .style("opacity", 0)
+            .style("opacity", 1)
             .attr("id", "globalAxis")
             .attr("transform", "translate(" + width.plot + ",0)")
             .call(y_axisg);
     
     svg.append("path")
-    	.datum(fulldata)
+    	.datum(localdata)
             .attr("class", "line")
             .attr("stroke", "steelblue")
             .attr("id","localLine")
@@ -208,10 +216,10 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.attr("d",linel);
     
     svg.append("path")
-    	.datum(fulldata)
+    	.datum(globaldata)
             .attr("class", "line")
             .style("stroke", "OrangeRed")
-            .style("opacity", 0) // don't show global data initially by default
+            .style("opacity", 1) // don't show global data initially by default
             .attr("id", "globalLine")
             .attr("transform", "translate(" + margin.left + ",0)")
             .attr("d",lineg);
@@ -273,9 +281,10 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	        .append("circle")
     		.attr("id", function(d) { return "circID" + d.id; })
     		.attr("cx", function(d) { return x(d.date); })
-    		.attr("cy", function(d) { return yl(d.localdata); })
+    		.attr("cy", height.plot-margin.bottom-margin.top)
     		.attr("transform", "translate("+margin.left+",0)")
-    		.attr("r", "10px")
+    		.attr("r", "5px")
+                // ADD HOVERING --> EXPAND TO 10PX + DATE DISPLAY
     		.style("stroke", "steelblue")
     		.style("stroke-width", "3px")
     		.style("fill", "steelblue");
@@ -286,8 +295,6 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
                 .append("text") 
     		.attr("id", function(d) { return "annoID" + d.id; })
     		.attr("class", "annoID")
-    		//.attr("x", function(d) { return x(d.date); })
-    		//.attr("y", function(d) { return yl(d.localdata); })
     		.attr("x", (width.plot)/2)
     		.attr("y", 60)
     		.attr("transform", "translate("+margin.left+",0)")
@@ -310,7 +317,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
             .style("fill", "black")
             .style("text-anchor","middle");
 
-    // --- Add instructions
+    // --- ARROWS SOMEWHERE TO INDICATE LEFT-RIGHT
 
     // --- Differently color the dots at the very beginning and end of the time series
     d3.select("circle#circID" + min_imgID).style("fill", "white");
@@ -396,6 +403,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     });
     
     // --- Right-left arrow key stepthrough
+    // FIGURE OUT BODY SELECTING FOR ARROW KEY FUNCTIONALITY
     d3.select("body").on({
     //d3.select("#imgdivID").on({
         keydown: function(d,i) {
@@ -440,6 +448,26 @@ function findindexbyid(arraytosearch, idtosearch) {
 
 function filterByX(obj,invalidEntries) {
    if ('x' in obj && typeof(obj.x) === 'number' && !isNaN(obj.x)) {
+      return true;
+   }
+   else {
+      invalidEntries++;
+      return false;
+   }
+}
+
+function filterByLocalData(obj,invalidEntries) {
+   if ('localdata' in obj && typeof(obj.localdata) === 'number' && !isNaN(obj.localdata)) {
+      return true;
+   }
+   else {
+      invalidEntries++;
+      return false;
+   }
+}
+
+function filterByGlobalData(obj,invalidEntries) {
+   if ('globaldata' in obj && typeof(obj.globaldata) === 'number' && !isNaN(obj.globaldata)) {
       return true;
    }
    else {
