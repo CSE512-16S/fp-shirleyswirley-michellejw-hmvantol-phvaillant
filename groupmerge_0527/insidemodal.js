@@ -74,7 +74,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
        .text(fulldata[0].intro);
     
     // --- Set up image display features  
-    var defs = d3.select("#myModal")
+    var defs = d3.select("imgdivID")
         .append("svg")
         .attr("class", "defs")
         .attr("x",0)
@@ -148,6 +148,8 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.x(function(d) { return x(d.date); })
     	.y(function(d) { return yg(d.globaldata); });
     
+    console.log(width.total, height.plot, width);
+    //there is a problem with the svg width
     var svg = d3.select("#imgdivID")
     	.append("svg")
     	.attr("id", "plot")
