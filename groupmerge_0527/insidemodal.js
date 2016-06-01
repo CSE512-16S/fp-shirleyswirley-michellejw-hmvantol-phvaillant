@@ -219,7 +219,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.datum(globaldata)
             .attr("class", "line")
             .style("stroke", "OrangeRed")
-            .style("opacity", 1) // don't show global data initially by default
+            .style("opacity", 1) // show global data initially by default
             .attr("id", "globalLine")
             .attr("transform", "translate(" + margin.left + ",0)")
             .attr("d",lineg);
