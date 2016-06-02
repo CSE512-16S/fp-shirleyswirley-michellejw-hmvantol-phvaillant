@@ -17,6 +17,28 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 }
 
 
+.btn {
+  background-color: lightgray;
+  border-color: lightgray;
+}
+
+.btn:hover {
+  background-color: lightgreen;
+  border-color: lightgreen;
+}
+
+h1 {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+p {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+#startbutton {
+  font-family: serif;
+}
+
 /* -- Modal Stuff -- */
 
 #myModal{
