@@ -269,6 +269,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
         })
     	.text(fulldata[0].localylabel);
 
+
     // label global data right y-axis
     svg.append("text")
     	.attr("class", "y label")
@@ -389,58 +390,68 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     // Set up and plot dots along the x-axis corresponding
     // to images, all still within div=plotdiv
     //----------------------------------
-    var activedotcolor = "white";
-    var inactivedotcolor = "steelblue";
+    var activedotcolor = "yellow";
+    var inactivedotcolor = "LightGray";
     var activedotsize = "15px";
-    var inactivedotsize = "5px";
+    var inactivedotsize = "8px"
 
     // FOR HELENA TO MAKE INTO SQUARES 
     // plot dots along the x-axis corresponding to images
-    var dots = svg.selectAll("circle")
-    		.data(imgdata).enter()
-    	        .append("circle")
-    		.attr("id", function(d) { return "circID" + d.id; })
-    		.attr("cx", function(d) { return x(d.date); })
-    		.attr("cy", height.plot-margin.bottom-margin.top) // along x-axis
-    		.attr("transform", "translate("+margin.left+",0)")
-    		.attr("r", inactivedotsize)
-    		.style("stroke", inactivedotcolor)
-    		.style("stroke-width", "3px")
-    		.style("fill", inactivedotcolor);
+    // var dots = svg.selectAll("circle")
+    // 		.data(imgdata).enter()
+    // 	        .append("circle")
+    // 		.attr("id", function(d) { return "circID" + d.id; })
+    // 		.attr("cx", function(d) { return x(d.date); })
+    // 		.attr("cy", height.plot-margin.bottom-margin.top) // along x-axis
+    // 		.attr("transform", "translate("+margin.left+",0)")
+    // 		.attr("r", inactivedotsize)
+    // 		.style("stroke", inactivedotcolor)
+    // 		.style("stroke-width", "3px")
+    // 		.style("fill", inactivedotcolor);
+
+    var dots = d3.select("#plotdiv").select("svg#plot").selectAll("rect")
+            .data(imgdata).enter()
+            .append("rect")
+            .attr("id", function(d) { return "rectID" + d.id; })
+            .attr("x", function(d) { return x(d.date);})
+            .attr("y", height.plot - margin.top - margin.bottom - 10)
+            .attr("transform", "translate("+margin.left+",0)")
+            .attr("width", inactivedotsize)
+            .attr("height", inactivedotsize)
+            .style("stroke", function(d) {if (d.annotation != '') {return "black"; } 
+                                        else {return inactivedotcolor; } })
+            .style("stroke-width", "3px")
+            .style("fill", inactivedotcolor);
 
     // add annotations
     var anno = svg.selectAll("text#anno")
-                .data(imgdata).enter()
-                .append("text") 
+            .data(imgdata).enter()
+            .append("text") 
     		.attr("id", function(d) { return "annoID" + d.id; })
     		.attr("class", "annoID")
-    		.attr("x", (width.plot)/2)
-    		.attr("y", 60)
+    		.attr("x", 0)
+    		.attr("y", margin.top)
     		.attr("transform", "translate("+margin.left+",0)")
-                .text(function(d) { return d.date.getFullYear() + " " + d.annotation; })
-    		.style("font-size", "30px")
-    		.style("font-family", "sans-serif")
-    		.style("fill", "black")
-                .style("opacity", 0)
-                .style("text-anchor","middle");
+            // .text(function(d) { return d.date.getFullYear() + " " + d.annotation; })
+            .text(function(d) { return d.annotation; })
+            .style("opacity", 0);
 
-    // FOR HELENA:
-    // AFTER YOU ADD ARROWS TO INDICATE MOVING LEFT/RIGHT, YOU CAN REMOVE THIS
-    // add prelim instructions where annotated text will be after hovering/clicking dots
-    svg.append("text")
-            .attr("id", "instructions")
-            .attr("x", (width.plot)/2)
-            .attr("y", 60)
-    	    .attr("transform", "translate("+margin.left+",0)")
-            .text("Hover over and click on dots below; use left/right arrow keys to step through time")
-            .style("font-size", "30px")
-            .style("font-family", "sans-serif")
-            .style("fill", "black")
-            .style("text-anchor","middle");
+    // alternative annotation style
+    // var anno = svg.selectAll("text#anno")
+    //             .data(imgdata).enter()
+    //             .append("text") 
+    //             .attr("id", function(d) { return "annoID" + d.id; })
+    //             .attr("class", "annoID")
+    //             .attr("transform", function(d) { return "translate("+(x(d.date)+margin.left)+","+(height.plot - margin.top - margin.bottom - 10)+")rotate(-90)"})
+    //             .text(function(d) { return d.annotation; })
+    //             .style("font-size", "16px")
+    //             .style("opacity", 0)
+    //             .style("text-anchor","left");
+
 
     // differently color/size the dots at the very beginning and end of the time series
-    d3.select("circle#circID" + min_imgID).style("fill", activedotcolor).attr("r",activedotsize);
-    d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r",activedotsize);
+    d3.select("rect#rectID" + min_imgID).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
+    d3.select("rect#rectID" + max_imgID).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
 
     //---------------------------------
     // Add interactivity to dots along the x-axis corresponding
@@ -449,35 +460,35 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     // define global variables for keyboard and mouse input
     var activeidx = 0;
     var activemouse = null;
-    var alldots = d3.selectAll("circle");
+    var alldots = d3.select("#plotdiv").select("svg#plot").selectAll("rect");
 
     // --- mouse-dot interactivity
     dots.on({
             mouseover: function(d) {
-                d3.select("text#instructions").style("opacity",0);
-                d3.select(this).style("fill", activedotcolor).attr("r",activedotsize);
+                // d3.select("text#instructions").style("opacity",0);
+                d3.select(this).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
                 this.style.cursor = "pointer";
                 d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
                 d3.select("text#annoID" + this.id.substring(6)).style("opacity",1);
             },
             mouseout: function(d) {
             	if (findindexbyid(alldots,this.id) != activeidx) {
-            	    d3.select(this).style("fill", inactivedotcolor).attr("r",inactivedotsize);
+            	    d3.select(this).style("fill", inactivedotcolor).attr("width",inactivedotsize).attr("height",inactivedotsize);
                     d3.select("text#annoID" + this.id.substring(6)).style("opacity",0);
                     d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
             	}
-            	d3.select("circle#circID" + max_imgID).style("fill", activedotcolor); // this is needed to keep last dot white after hovering over it
+            	d3.select("rect#rectID" + max_imgID).style("fill", activedotcolor); // this is needed to keep last dot white after hovering over it
             },
             click: function(d) {
-                d3.select("text#instructions").style("opacity",0);
+                // d3.select("text#instructions").style("opacity",0);
                 // activemouse.id.substring(6) is the selected
                 // circle's id number following "circID" 
                 d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
-            	d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
-            	d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r",activedotsize); // this is needed to keep last dot white after clicking on it
+            	d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivedotcolor).attr("width",inactivedotsize).attr("height",inactivedotsize);
+            	d3.select("rect#rectID" + max_imgID).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize); // this is needed to keep last dot white after clicking on it
             	activemouse = this;
                 activeidx = findindexbyid(alldots,activemouse.id); 
-                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r",activedotsize);
+                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
                 d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
                 d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
                 d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
@@ -493,29 +504,47 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
         keydown: function(d,i) {
             if (d3.event.keyCode == 39) { // when you click the right arrow key...
                 //console.log('right');
-                d3.select("text#instructions").style("opacity",0);
+                // d3.select("text#instructions").style("opacity",0);
                 d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
                 if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
-                d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
-                d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r", activedotsize);
-                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r", activedotsize);
+                d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivedotcolor).attr("width",inactivedotsize).attr("height",inactivedotsize);
+                d3.select("rect#rectID" + max_imgID).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
+                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
                 d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
         	d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
         	d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
             }
             if (d3.event.keyCode == 37) { // when you click the left arrow key...
                 //console.log('left');
-                d3.select("text#instructions").style("opacity",0);
+                // d3.select("text#instructions").style("opacity",0);
                 d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
                 if (activeidx>0) {activeidx--;} // don't go further left than there are pts
-                d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
-                d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r",activedotsize);
-                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r",activedotsize);
+                d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivedotcolor).attr("width",inactivedotsize).attr("height",inactivedotsize);
+                d3.select("rect#rectID" + max_imgID).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
+                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
                 d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
         	d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
         	d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
             }
           }
+    });
+
+    $("body").on('keydown', function(e) {
+        if (e.keyCode==39) {
+            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray2 gi-5x";
+        }
+        if (e.keyCode==37) {
+            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray2 gi-5x";
+        }
+    });
+
+    $("body").on('keyup', function(e) {
+        if (e.keyCode==39) {
+            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-5x";
+        }
+        if (e.keyCode==37) {
+            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-5x";
+        }
     });
 
     //---------------------------------

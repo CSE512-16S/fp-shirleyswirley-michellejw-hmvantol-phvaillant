@@ -53,10 +53,8 @@
               <div class="modal-content">
               
                 <div class="modal-header">
-                  <div class="col-xs-5"></div>
-                  <a href="#" class="glyphicon glyphicon-triangle-top col-xs-1" role="button"></a>
-                  <div class="col-xs-5"></div>
-                  <button type="button" class="close col-xs-1 pull-right" data-dismiss="modal">&times;</button>
+                  <span href="#" class="glyphicon glyphicon-chevron-up gray1 gi-2x col-xs-11" role="button"></span>
+                  <button type="button" class="close gi-2x" data-dismiss="modal">&times;</button>
                 </div>
 
                 <div class="modal-body">
@@ -66,20 +64,19 @@
                   <div id="imgplotinfodiv" class= "container col-xs-12">
 
                     <div class="row">
-                      <!-- using col-xs-* for modal div class so that columns don't wrap (it's the bootstrap setting for v. small mobile devices) -->
-                      <a href="#" class="glyphicon glyphicon-triangle-left col-xs-1" id="left" role="button"></a>
-                      <div id="beforeimagediv" class="col-xs-5"></div>
-                      <div id="afterimagediv" class = "col-xs-5"></div>
-                      <a href="#" class="glyphicon pull-right glyphicon-triangle-right col-xs-1" id="right" role="button"></a>
+                      <div id="beforeimagediv" class="col-xs-6"></div>
+                      <div id="afterimagediv" class = "col-xs-6"></div>
                     </div>
 
                     <div class="row">
-                      <div class="col-xs-1" vertical-align="center">Source:</div>
-                      <a href="#" class="btn btn-link col-xs-1" id="imgsrc" role="button"></a>
+                      <span>Source:</span>
+                      <a href="#" class="btn btn-link" id="imgsrc" role="button"></a>
                     </div>
-                    <!-- don't actually need to use row containers if div is full width (12) -->
+
                     <div class="row"> 
-                      <div id="plotdiv" class="col-xs-12"></div>
+                      <span href="#" class="glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-5x" id="left" role="button"></span>
+                      <div id="plotdiv" class="col-xs-10"></div>
+                      <span href="#" class="glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-5x" id="right" role="button"></span>
                     </div> 
 
                     <div class="row">
@@ -106,8 +103,8 @@
                 </div>
 
                 <div class="modal-footer">
-                  <a href="#" class="glyphicon glyphicon-triangle-bottom" role="button"></a>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <span href="#" class="glyphicon glyphicon-chevron-down gray1 gi-3x col-xs-11" role="button"></span>
+                  <button type="button" class="btn btn-default col-xs-1" data-dismiss="modal">Close</button>
                 </div>
 
               </div>
