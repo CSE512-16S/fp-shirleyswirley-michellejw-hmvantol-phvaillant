@@ -11,11 +11,13 @@ $( document ).ready(function() {
 
 	//create the svg element
 	var svg = d3.select("#map").append("svg")
+		.attr("class","map_svg")
 	    .attr("width", width)
 	    .attr("height", height);
 
 	//center svg elements
-	d3.select("#map").attr("align","center"); 
+	// d3.select("#map").attr("align","center")
+	// 				.attr("vertical-align","middle"); 
 
 	//different d3 projections. https://github.com/d3/d3/wiki/Geo-Projections
 	var projection = d3.geo.orthographic()
