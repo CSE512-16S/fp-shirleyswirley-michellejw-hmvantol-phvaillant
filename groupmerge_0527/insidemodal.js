@@ -1,5 +1,23 @@
 // NOTE: divs are so named in index.html and viz.js; must change names here if names are changed there 
 
+//---------------------------------
+    // Add interactivity to dots along the x-axis corresponding
+    // to images, all still within div=plotdiv
+    //---------------------------------
+    // define global variables for keyboard and mouse input
+    var activeidx = 0;
+    var activemouse = null;
+    var alldots = d3.selectAll("circle");
+
+//---------------------------------
+    // Set up and plot dots along the x-axis corresponding
+    // to images, all still within div=plotdiv
+    //----------------------------------
+    var activedotcolor = "white";
+    var inactivedotcolor = "steelblue";
+    var activedotsize = "15px";
+    var inactivedotsize = "5px";
+
 var show_info_inside_modal = function(current_location) {
 
 d3.csv("timeline/location" + current_location + ".csv", function(data) {
@@ -26,18 +44,18 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     var localdata = fulldata.filter(filterByLocalData);
     // Data associated with non-null global data
     var globaldata = fulldata.filter(filterByGlobalData);
-    console.log('imgdata=',imgdata);
-    console.log('fulldata=',fulldata);
-    console.log('localdata=',localdata);
-    console.log('globaldata=',globaldata);
+    // console.log('imgdata=',imgdata);
+    // console.log('fulldata=',fulldata);
+    // console.log('localdata=',localdata);
+    // console.log('globaldata=',globaldata);
 
     // --- Calculate begin and end IDs of image time series 
     imgIDarray = imgdata.map(function(d) { return +d.id; });
     min_imgID = Math.min.apply(null,imgIDarray);
     max_imgID = Math.max.apply(null,imgIDarray);
-    console.log('imgIDarray=',imgIDarray);
-    console.log('min_imgID=',min_imgID);
-    console.log('max_imgID=',max_imgID);
+    // console.log('imgIDarray=',imgIDarray);
+    // console.log('min_imgID=',min_imgID);
+    // console.log('max_imgID=',max_imgID);
 
     // --- Calculate image size attributes
     imgxpos = imgdata.map(function(d) { return Math.abs(d.x); });
@@ -46,8 +64,8 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     single_img_height = Math.min.apply(0, imgypos.filter(Number));
     total_img_width = Math.max.apply(0, imgxpos.filter(Number)) + single_img_width;
     total_img_height = Math.max.apply(0, imgypos.filter(Number)) + single_img_height;
-    console.log('single_img_width=',single_img_width);
-    console.log('total_img_height=',total_img_height);
+    // console.log('single_img_width=',single_img_width);
+    // console.log('total_img_height=',total_img_height);
 
     // --- Define margins + plot and image widths/heights
     var margin = {top:100, right:20, bottom:10, left:50};
@@ -354,15 +372,6 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
             })
             .text(fulldata[0].globaldatasrctext);
 
-    //---------------------------------
-    // Set up and plot dots along the x-axis corresponding
-    // to images, all still within div=plotdiv
-    //----------------------------------
-    var activedotcolor = "white";
-    var inactivedotcolor = "steelblue";
-    var activedotsize = "15px";
-    var inactivedotsize = "5px";
-
     // FOR HELENA TO MAKE INTO SQUARES 
     // plot dots along the x-axis corresponding to images
     var dots = svg.selectAll("circle")
@@ -409,14 +418,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     d3.select("circle#circID" + min_imgID).style("fill", activedotcolor).attr("r",activedotsize);
     d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r",activedotsize);
 
-    //---------------------------------
-    // Add interactivity to dots along the x-axis corresponding
-    // to images, all still within div=plotdiv
-    //---------------------------------
-    // define global variables for keyboard and mouse input
-    var activeidx = 0;
-    var activemouse = null;
-    var alldots = d3.selectAll("circle");
+    alldots = d3.selectAll("circle");
 
     // --- mouse-dot interactivity
     dots.on({
@@ -455,35 +457,35 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     
     // --- right-left arrow key stepthrough
     // FIGURE OUT BODY SELECTING FOR ARROW KEY FUNCTIONALITY
-    d3.select("body").on({
-    //d3.select("#plotdiv").on({
-        keydown: function(d,i) {
-            if (d3.event.keyCode == 39) { // when you click the right arrow key...
-                //console.log('right');
-                d3.select("text#instructions").style("opacity",0);
-                d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
-                if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
-                d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
-                d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r", activedotsize);
-                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r", activedotsize);
-                d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
-        	d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
-        	d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
-            }
-            if (d3.event.keyCode == 37) { // when you click the left arrow key...
-                //console.log('left');
-                d3.select("text#instructions").style("opacity",0);
-                d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
-                if (activeidx>0) {activeidx--;} // don't go further left than there are pts
-                d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
-                d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r",activedotsize);
-                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r",activedotsize);
-                d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
-        	d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
-        	d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
-            }
-          }
-    });
+    // d3.select("body").on({
+    // //d3.select("#plotdiv").on({
+    //     keydown: function(d,i) {
+    //         if (d3.event.keyCode == 39) { // when you click the right arrow key...
+    //             //console.log('right');
+    //             d3.select("text#instructions").style("opacity",0);
+    //             d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
+    //             if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
+    //             d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
+    //             d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r", activedotsize);
+    //             d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r", activedotsize);
+    //             d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
+    //     	d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
+    //     	d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
+    //         }
+    //         if (d3.event.keyCode == 37) { // when you click the left arrow key...
+    //             //console.log('left');
+    //             d3.select("text#instructions").style("opacity",0);
+    //             d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
+    //             if (activeidx>0) {activeidx--;} // don't go further left than there are pts
+    //             d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
+    //             d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r",activedotsize);
+    //             d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r",activedotsize);
+    //             d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
+    //     	d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
+    //     	d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
+    //         }
+    //       }
+    // });
 
     //---------------------------------
     // Add more info to div=moreinfodiv 
@@ -538,3 +540,34 @@ function filterByGlobalData(obj,invalidEntries) {
       return false;
    }
 }
+
+d3.select("body").on({
+        keydown: function(d) {
+            console.log("pressed");
+            if (d3.event.keyCode == 39) { // when you click the right arrow key...
+                d3.select("text#instructions").style("opacity",0);
+                d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
+                if (activeidx<alldots.size()-1) {activeidx++;} // don't go further right than there are pts
+                d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
+                d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r", activedotsize);
+                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r", activedotsize);
+                d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
+            d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
+            d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
+            }
+           if (d3.event.keyCode == 37) { // when you click the left arrow key...
+                d3.select("text#instructions").style("opacity",0);
+                d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
+                if (activeidx>0) {activeidx--;} // don't go further left than there are pts
+                d3.selectAll("circle").style("fill", inactivedotcolor).attr("r",inactivedotsize);
+                d3.select("circle#circID" + max_imgID).style("fill", activedotcolor).attr("r",activedotsize);
+                d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("r",activedotsize);
+                d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
+            d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
+            d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
+            }
+        }
+});
+
+
+
