@@ -58,10 +58,39 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
   background: none;
 }
 
+.glyphicon.gray1 {
+  color: LightGray;
+}
+
+.glyphicon.gray2 {
+  color: Gray;
+}
+
+
+
+.glyphicon.glyphicon-chevron-up {
+  display: block;
+  text-align: center;
+}
+
+.glyphicon.glyphicon-chevron-down {
+  display: block;
+  text-align: center;
+}
+
+.glyphicon.glyphicon-triangle-right {
+  display: block;
+  vertical-align: middle;
+}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
 #imgdivID {
   height: 100%;
 }
-
 
 
 /* -- -- -- -- -- --*/
