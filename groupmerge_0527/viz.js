@@ -172,8 +172,10 @@ $( document ).ready(function() {
     // you must change it in show_info_inside_modal.js as well
     // NOW need to clear inner divs instead (div1, div2, etc)
     // $("#imgdivID").html(""); 
-    $("#div1").html("");
-    $("#div2").html("");
+    $("#titlediv").html("");
+    $("#imgdiv").html("");
+    $("#plotdiv").html("");
+    $("#moreinfodiv").html("");
 
     // Show the modal
     // NOTE: If you change the name of the modal here,
