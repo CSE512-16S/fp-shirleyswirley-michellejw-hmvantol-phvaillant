@@ -1,29 +1,34 @@
-date needs to be in the format m(m)/d(d)/yyyy
+1. localdata should have numbers corresponding to date; put "null" where no data
 
-localdata should have numbers corresponding to date
+2. globaldata should have numbers corresponding to date; put "null" where no data
 
-globaldata should have numbers corresponding to date
+3. date needs to be in the format m(m)/d(d)/yyyy
 
-x and y are from the css files created with glue
+4-5. x and y are from the css files created with glue
 
 glue instructions:
 - type "glue source output --ordering=filename" on the command line
 - source is a folder containing all the images you want to stitch together and output is the folder that the program puts the css and merged image (png) file in
 - the generated css contains the x and y positioning information required in the csv
 
-localylabel is how you want the local left-side y-axis to be labeled
-globalylabel is how you want the global right-side y-axis to be labeled
+6. localylabel is how you want the local left-side y-axis to be labeled
 
-annotation should have annotations written for all the data points you want an annotation for
+7.globalylabel is how you want the global right-side y-axis to be labeled
 
-title will appear at the top of the modal
+8. annotation should have annotations written for all the data points you want an annotation for
 
-intro is an introductory sentence that will appear at the top of the modal beneath the title
+9. title will appear at the top of the modal
 
-imgsrc is the url from which the images came
+10. imgsrctext is where the images came from in words
 
-datasrc is the url from which the data came
+11. imgsrcurl is the url from which the images came
 
-fastfacts appears right below the timeline
+12. localdatasrctext is same as 10, but for the local data
 
-moreinfo appears right beneath fastfacts; these will be clickable URLs with URLs corresponding to moreinfosrc
+13. localdatasrcurl is same as 11, but for the local data
+
+14. globaldatasrctext same as 12, but for global data
+
+15. globaldatasrcurl same as 13, but for global data
+
+16. moreinfo appears as writing right below the timeline plot
