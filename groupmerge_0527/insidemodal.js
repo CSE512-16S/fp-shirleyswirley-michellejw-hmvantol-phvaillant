@@ -88,6 +88,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     	.attr("id", "after")
     	.attr("width", width.image)
     	.attr("height", height.image);
+        
     	// .attr("x",width.image)
     	// .attr("y",0);
 
