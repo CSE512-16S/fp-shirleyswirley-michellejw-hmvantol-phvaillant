@@ -25,12 +25,12 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 }
 
 
-.btn {
+.btn-starttour {
   background-color: lightgray;
   border-color: lightgray;
 }
 
-.btn:hover {
+.btn-starttour:hover {
   background-color: lightgreen;
   border-color: lightgreen;
 }
@@ -43,9 +43,7 @@ p {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-#startbutton {
-  font-family: serif;
-}
+
 
 /* -- Modal Stuff -- */
 
