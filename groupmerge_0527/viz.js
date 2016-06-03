@@ -2,22 +2,21 @@ $( document ).ready(function() {
 
 	//compute the dimensions of the current div - #map
 	var margin = {top: 10, left: 10, bottom: 10, right: 10}
-	  , screen_width = parseInt(d3.select('#map').style('width'))
-	  , height = parseInt(d3.select('#map').style('height'));
+	  , screen_width = parseInt(d3.select('#map-container').style('width'))
+	  , height = parseInt(d3.select('#map-container').style('height'));
 
 	//set the size of the svg to be the minimum of width and height - map ratio is 1
 	var width = Math.min(screen_width - margin.left - margin.right, height - margin.top - margin.bottom)
 	  , height = width;
+
+	  d3.select('#map').style('width',width + 'px');
+	  d3.select('#map').style('height',height + 'px');
 
 	//create the svg element
 	var svg = d3.select("#map").append("svg")
 		.attr("class","map_svg")
 	    .attr("width", width)
 	    .attr("height", height);
-
-	//center svg elements
-	// d3.select("#map").attr("align","center")
-	// 				.attr("vertical-align","middle"); 
 
 	//different d3 projections. https://github.com/d3/d3/wiki/Geo-Projections
 	var projection = d3.geo.orthographic()
@@ -649,8 +648,8 @@ $( document ).ready(function() {
 
 	function resize() {
 	    // adjust width and height when the window size changes
-	   width = parseInt(d3.select('#map').style('width'))
-	    , height = parseInt(d3.select('#map').style('height'))
+	   width = parseInt(d3.select('#map-container').style('width'))
+	    , height = parseInt(d3.select('#map-container').style('height'))
 	    , width = Math.min(width - margin.left - margin.right, height - margin.top - margin.bottom)
 	    , height = width;
 
@@ -658,6 +657,9 @@ $( document ).ready(function() {
 	    projection
 	        .translate([width / 2, height / 2])
 	        .scale(width/2);
+
+	    d3.select('#map').style('width',width + 'px');
+	    d3.select('#map').style('height',height + 'px');
 
 	    // resize the map container
 	    svg
@@ -737,7 +739,7 @@ $( document ).ready(function() {
     // you must change it in show_info_inside_modal.js as well
     // NOW need to clear inner divs instead (div1, div2, etc)
     // $("#imgdivID").html(""); 
-    $("#titlediv").html("");
+    $("#titlediv").html("<button type='button' class='close' data-dismiss='modal'>&times;</button>");
     $("#imgdiv").html("");
     $("#plotdiv").html("");
     $("#moreinfodiv").html("");
