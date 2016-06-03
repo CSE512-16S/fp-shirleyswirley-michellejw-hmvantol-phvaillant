@@ -1,0 +1,48 @@
+html, body, .container-fluid, #map-container, #information_pane { height: 100%; }
+
+#title {
+	position: absolute;
+	width:90%;
+	height: 15%;
+	top: 10%;
+	margin: 0 auto;
+	text-align: center;
+	overflow: scroll;
+}
+
+#abstract {
+	position: absolute;
+	top: 30%;
+	height: 30%;
+	margin: 0 auto;
+	text-align: center;
+	width: 90%;
+	overflow: scroll;
+}
+
+#start-tour-container {
+	position: absolute;
+	top: 65%;
+	margin: 0 auto;
+	text-align: center;
+	width: 90%;
+	overflow: scroll;
+}
+
+#media-icons {
+	position: absolute;
+	top: 85%;
+	height: 15%;
+	margin: 0 auto;
+	text-align: center;
+	width: 90%;
+	overflow: scroll;
+}
+
+#github-icon {
+	position: absolute;
+	height: 15%;
+	left: 70%;
+	width: 30%;
+	overflow: scroll;
+}
