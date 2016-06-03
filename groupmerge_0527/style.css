@@ -35,6 +35,10 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
   border-color: lightgreen;
 }
 
+.btn-source {
+  font-size: 15px;
+}
+
 h1 {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
@@ -130,19 +134,25 @@ p {
 
 /* -- Styles orignally defined for info inside modal -- */
 
-.axis-path,
+/*.axis-path,
 .axis-line {
     fill: none;
     stroke: black;
     stroke-width: 3px;
     shape-rendering: crispEdges;
-}
+}*/
 
 .xaxis-bottom {
     fill: none;
     stroke: black;
     stroke-width: 3px;
     shape-rendering: crispEdges;
+}
+
+.xaxis-bottom text {
+  stroke: none;
+  fill: black;
+  font-size: 30px;
 }
 
 .yaxis-g {
@@ -152,12 +162,28 @@ p {
     shape-rendering: crispEdges;
 }
 
+.yaxis-g text {
+  font-size: 30px;
+  stroke: none;
+  fill: orangered;
+}
+
 .yaxis-l {
     fill: none;
     stroke: steelblue;
     stroke-width: 3px;
     shape-rendering: crispEdges;
 }
+
+.yaxis-l text {
+  font-size: 30px;
+  stroke: none;
+  fill: steelblue;
+}
+
+/*.axis text {
+  font-size: 40px;
+}*/
 
 .line-l {
     fill: none;
@@ -195,6 +221,14 @@ p {
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+}
+
+#ylabell {
+  fill: steelblue;
+}
+
+#ylabelg {
+  fill: orangered;
 }
 
 .xlabel {
