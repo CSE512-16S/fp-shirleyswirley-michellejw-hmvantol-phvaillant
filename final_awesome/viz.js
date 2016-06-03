@@ -135,7 +135,60 @@ $( document ).ready(function() {
       current_location =1;
       $("#myModal").modal('show');
       // show_information(current_location);
-      // center_on_location(current_location);
+      center_on_location(current_location);
     });
+
+    $("#modal-up").on('click', function() {
+    	current_location += 1;
+    	current_location = current_location % (n_locations+1);
+        if (current_location==0) {current_location=1};
+    	center_on_location(current_location);
+    });
+
+    $("#modal-down").on('click', function() {
+    	current_location -= 1;
+    	current_location = current_location % (n_locations+1);
+        if (current_location==0) {current_location=n_locations};
+    	center_on_location(current_location);
+    });
+
+    function center_on_location(current_location) {
+      d3.transition()
+          .duration(1250)
+          .tween("rotate", function() {
+              var r = d3.interpolate(projection.rotate(), [-coordinates_locations[current_location][0],-coordinates_locations[current_location][1]]);
+              return function(t) {
+                projection.rotate(r(t));
+                svg.selectAll("path.land").attr("d", path);
+                svg.selectAll("path.locations").attr("d", path);
+              };
+            })
+    }
+
+    d3.select("body").on({
+        keydown: function(d) {
+          // when you click the down arrow key, go to next location
+          if(d3.event.keyCode == 38) { 
+            current_location += 1;
+            current_location = current_location % (n_locations+1);
+            if (current_location==0) {current_location=1};
+            center_on_location(current_location);
+            //show_information(current_location);
+          }
+          // when you click the up arrow key, go to prev location
+          if (d3.event.keyCode == 40) {
+            current_location -= 1;
+            current_location = current_location % (n_locations+1);
+            if (current_location==0) {current_location=n_locations};
+            center_on_location(current_location);
+            //show_information(current_location);
+          }
+          // when you click the right/left arrow keys, step through the timeline
+          if (d3.event.keyCode == 39 || d3.event.keyCode == 37) {
+                // 39 = right arrow key, 37 = left arrow key
+        	step_through_time(d3.event.keyCode);
+          }
+        }
+     }) //end of select body
 
 }); //end of document ready
