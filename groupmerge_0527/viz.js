@@ -739,7 +739,7 @@ $( document ).ready(function() {
     // you must change it in show_info_inside_modal.js as well
     // NOW need to clear inner divs instead (div1, div2, etc)
     // $("#imgdivID").html(""); 
-    $("#titlediv").html("");
+    $("#titlediv").html("<button type='button' class='close' data-dismiss='modal'>&times;</button>");
     $("#imgdiv").html("");
     $("#plotdiv").html("");
     $("#moreinfodiv").html("");

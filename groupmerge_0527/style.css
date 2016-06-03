@@ -53,6 +53,10 @@ p {
     opacity: 0;
 }
 
+.btn-modal { display: inline-block; 
+    position: absolute;
+  }
+
 #myModal{
   height: 100%;
   width: 100%;
