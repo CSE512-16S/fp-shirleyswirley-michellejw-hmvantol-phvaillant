@@ -77,8 +77,8 @@ p {
 
 .modal-header {
   padding: 10px;
-  margin-top: -50px;
-  height: 50px;
+  margin-top: -45px;
+  height: 45px;
 }
 
 .modal-body {
@@ -92,9 +92,11 @@ p {
   height: 50px;
 }
 
-/*.modal-backdrop {
-  background: none;
-}*/
+/* -- -- -- -- -- --*/
+
+
+
+/* -- Glyphs -- */
 
 .glyphicon.gray1 {
   color: LightGray;
@@ -163,13 +165,13 @@ p {
 }
 
 .ylabel {
-    font-size: 25px;
+    font-size: 40px;
     font-weight: bold;
     cursor: pointer;
 }
 
 .xlabel {
-    font-size: 25px;
+    font-size: 40px;
     font-weight: bold;
 }
 
