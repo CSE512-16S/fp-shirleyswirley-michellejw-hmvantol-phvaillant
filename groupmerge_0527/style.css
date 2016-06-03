@@ -1,11 +1,19 @@
-html, body, .container-fluid, #map, #information_pane { height: 100%; }
+html, body, .container-fluid, #map-container, #information_pane { height: 100%; }
 
 /*body.modal-open {
     overflow: hidden;
 }*/
 
-#map {
+#map-container {
   padding: 10px;
+  position: relative;
+}
+
+#map {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  /*display: inline-block;*/
 }
 
 .water {
@@ -17,22 +25,50 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
 }
 
 
+.btn {
+  background-color: lightgray;
+  border-color: lightgray;
+}
+
+.btn:hover {
+  background-color: lightgreen;
+  border-color: lightgreen;
+}
+
+h1 {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+p {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+#startbutton {
+  font-family: serif;
+}
+
 /* -- Modal Stuff -- */
+
+.modal-backdrop.in {
+    opacity: 0;
+}
 
 #myModal{
   height: 100%;
+  width: 100%;
   overflow: hidden;
 }
 
 
 .modal-dialog {
-  width: 100%;
-  height: 90%;
+  width: 60%;
+  height: 100%;
   float: right;
+  margin: 0px;
 }
 
 .modal-content {
-  height: 90%;
+  height: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -54,9 +90,9 @@ html, body, .container-fluid, #map, #information_pane { height: 100%; }
   height: 50px;
 }
 
-.modal-backdrop {
+/*.modal-backdrop {
   background: none;
-}
+}*/
 
 #imgdivID {
   height: 100%;
