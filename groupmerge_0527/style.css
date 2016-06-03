@@ -130,18 +130,45 @@ p {
 
 /* -- Styles orignally defined for info inside modal -- */
 
-.axis path,
-.axis line {
+.axis-path,
+.axis-line {
     fill: none;
     stroke: black;
     stroke-width: 3px;
     shape-rendering: crispEdges;
 }
 
-.line {
+.xaxis-bottom {
     fill: none;
-    /* stroke: black; */
+    stroke: black;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-g {
+    fill: none;
+    stroke: orangered;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-l {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.line-l {
+    fill: none;
+    stroke: steelblue; 
     stroke-width: 5px;
+}
+
+.line-g {
+  fill: none;
+  stroke: orangered;
+  stroke-width: 5px;
 }
 
 #instructions {

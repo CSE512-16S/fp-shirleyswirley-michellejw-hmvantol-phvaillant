@@ -267,22 +267,20 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     
     // draw x-axis
     svg.append("g")
-        .attr("class", "xaxis")
+        .attr("class", "xaxis-bottom")
         .attr("transform", "translate(" + margin.left + "," + [height.plot - margin.top - margin.bottom] + ")")
         .call(x_axis);
     
     // draw local data left y-axis
     svg.append("g")
-            .attr("class", "yaxis")
-            .style("fill", localdatacolor)
+            .attr("class", "yaxis-l")
             .attr("id", "localAxis")
             .attr("transform", "translate(" + margin.left + ",0)")
             .call(y_axisl);
     
     // draw global data right y-axis
     svg.append("g")
-            .attr("class", "yaxis")
-            .style("fill", globaldatacolor)
+            .attr("class", "yaxis-g")
             .style("opacity", 1)
             .attr("id", "globalAxis")
             .attr("transform", "translate(" + (width.plot-margin.left) + ",0)")
@@ -291,8 +289,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     // draw local data line
     svg.append("path")
         .datum(localdata)
-            .attr("class", "line")
-            .attr("stroke", localdatacolor)
+            .attr("class", "line-l")
             .attr("id","localLine")
             .attr("transform", "translate(" + margin.left + ",0)")
             .attr("d",linel);
@@ -300,8 +297,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     // draw global data line
     svg.append("path")
         .datum(globaldata)
-            .attr("class", "line")
-            .style("stroke", globaldatacolor)
+            .attr("class", "line-g")
             .style("opacity", 1) // show global data initially by default
             .attr("id", "globalLine")
             .attr("transform", "translate(" + margin.left + ",0)")
