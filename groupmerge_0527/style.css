@@ -1,16 +1,19 @@
-html, body, .container-fluid, #map, #information_pane { height: 100%; }
+html, body, .container-fluid, #map-container, #information_pane { height: 100%; }
 
 /*body.modal-open {
     overflow: hidden;
 }*/
 
-#map {
+#map-container {
   padding: 10px;
+  position: relative;
 }
 
-.map_svg {
-  display: block;
-  margin: auto auto;
+#map {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  /*display: inline-block;*/
 }
 
 .water {
@@ -46,14 +49,19 @@ p {
 
 /* -- Modal Stuff -- */
 
+.modal-backdrop.in {
+    opacity: 0;
+}
+
 #myModal{
   height: 100%;
+  width: 100%;
   overflow: hidden;
 }
 
 
 .modal-dialog {
-  width: 100%;
+  width: 60%;
   height: 100%;
   float: right;
   margin: 0px;
@@ -82,9 +90,9 @@ p {
   height: 50px;
 }
 
-.modal-backdrop {
+/*.modal-backdrop {
   background: none;
-}
+}*/
 
 #imgdivID {
   height: 100%;
