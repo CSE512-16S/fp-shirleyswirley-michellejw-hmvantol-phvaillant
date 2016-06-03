@@ -3,10 +3,10 @@ $( document ).ready(function() {
 	//compute the dimensions of the current div - #map
 	var margin = {top: 10, left: 10, bottom: 10, right: 10}
 	  , screen_width = parseInt(d3.select('#map-container').style('width'))
-	  , height = parseInt(d3.select('#map-container').style('height'));
+	  , screen_height = parseInt(d3.select('#map-container').style('height'));
 
 	//set the size of the svg to be the minimum of width and height - map ratio is 1
-	var width = Math.min(screen_width - margin.left - margin.right, height - margin.top - margin.bottom)
+	var width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
 	  , height = width;
 
 	  d3.select('#map').style('width',width + 'px');

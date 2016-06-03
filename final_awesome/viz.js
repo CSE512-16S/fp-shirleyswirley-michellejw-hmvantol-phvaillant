@@ -3,11 +3,21 @@ $( document ).ready(function() {
 	//compute the dimensions of the current div - #map
 	var margin = {top: 10, left: 10, bottom: 10, right: 10}
 	  , screen_width = parseInt(d3.select('#map-container').style('width'))
-	  , height = parseInt(d3.select('#map-container').style('height'));
+	  , screen_height = parseInt(d3.select('#map-container').style('height'));
 
 	//set the size of the svg to be the minimum of width and height - map ratio is 1
-	var width = Math.min(screen_width - margin.left - margin.right, height - margin.top - margin.bottom)
+	var width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
 	  , height = width;
+
+	modal_height = screen_height - 45;
+	if (modal_height > 200) {
+		d3.select('#modal-main-view').style('height',modal_height*0.8 + 'px');
+		d3.select('#modal-secondary-view').style('height',modal_height*0.2 + 'px');
+	}
+	else {
+		d3.select('#modal-main-view').style('height',modal_height + 'px');
+		d3.select('#modal-secondary-view').style('height','200px');
+	}
 
 	  d3.select('#map').style('width',width + 'px');
 	  d3.select('#map').style('height',height + 'px');
@@ -87,7 +97,8 @@ $( document ).ready(function() {
 	        .attr("d", path.pointRadius(8))
 	        //add the attribute for location id
 	        .attr("id","location_" + d.location_id)
-	        .on("click", function() {show_information(d.location_id)});
+	        .on("click", function() {center_on_location(d.location_id)})
+	        //.on("click", function() {show_information(d.location_id)});
 	    coordinates_locations[d.location_id] = [d.lon,d.lat];
 	  });
 
@@ -107,9 +118,9 @@ $( document ).ready(function() {
 
 	function resize() {
 	    // adjust width and height when the window size changes
-	   width = parseInt(d3.select('#map-container').style('width'))
-	    , height = parseInt(d3.select('#map-container').style('height'))
-	    , width = Math.min(width - margin.left - margin.right, height - margin.top - margin.bottom)
+	   screen_width = parseInt(d3.select('#map-container').style('width'))
+	    , screen_height = parseInt(d3.select('#map-container').style('height'))
+	    , width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
 	    , height = width;
 
 	    // update projection
@@ -119,6 +130,16 @@ $( document ).ready(function() {
 
 	    d3.select('#map').style('width',width + 'px');
 	    d3.select('#map').style('height',height + 'px');
+
+	    modal_height = screen_height - 45;
+		if (modal_height > 200) {
+			d3.select('#modal-main-view').style('height',modal_height*0.8 + 'px');
+			d3.select('#modal-secondary-view').style('height',modal_height*0.2 + 'px');
+		}
+		else {
+			d3.select('#modal-main-view').style('height',modal_height + 'px');
+			d3.select('#modal-secondary-view').style('height','200px');
+		}
 
 	    // resize the map container
 	    svg
