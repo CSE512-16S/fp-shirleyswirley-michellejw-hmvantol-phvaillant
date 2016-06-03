@@ -19,12 +19,12 @@
 
       <div class="container-fluid">
 
-
-
+          <!-- Map -->
           <div id="map-container" class="col-xs-5">
             <div id="map"></div>
           </div>
 
+          <!-- Info pane -->
           <div id="information_pane" class="col-xs-7" >
             
             <div class="h1">Exploring climate change</div>
@@ -32,72 +32,68 @@
 
             <a href="#" class="btn btn-link" id="start_tour" role="button">Start tour</a>
 
-
-
-
-
           </div>
 
-
-
-
-
-            <!-- Modal -->
-
-
-
+          <!-- Modal -->
           <div id="myModal" class="modal fade" role="dialog" tabindex="-1">
             
             <div class="modal-dialog col-xs-offset-5 col-xs-7">
 
-              <!-- Modal content-->
+              <!-- Modal content -->
               <div class="modal-content">
               
+                <!-- Modal header -->
                 <div class="modal-header">
+                  <span href="#" class="glyphicon glyphicon-chevron-up gray1 gi-2x col-xs-11" role="button"></span> 
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
+                </div> <!-- end modal-header -->
 
+                <!-- Modal body -->
                 <div class="modal-body">
                   
-                  <div id="titlediv" class= "container col-xs-12" align="center"></div>
+                    <!-- Title div -->
+                    <div id="titlediv" class= "container col-xs-12" align="center"></div>
 
-                    <div class="row"> 
-                        <div id="imgdiv" class="col-xs-12 svg-container"></div>
-                    </div> 
-    
-                    <div class="row"> 
-                      <div id="plotdiv" class="col-xs-12 svg-container"></div>  
+                    <!-- Before and after images div -->
+                    <div id="imgdiv" class="col-xs-12 svg-container"></div>
+
+                    <!-- Img source div -->
+                    <div class="row">
+                      <span>Source:</span>
+                      <a href="#" class="btn btn-link" id="imgsrc" role="button"></a>
+                    </div>
+
+                    <!-- Timeline plot div -->
+                    <div class="row">
+                      <span href="#" class="glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-5x svg-container" id="left" role="button"></span>
+                      <div id="plotdiv" class="col-xs-10 svg-container" align="center"></div>
+                      <span href="#" class="glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-5x" id="right" role="button"></span> 
                     </div>  
 
+                    <!-- Local and global data srcs div -->
+                    <div class="row">
+                      <a href="#" class="btn btn-primary col-xs-3" id="localsrc" role="button"></a>
+                      <a href="#" class="btn  pull-right btn-danger col-xs-3" id="globalsrc" role="button"></a>
+                    </div>
+
+                    <!-- More info div -->
                     <div class="row">
                       <div id="moreinfodiv" class="col-xs-12" align="center"></div>
                     </div>
 
+                </div> <!--end modal-body div-->
 
-
-
-
-
-
-
-                </div>
-
+                <!-- Modal footer -->
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                  <span href="#" class="glyphicon glyphicon-chevron-down gray1 gi-3x col-xs-11" role="button"></span>
+                  <button type="button" class="btn btn-default col-xs-1" data-dismiss="modal">Close</button>
+                </div> 
 
-              </div>
+              </div> <!--end modal-footer div-->
 
-            </div>
-          </div>
-
-
-
-
-
-
-
-      </div>
+            </div> <!-- end modal-content div -->
+          </div> <!-- end modal-dialog div -->
+      </div> <!-- end myModal div -->
 
   </body>
 
