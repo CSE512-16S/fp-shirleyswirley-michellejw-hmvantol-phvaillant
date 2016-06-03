@@ -1,0 +1,77 @@
+/* glue: 0.11.1 hash: 7501b3cf60 */
+        .sprite-lake_chad-19631031,
+.sprite-lake_chad-19730101,
+.sprite-lake_chad-19870101,
+.sprite-lake_chad-19970101,
+.sprite-lake_chad-20010201,
+.sprite-lake_chad-20070501,
+.sprite-lake_chad-20130501,
+.sprite-lake_chad-20140704 {
+            background-image: url('lake_chad.png');
+            background-repeat: no-repeat;
+        }
+        
+        .sprite-lake_chad-19631031 {
+            background-position: 0 0;
+            width: 1000px;
+            height: 831px;
+        }
+        
+        .sprite-lake_chad-19730101 {
+            background-position: -1000px 0;
+            width: 1000px;
+            height: 831px;
+        }
+        
+        .sprite-lake_chad-19870101 {
+            background-position: 0 -831px;
+            width: 1000px;
+            height: 831px;
+        }
+        
+        .sprite-lake_chad-19970101 {
+            background-position: -1000px -831px;
+            width: 1000px;
+            height: 831px;
+        }
+        
+        .sprite-lake_chad-20010201 {
+            background-position: -2000px 0;
+            width: 1000px;
+            height: 831px;
+        }
+        
+        .sprite-lake_chad-20070501 {
+            background-position: -2000px -831px;
+            width: 1000px;
+            height: 831px;
+        }
+        
+        .sprite-lake_chad-20130501 {
+            background-position: 0 -1662px;
+            width: 1000px;
+            height: 831px;
+        }
+        
+        .sprite-lake_chad-20140704 {
+            background-position: -1000px -1662px;
+            width: 1000px;
+            height: 831px;
+        }
+        
+        @media screen and (-webkit-min-device-pixel-ratio: 1.0), screen and (min--moz-device-pixel-ratio: 1.0), screen and (-o-min-device-pixel-ratio: 100/100), screen and (min-device-pixel-ratio: 1.0), screen and (min-resolution: 1.0dppx) {
+            .sprite-lake_chad-19631031,
+    .sprite-lake_chad-19730101,
+    .sprite-lake_chad-19870101,
+    .sprite-lake_chad-19970101,
+    .sprite-lake_chad-20010201,
+    .sprite-lake_chad-20070501,
+    .sprite-lake_chad-20130501,
+    .sprite-lake_chad-20140704 {
+                background-image: url('lake_chad.png');
+                -webkit-background-size: 3000px 2493px;
+                -moz-background-size: 3000px 2493px;
+                background-size: 3000px 2493px;
+            }
+        }
+        
