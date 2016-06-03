@@ -556,9 +556,10 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
        //.attr("y", 800)
        //.attr("text-anchor","middle")
        .text(fulldata[0].moreinfo)
-       .style("fill", "black")
-       .style("font-size", "20px")
-       .style("font-family", "sans-serif");
+       .attr("class","moreinfo");
+       //.style("fill", "black")
+       //.style("font-size", "20px")
+       //.style("font-family", "sans-serif");
 
 }); // end d3.csv
 

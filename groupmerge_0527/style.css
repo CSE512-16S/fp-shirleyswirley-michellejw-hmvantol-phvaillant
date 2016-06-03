@@ -94,9 +94,33 @@ p {
   background: none;
 }*/
 
-#imgdivID {
-  height: 100%;
+.glyphicon.gray1 {
+  color: LightGray;
 }
+
+.glyphicon.gray2 {
+  color: Gray;
+}
+
+.glyphicon.glyphicon-chevron-up {
+  display: block;
+  text-align: center;
+}
+
+.glyphicon.glyphicon-chevron-down {
+  display: block;
+  text-align: center;
+}
+
+.glyphicon.glyphicon-triangle-right {
+  display: block;
+  vertical-align: middle;
+}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
 
 /* -- -- -- -- -- --*/
 
@@ -116,8 +140,15 @@ p {
     stroke-width: 5px;
 }
 
+#instructions {
+    font-size: 25px;
+    color: black;
+    font-family: sans-serif;
+    text-anchor: middle;
+}
+
 .annotation {
-    font-size: 30px;
+    font-size: 25px;
     color: black;
     font-family: sans-serif;
 }
@@ -129,8 +160,19 @@ p {
     font-family: sans-serif;
 }
 
+.ylabel {
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.xlabel {
+    font-size: 25px;
+    font-weight: bold;
+}
+
 .moreinfo {
-    font-size: 20px;
+    font-size: 100px;
     font-size: 1vw; /*dynamic font resizing*/
     color: black;
     font-family: sans-serif;
@@ -157,7 +199,7 @@ p {
     width: 100%; /* only required for <img /> */
 }
 
-.sidebysideimages {
+.sidebysideimage {
     max-width: 50%; /*this makes the two side by side before and after sat images take up half the width of the div container they are in each*/
     max-height: 100%;
 }
