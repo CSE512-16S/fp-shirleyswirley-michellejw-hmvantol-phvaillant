@@ -217,14 +217,8 @@ $( document ).ready(function() {
     // NOTE: If you change the name of the modal div container here,
     // you must change it in show_info_inside_modal.js as well
     // NOW need to clear inner divs instead (div1, div2, etc)
-<<<<<<< HEAD
-    // $("#imgdivID").html(""); 
-    $("#titlediv").html("<button type='button' class='close' data-dismiss='modal'>&times;</button>");
-    $("#imgdiv").html("");
-=======
     $("#titlediv").html("");
-    $("#imgdiv").html(""); // CHANGE THIS NAME!!!!
->>>>>>> shirley
+    $("#imgdiv").html("");
     $("#plotdiv").html("");
     $("#moreinfodiv").html("");
 
