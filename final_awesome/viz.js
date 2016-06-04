@@ -273,7 +273,9 @@ $( document ).ready(function() {
 		    //var margin = {top:100, right:20, bottom:10, left:50};
 		    var margin = {top:100, right:0.2*single_img_width, bottom:10, left:0.2*single_img_width};
 		    var width = {image: single_img_width, plot: single_img_width*2, image_total: total_img_width};
-		    var height = {image: single_img_height, plot: 1.8*single_img_height, image_total: total_img_height};
+		    // var height = {image: single_img_height, plot: 1.8*single_img_height, image_total: total_img_height};
+		    var height = {image: single_img_height, plot: single_img_height, image_total: total_img_height};
+
 
 		    //----------------------------------
 		    // Display location title within div=titlediv
@@ -538,19 +540,6 @@ $( document ).ready(function() {
 		        window.open(fulldata[0].globaldatasrcurl);
 		    });
 
-		    // plot dots along the x-axis corresponding to images
-		    /*var dots = svg.selectAll("circle")
-		            .data(imgdata).enter()
-		                .append("circle")
-		            .attr("id", function(d) { return "circID" + d.id; })
-		            .attr("cx", function(d) { return x(d.date); })
-		            .attr("cy", height.plot-margin.bottom-margin.top) // along x-axis
-		            .attr("transform", "translate("+margin.left+",0)")
-		            .attr("r", inactivedotsize)
-		            .style("stroke", inactivedotcolor)
-		            .style("stroke-width", "3px")
-		            .style("fill", inactivedotcolor);
-		    */
 		    var dots = d3.select("#plotdiv").select("svg#plot").selectAll("rect")
 		            .data(imgdata).enter()
 		            .append("rect")
@@ -615,8 +604,25 @@ $( document ).ready(function() {
 		        .text(fulldata[0].moreinfo)
 
 		}); // end d3.csv
+		// end show_info_inside_modal function
+	};
 
-		} // end show_info_inside_modal function
+	function step_through_time(keyCode) {
+		      d3.select("text#instructions").style("opacity",0);
+		      d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
+		      if (keyCode == 39 && activeidx<alldots.size()-1) { // right arrow key
+		          activeidx++; // don't go further right than there are pts
+		      }
+		      if (keyCode == 37 && activeidx>0) { // left arrow key
+		          activeidx--; // don't go further left than there are pts
+		      }
+		      d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivedotcolor).attr("width",inactivedotsize).attr("height",inactivedotsize);
+		      d3.select("rect#rectID" + max_imgID).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
+		      d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
+		      d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
+		      d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
+		      d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
+		  }; //end step_through_time function
 
 		//-----------------
 		// HELPER FUNCTIONS

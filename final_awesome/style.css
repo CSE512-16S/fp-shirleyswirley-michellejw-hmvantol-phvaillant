@@ -71,12 +71,18 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 	height: 50%;
 }
 
+/*#modal-arrows-updown, #modal-title {
+	padding: 0px;
+}*/
+
 .modal-backdrop.in {
     opacity: 0;
 }
 
-.btn-modal { display: inline-block; 
+.btn-modal { 
+	display: inline-block; 
     position: absolute;
+    left: 97%;
   }
 
 #myModal{
@@ -135,6 +141,115 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 .sidebysideimage {
     max-width: 50%; /*this makes the two side by side before and after sat images take up half the width of the div container they are in each*/
     max-height: 100%;
+}
+
+#plot {
+	max-height: 100%;
+}
+
+/*style for plot
+*/
+
+
+.xaxis-bottom {
+    fill: none;
+    stroke: black;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.xaxis-bottom text {
+  stroke: none;
+  fill: black;
+  font-size: 30px;
+}
+
+.yaxis-g {
+    fill: none;
+    stroke: orangered;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-g text {
+  font-size: 30px;
+  stroke: none;
+  fill: orangered;
+}
+
+.yaxis-l {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-l text {
+  font-size: 30px;
+  stroke: none;
+  fill: steelblue;
+}
+
+/*.axis text {
+  font-size: 40px;
+}*/
+
+.line-l {
+    fill: none;
+    stroke: steelblue; 
+    stroke-width: 5px;
+}
+
+.line-g {
+  fill: none;
+  stroke: orangered;
+  stroke-width: 5px;
+}
+
+#instructions {
+    font-size: 25px;
+    color: black;
+    font-family: sans-serif;
+    text-anchor: middle;
+}
+
+.annotation {
+    font-size: 25px;
+    color: black;
+    font-family: sans-serif;
+}
+
+.title {
+    font-size: 40px;
+    font-size: 2vw; /*dynamic font resizing*/
+    color: black;
+    font-family: sans-serif;
+}
+
+.ylabel {
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#ylabell {
+  fill: steelblue;
+}
+
+#ylabelg {
+  fill: orangered;
+}
+
+.xlabel {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.moreinfo {
+    font-size: 100px;
+    font-size: 1vw; /*dynamic font resizing*/
+    color: black;
+    font-family: sans-serif;
 }
 
 
