@@ -288,7 +288,7 @@ $( document ).ready(function() {
 		    //----------------------------------
 		    var title = d3.select("#modal-title")
 		        .append("text")
-		        .attr("class","title")
+		        .attr("class","title-modal")
 		        .text(fulldata[0].title)
 		    
 		    //----------------------------------

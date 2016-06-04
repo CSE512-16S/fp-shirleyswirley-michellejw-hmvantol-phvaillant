@@ -66,8 +66,17 @@ body {
 	position: absolute;
 	height: 15%;
 	left: 70%;
+  text-align: right;
 	width: 30%;
 	overflow: scroll;
+}
+
+#media-icons img {
+width: 35px;
+padding: 5px;
+border: 0;
+box-shadow: 0;
+display: inline;
 }
 
 /*styling of globe
@@ -93,10 +102,6 @@ body {
 #imgdiv, #plotdiv {
 	height: 50%;
 }
-
-/*#modal-arrows-updown, #modal-title {
-	padding: 0px;
-}*/
 
 .modal-backdrop.in {
     opacity: 0;
@@ -247,10 +252,10 @@ body {
     font-family: sans-serif;
 }
 
-.title {
+.title-modal {
     font-size: 40px;
     font-size: 2vw; /*dynamic font resizing*/
-    color: black;
+    color: #333333;
     font-family: sans-serif;
 }
 
