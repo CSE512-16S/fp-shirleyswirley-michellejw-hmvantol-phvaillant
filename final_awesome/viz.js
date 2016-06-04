@@ -384,8 +384,8 @@ $( document ).ready(function() {
 		    // Set up all line plot features and
 		    // then plot lines within div=plotdiv
 		    //----------------------------------
-		    var localdatacolor = "steelblue";
-		    var globaldatacolor = "orangered";
+		    // var localdatacolor = "steelblue";
+		    // var globaldatacolor = "orangered";
 
 		    var x = d3.time.scale()
 		        .range([0,width.plot - margin.left - margin.right]);
@@ -432,7 +432,6 @@ $( document ).ready(function() {
 		        .attr("text-anchor", "middle")
 		        .attr("x", (width.plot)/2)
 		        .attr("y", height.plot+margin.bottom*6-margin.top)
-		        .style("fill", "black")
 		        .text("Year")
 
 		    // label local data left y-axis

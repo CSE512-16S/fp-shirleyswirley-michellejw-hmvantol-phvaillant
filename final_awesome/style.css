@@ -1,5 +1,9 @@
 html, body, .container-fluid, #map-container, #information_pane { height: 100%; }
 
+body {
+    background-color: rgba(96, 115, 139, 0.72);
+}
+
 #title {
 	position: absolute;
 	width:90%;
@@ -18,6 +22,7 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 	text-align: center;
 	width: 90%;
 	overflow: scroll;
+  color: #DDD;
 }
 
 #start-tour-container {
@@ -28,6 +33,22 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 	width: 90%;
 	overflow: scroll;
 }
+
+/*Start button styling
+*/
+
+.btn-starttour {
+  background-color: #607D8B;
+  border-color: #607D8B;
+}
+
+.btn-starttour:hover {
+  background-color: #2c7fb8;
+  border-color: #2c7fb8;
+}
+
+/*Main page icons/*
+*/
 
 #media-icons {
 	position: absolute;
@@ -150,6 +171,15 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 /*style for plot
 */
 
+#ylabell, .line-l, .yaxis-l {
+  stroke: steelblue;
+  fill: steelblue;
+}
+
+#ylabelg, .line-g, .yaxis-g {
+  stroke: orangered;
+  fill: orangered;
+}
 
 .xaxis-bottom {
     fill: none;
@@ -166,7 +196,6 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 
 .yaxis-g {
     fill: none;
-    stroke: orangered;
     stroke-width: 3px;
     shape-rendering: crispEdges;
 }
@@ -174,12 +203,11 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 .yaxis-g text {
   font-size: 30px;
   stroke: none;
-  fill: orangered;
+  shape-rendering: crispEdges;
 }
 
 .yaxis-l {
     fill: none;
-    stroke: steelblue;
     stroke-width: 3px;
     shape-rendering: crispEdges;
 }
@@ -187,7 +215,6 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 .yaxis-l text {
   font-size: 30px;
   stroke: none;
-  fill: steelblue;
 }
 
 /*.axis text {
@@ -196,13 +223,11 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 
 .line-l {
     fill: none;
-    stroke: steelblue; 
     stroke-width: 5px;
 }
 
 .line-g {
   fill: none;
-  stroke: orangered;
   stroke-width: 5px;
 }
 
@@ -232,17 +257,11 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
     cursor: pointer;
 }
 
-#ylabell {
-  fill: steelblue;
-}
-
-#ylabelg {
-  fill: orangered;
-}
 
 .xlabel {
     font-size: 40px;
     font-weight: bold;
+    fill: black;
 }
 
 .moreinfo {
