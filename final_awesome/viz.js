@@ -10,7 +10,7 @@ $( document ).ready(function() {
 	  , height = width;
 
 	modal_height = screen_height - 55;
-	if (modal_height > 600) {
+	if (modal_height > 1000) {
 		d3.select('#modal-main-view').style('height',modal_height*0.8 + 'px');
 		d3.select('#modal-secondary-view').style('height',modal_height*0.2 + 'px');
 	}
