@@ -97,8 +97,10 @@ $( document ).ready(function() {
 	        .attr("d", path.pointRadius(8))
 	        //add the attribute for location id
 	        .attr("id","location_" + d.location_id)
-	        .on("click", function() {center_on_location(d.location_id)})
-	        //.on("click", function() {show_information(d.location_id)});
+	        .on("click", function() {
+		        			center_on_location(d.location_id);
+		        			show_info_inside_modal(d.location_id);
+		        		});
 	    coordinates_locations[d.location_id] = [d.lon,d.lat];
 	  });
 
@@ -230,6 +232,10 @@ $( document ).ready(function() {
 	    $("#moreinfodiv").html("");
 
 	    $("#myModal").modal('show');
+
+	    activeidx = 0;
+	    alldots = null;
+	    activemouse = null;
 
 		d3.csv("timeline/location" + current_location + ".csv", function(data) {
 
@@ -378,8 +384,8 @@ $( document ).ready(function() {
 		    // Set up all line plot features and
 		    // then plot lines within div=plotdiv
 		    //----------------------------------
-		    var localdatacolor = "steelblue";
-		    var globaldatacolor = "orangered";
+		    // var localdatacolor = "steelblue";
+		    // var globaldatacolor = "orangered";
 
 		    var x = d3.time.scale()
 		        .range([0,width.plot - margin.left - margin.right]);
@@ -426,7 +432,6 @@ $( document ).ready(function() {
 		        .attr("text-anchor", "middle")
 		        .attr("x", (width.plot)/2)
 		        .attr("y", height.plot+margin.bottom*6-margin.top)
-		        .style("fill", "black")
 		        .text("Year")
 
 		    // label local data left y-axis
