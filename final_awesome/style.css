@@ -2,6 +2,11 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 
 body {
     background-color: rgba(96, 115, 139, 0.72);
+    overflow: hidden;
+}
+
+.container-fluid{
+  overflow: hidden;
 }
 
 #title {
