@@ -12,6 +12,8 @@ body {
 	margin: 0 auto;
 	text-align: center;
 	overflow: scroll;
+  font-size: 30px;
+  color: #FFF;
 }
 
 #abstract {
@@ -22,7 +24,7 @@ body {
 	text-align: center;
 	width: 90%;
 	overflow: scroll;
-  color: #DDD;
+  color: #FFF;
 }
 
 #start-tour-container {
@@ -78,7 +80,7 @@ body {
 }
 
 .water {
-  fill: LightGrey;
+  fill: #EEE;
 }
 
 .land {
@@ -123,6 +125,7 @@ body {
 .modal-content {
   height: 100%;
   padding-top: 45px;
+  background-color: #FFF;
 }
 
 .modal-header {
@@ -172,13 +175,13 @@ body {
 */
 
 #ylabell, .line-l, .yaxis-l {
-  stroke: steelblue;
-  fill: steelblue;
+  stroke: #41b6c4;
+  fill: #41b6c4;
 }
 
 #ylabelg, .line-g, .yaxis-g {
-  stroke: orangered;
-  fill: orangered;
+  stroke: #253494;
+  fill: #253494;
 }
 
 .xaxis-bottom {
