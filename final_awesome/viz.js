@@ -9,8 +9,8 @@ $( document ).ready(function() {
 	var width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
 	  , height = width;
 
-	modal_height = screen_height - 45;
-	if (modal_height > 200) {
+	modal_height = screen_height - 55;
+	if (modal_height > 600) {
 		d3.select('#modal-main-view').style('height',modal_height*0.8 + 'px');
 		d3.select('#modal-secondary-view').style('height',modal_height*0.2 + 'px');
 	}

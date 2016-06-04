@@ -102,11 +102,39 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
   padding: 5px;
   margin-top: -45px;
   height: 45px;
+  overflow: scroll;
 }
 
 .modal-body {
   height: 100%;
   overflow-y: scroll;
+  padding: 5px;
+}
+
+/* -- Liquid SVG and images -- */
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    /*width: 100%;*/
+    padding-bottom: 0%; /* aspect ratio, depends on svg ratio, for my zebra height/width = 1.2 so padding-bottom = 50% * 1.2 = 60% */
+    vertical-align: top; /* top | middle | bottom ... do what you want */
+    overflow: hidden;
+}
+
+.svg-content-responsive { /* svg into : object, img or inline */
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    top: 0; /*10px;*/
+    left: 0;
+    width: 100%; /* only required for <img /> */
+}
+
+.sidebysideimage {
+    max-width: 50%; /*this makes the two side by side before and after sat images take up half the width of the div container they are in each*/
+    max-height: 100%;
 }
 
 
