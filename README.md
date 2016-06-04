@@ -37,4 +37,4 @@ One of the greatest challenges in visualizing climate change is how to accuratel
 
 Access our visualization at http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/final_awesome/ or download this repository and run `python -m SimpleHTTPServer 9000` and access this from http://localhost:9000/.
 
-(If you put your work online, please also write a [one-line description and add a link to your final work](http://note.io/1n3u46s) so people can access it directly from CSE512-16S page.)
+**(To do: "If you put your work online, please also write a [one-line description and add a link to your final work](http://note.io/1n3u46s) so people can access it directly from CSE512-16S page.")**
