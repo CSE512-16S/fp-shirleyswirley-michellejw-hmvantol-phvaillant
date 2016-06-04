@@ -49,6 +49,18 @@ body {
   border-color: #2c7fb8;
 }
 
+/*Data source button styling*/
+
+.btn-localdata {
+  background-color: #41b6c4;
+  border-color: #41b6c4;
+}
+
+.btn-globaldata {
+  background-color: #253494;
+  border-color: #253494;
+}
+
 /*Main page icons/*
 */
 
@@ -270,6 +282,10 @@ display: inline;
     font-size: 40px;
     font-weight: bold;
     fill: black;
+}
+
+#moreinfodiv {
+    text-align: left;
 }
 
 .moreinfo {
