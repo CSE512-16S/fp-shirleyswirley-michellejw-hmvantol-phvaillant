@@ -231,6 +231,10 @@ $( document ).ready(function() {
 
 	    $("#myModal").modal('show');
 
+	    activeidx = 0;
+	    alldots = null;
+	    activemouse = null;
+
 		d3.csv("timeline/location" + current_location + ".csv", function(data) {
 
 		    // --- Just for data reference clarity later
