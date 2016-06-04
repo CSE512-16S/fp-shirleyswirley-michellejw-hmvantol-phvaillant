@@ -213,7 +213,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
         .attr("id", "ylabell")
         .attr("text-anchor", "middle")
         .attr("transform", "translate("+(margin.left)/2+","+(height.plot)/2+")rotate(-90)")
-        .style("fill", localdatacolor)
+        // .style("fill", localdatacolor)
         .on({
             click: function() {
                 // Determine if current line is visible
@@ -223,13 +223,13 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
                 d3.select("#localLine").style("opacity", newOpacity);
                 // Update whether or not the elements are active
                 ylabell.active = activeline;
-            },
-            mouseover: function() {
-                d3.select(this).style("font-size", "35px");
-            },
-            mouseout: function() {
-                d3.select(this).style("font-size", "25px");
-            }
+            } //,
+            // mouseover: function() {
+            //     d3.select(this).style("font-size", "35px");
+            // },
+            // mouseout: function() {
+            //     d3.select(this).style("font-size", "25px");
+            // }
         })
         .text(fulldata[0].localylabel);
 
@@ -239,7 +239,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
         .attr("id", "ylabelg")
         .attr("text-anchor", "middle")
         .attr("transform", "translate("+(width.plot-margin.left/2)+","+(height.plot)/2+")rotate(90)")
-        .style("fill", globaldatacolor)
+        // .style("fill", globaldatacolor)
         .style("opacity", 1)
         .on({
             click: function() {
@@ -250,13 +250,14 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
                 d3.select("#globalLine").style("opacity", newOpacity);
                 // Update whether or not the elements are active
                 ylabelg.active = activeline;
-            },
-            mouseover: function() {
-                d3.select(this).style("font-size", "35px");
-            },
-            mouseout: function() {
-                d3.select(this).style("font-size", "25px"); // defined in style.css
-            }
+            } //,
+            // mouseover: function() {
+            //     // d3.select(this).style("font-size", "35px");
+            //     d3.select(this).attr("class", "ylabel-highlight");
+            // },
+            // mouseout: function() {
+            //     d3.select(this).attr("class", "ylabel"); // defined in style.css
+            // }
         })
         .text(fulldata[0].globalylabel);
 
@@ -267,22 +268,20 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     
     // draw x-axis
     svg.append("g")
-        .attr("class", "xaxis")
+        .attr("class", "xaxis-bottom")
         .attr("transform", "translate(" + margin.left + "," + [height.plot - margin.top - margin.bottom] + ")")
         .call(x_axis);
     
     // draw local data left y-axis
     svg.append("g")
-            .attr("class", "yaxis")
-            .style("fill", localdatacolor)
+            .attr("class", "yaxis-l")
             .attr("id", "localAxis")
             .attr("transform", "translate(" + margin.left + ",0)")
             .call(y_axisl);
     
     // draw global data right y-axis
     svg.append("g")
-            .attr("class", "yaxis")
-            .style("fill", globaldatacolor)
+            .attr("class", "yaxis-g")
             .style("opacity", 1)
             .attr("id", "globalAxis")
             .attr("transform", "translate(" + (width.plot-margin.left) + ",0)")
@@ -291,8 +290,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     // draw local data line
     svg.append("path")
         .datum(localdata)
-            .attr("class", "line")
-            .attr("stroke", localdatacolor)
+            .attr("class", "line-l")
             .attr("id","localLine")
             .attr("transform", "translate(" + margin.left + ",0)")
             .attr("d",linel);
@@ -300,8 +298,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
     // draw global data line
     svg.append("path")
         .datum(globaldata)
-            .attr("class", "line")
-            .style("stroke", globaldatacolor)
+            .attr("class", "line-g")
             .style("opacity", 1) // show global data initially by default
             .attr("id", "globalLine")
             .attr("transform", "translate(" + margin.left + ",0)")

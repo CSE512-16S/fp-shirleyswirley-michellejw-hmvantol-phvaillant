@@ -1,0 +1,2 @@
+glue athabasca sprites --ordering=filename
+python css2tab.py athabasca
