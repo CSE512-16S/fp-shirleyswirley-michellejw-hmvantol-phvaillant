@@ -97,8 +97,10 @@ $( document ).ready(function() {
 	        .attr("d", path.pointRadius(8))
 	        //add the attribute for location id
 	        .attr("id","location_" + d.location_id)
-	        .on("click", function() {center_on_location(d.location_id)})
-	        //.on("click", function() {show_information(d.location_id)});
+	        .on("click", function() {
+		        			center_on_location(d.location_id);
+		        			show_info_inside_modal(d.location_id);
+		        		});
 	    coordinates_locations[d.location_id] = [d.lon,d.lat];
 	  });
 
