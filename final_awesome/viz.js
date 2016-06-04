@@ -9,6 +9,16 @@ $( document ).ready(function() {
 	var width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
 	  , height = width;
 
+	modal_height = screen_height - 45;
+	if (modal_height > 200) {
+		d3.select('#modal-main-view').style('height',modal_height*0.8 + 'px');
+		d3.select('#modal-secondary-view').style('height',modal_height*0.2 + 'px');
+	}
+	else {
+		d3.select('#modal-main-view').style('height',modal_height + 'px');
+		d3.select('#modal-secondary-view').style('height','200px');
+	}
+
 	  d3.select('#map').style('width',width + 'px');
 	  d3.select('#map').style('height',height + 'px');
 
@@ -87,7 +97,8 @@ $( document ).ready(function() {
 	        .attr("d", path.pointRadius(8))
 	        //add the attribute for location id
 	        .attr("id","location_" + d.location_id)
-	        .on("click", function() {show_information(d.location_id)});
+	        .on("click", function() {center_on_location(d.location_id)})
+	        //.on("click", function() {show_information(d.location_id)});
 	    coordinates_locations[d.location_id] = [d.lon,d.lat];
 	  });
 
@@ -107,9 +118,9 @@ $( document ).ready(function() {
 
 	function resize() {
 	    // adjust width and height when the window size changes
-	   width = parseInt(d3.select('#map-container').style('width'))
-	    , height = parseInt(d3.select('#map-container').style('height'))
-	    , width = Math.min(width - margin.left - margin.right, height - margin.top - margin.bottom)
+	   screen_width = parseInt(d3.select('#map-container').style('width'))
+	    , screen_height = parseInt(d3.select('#map-container').style('height'))
+	    , width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
 	    , height = width;
 
 	    // update projection
@@ -120,6 +131,16 @@ $( document ).ready(function() {
 	    d3.select('#map').style('width',width + 'px');
 	    d3.select('#map').style('height',height + 'px');
 
+	    modal_height = screen_height - 45;
+		if (modal_height > 200) {
+			d3.select('#modal-main-view').style('height',modal_height*0.8 + 'px');
+			d3.select('#modal-secondary-view').style('height',modal_height*0.2 + 'px');
+		}
+		else {
+			d3.select('#modal-main-view').style('height',modal_height + 'px');
+			d3.select('#modal-secondary-view').style('height','200px');
+		}
+
 	    // resize the map container
 	    svg
 	        .style('width', width + 'px')
@@ -129,76 +150,30 @@ $( document ).ready(function() {
 	    svg.selectAll('path').attr('d', path);
   	};
 
-    current_location = 1;
+  	current_location = 1;
 
     $("#start_tour").on('click', function() {
       current_location =1;
-      show_information(current_location);
+      $("#myModal").modal('show');
+      // show_information(current_location);
       center_on_location(current_location);
     });
 
-    d3.select("body").on({
-        keydown: function(d) {
-          // when you click the down arrow key, go to next location
-          if(d3.event.keyCode == 38) { 
-            current_location += 1;
-            current_location = current_location % (n_locations+1);
-            if (current_location==0) {current_location=1};
-            center_on_location(current_location);
-            show_information(current_location);
-          }
-          // when you click the up arrow key, go to prev location
-          if (d3.event.keyCode == 40) {
-            current_location -= 1;
-            current_location = current_location % 3;
-            if (current_location==0) {current_location=n_locations};
-            center_on_location(current_location);
-            show_information(current_location);
-          }
-          // when you click the right/left arrow keys, step through the timeline
-          if (d3.event.keyCode == 39 || d3.event.keyCode == 37) {
-                // 39 = right arrow key, 37 = left arrow key
-        	step_through_time(d3.event.keyCode);
-          }
-        }
-      })
-
-    $("body").on('keydown', function(e) {
-        if (e.keyCode==39) {
-            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray2 gi-5x";
-        }
-        if (e.keyCode==37) {
-            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray2 gi-5x";
-        }
+    $("#modal-up").on('click', function() {
+    	current_location += 1;
+    	current_location = current_location % (n_locations+1);
+        if (current_location==0) {current_location=1};
+    	center_on_location(current_location);
     });
 
-    $("body").on('keyup', function(e) {
-        if (e.keyCode==39) {
-            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-5x";
-        }
-        if (e.keyCode==37) {
-            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-5x";
-        }
+    $("#modal-down").on('click', function() {
+    	current_location -= 1;
+    	current_location = current_location % (n_locations+1);
+        if (current_location==0) {current_location=n_locations};
+    	center_on_location(current_location);
     });
 
-  function step_through_time(keyCode) {
-      d3.select("text#instructions").style("opacity",0);
-      d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",0);
-      if (keyCode == 39 && activeidx<alldots.size()-1) { // right arrow key
-          activeidx++; // don't go further right than there are pts
-      }
-      if (keyCode == 37 && activeidx>0) { // left arrow key
-          activeidx--; // don't go further left than there are pts
-      }
-      d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivedotcolor).attr("width",inactivedotsize).attr("height",inactivedotsize);
-      d3.select("rect#rectID" + max_imgID).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
-      d3.select(alldots[0][activeidx]).style("fill", activedotcolor).attr("width",activedotsize).attr("height",activedotsize);
-      d3.select("text#annoID" + alldots[0][activeidx].id.substring(6)).style("opacity",1);
-      d3.select("use#imagebefore").attr("xlink:href", "#imgID" + alldots[0][activeidx].id.substring(6));
-      d3.select("#before-text").text(fulldata[alldots[0][activeidx].id.substring(6)].date.getFullYear());
-  }
-
-  function center_on_location(current_location) {
+    function center_on_location(current_location) {
       d3.transition()
           .duration(1250)
           .tween("rotate", function() {
@@ -211,26 +186,30 @@ $( document ).ready(function() {
             })
     }
 
-  function show_information(current_location) {
+    d3.select("body").on({
+        keydown: function(d) {
+          // when you click the down arrow key, go to next location
+          if(d3.event.keyCode == 38) { 
+            current_location += 1;
+            current_location = current_location % (n_locations+1);
+            if (current_location==0) {current_location=1};
+            center_on_location(current_location);
+            //show_information(current_location);
+          }
+          // when you click the up arrow key, go to prev location
+          if (d3.event.keyCode == 40) {
+            current_location -= 1;
+            current_location = current_location % (n_locations+1);
+            if (current_location==0) {current_location=n_locations};
+            center_on_location(current_location);
+            //show_information(current_location);
+          }
+          // when you click the right/left arrow keys, step through the timeline
+          if (d3.event.keyCode == 39 || d3.event.keyCode == 37) {
+                // 39 = right arrow key, 37 = left arrow key
+        	step_through_time(d3.event.keyCode);
+          }
+        }
+     }) //end of select body
 
-    // Clear html within modal div container
-    // NOTE: If you change the name of the modal div container here,
-    // you must change it in show_info_inside_modal.js as well
-    // NOW need to clear inner divs instead (div1, div2, etc)
-    $("#titlediv").html("");
-    $("#imgdiv").html("");
-    $("#plotdiv").html("");
-    $("#moreinfodiv").html("");
-
-    // Show the modal
-    // NOTE: If you change the name of the modal here,
-    // you must change it in show_info_inside_modal.js as well
-    $("#myModal").modal('show');
-        
-    // Display all the contents of the modal
-    // This function defined in insidemodal.js
-    show_info_inside_modal(current_location);
-
-  } // end function show_information
-
-});
+}); //end of document ready

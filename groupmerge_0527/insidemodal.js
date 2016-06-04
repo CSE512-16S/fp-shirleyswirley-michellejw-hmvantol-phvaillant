@@ -213,7 +213,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
         .attr("id", "ylabell")
         .attr("text-anchor", "middle")
         .attr("transform", "translate("+(margin.left)/2+","+(height.plot)/2+")rotate(-90)")
-        .style("fill", localdatacolor)
+        // .style("fill", localdatacolor)
         .on({
             click: function() {
                 // Determine if current line is visible
@@ -223,13 +223,13 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
                 d3.select("#localLine").style("opacity", newOpacity);
                 // Update whether or not the elements are active
                 ylabell.active = activeline;
-            },
-            mouseover: function() {
-                d3.select(this).style("font-size", "35px");
-            },
-            mouseout: function() {
-                d3.select(this).style("font-size", "25px");
-            }
+            } //,
+            // mouseover: function() {
+            //     d3.select(this).style("font-size", "35px");
+            // },
+            // mouseout: function() {
+            //     d3.select(this).style("font-size", "25px");
+            // }
         })
         .text(fulldata[0].localylabel);
 
@@ -239,7 +239,7 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
         .attr("id", "ylabelg")
         .attr("text-anchor", "middle")
         .attr("transform", "translate("+(width.plot-margin.left/2)+","+(height.plot)/2+")rotate(90)")
-        .style("fill", globaldatacolor)
+        // .style("fill", globaldatacolor)
         .style("opacity", 1)
         .on({
             click: function() {
@@ -250,13 +250,14 @@ d3.csv("timeline/location" + current_location + ".csv", function(data) {
                 d3.select("#globalLine").style("opacity", newOpacity);
                 // Update whether or not the elements are active
                 ylabelg.active = activeline;
-            },
-            mouseover: function() {
-                d3.select(this).style("font-size", "35px");
-            },
-            mouseout: function() {
-                d3.select(this).style("font-size", "25px"); // defined in style.css
-            }
+            } //,
+            // mouseover: function() {
+            //     // d3.select(this).style("font-size", "35px");
+            //     d3.select(this).attr("class", "ylabel-highlight");
+            // },
+            // mouseout: function() {
+            //     d3.select(this).attr("class", "ylabel"); // defined in style.css
+            // }
         })
         .text(fulldata[0].globalylabel);
 
