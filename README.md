@@ -1,4 +1,4 @@
-Project Name
+Visualizing Climate Change
 ===============
 
 ## Team Members
