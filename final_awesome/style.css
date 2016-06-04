@@ -67,6 +67,10 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 /*styling modal
 */
 
+#imgdiv, #plotdiv {
+	height: 50%;
+}
+
 .modal-backdrop.in {
     opacity: 0;
 }
