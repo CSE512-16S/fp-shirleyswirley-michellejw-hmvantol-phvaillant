@@ -13,7 +13,6 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%,-50%);
-  /*display: inline-block;*/
 }
 
 .water {
@@ -25,14 +24,18 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 }
 
 
-.btn {
+.btn-starttour {
   background-color: lightgray;
   border-color: lightgray;
 }
 
-.btn:hover {
+.btn-starttour:hover {
   background-color: lightgreen;
   border-color: lightgreen;
+}
+
+.btn-source {
+  font-size: 15px;
 }
 
 h1 {
@@ -43,9 +46,7 @@ p {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-#startbutton {
-  font-family: serif;
-}
+
 
 /* -- Modal Stuff -- */
 
@@ -79,8 +80,8 @@ p {
 
 .modal-header {
   padding: 10px;
-  margin-top: -50px;
-  height: 50px;
+  margin-top: -45px;
+  height: 45px;
 }
 
 .modal-body {
@@ -94,9 +95,11 @@ p {
   height: 50px;
 }
 
-/*.modal-backdrop {
-  background: none;
-}*/
+/* -- -- -- -- -- --*/
+
+
+
+/* -- Glyphs -- */
 
 .glyphicon.gray1 {
   color: LightGray;
@@ -130,18 +133,67 @@ p {
 
 /* -- Styles orignally defined for info inside modal -- */
 
-.axis path,
-.axis line {
+/*.axis-path,
+.axis-line {
+    fill: none;
+    stroke: black;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}*/
+
+.xaxis-bottom {
     fill: none;
     stroke: black;
     stroke-width: 3px;
     shape-rendering: crispEdges;
 }
 
-.line {
+.xaxis-bottom text {
+  stroke: none;
+  fill: black;
+  font-size: 30px;
+}
+
+.yaxis-g {
     fill: none;
-    /* stroke: black; */
+    stroke: orangered;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-g text {
+  font-size: 30px;
+  stroke: none;
+  fill: orangered;
+}
+
+.yaxis-l {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-l text {
+  font-size: 30px;
+  stroke: none;
+  fill: steelblue;
+}
+
+/*.axis text {
+  font-size: 40px;
+}*/
+
+.line-l {
+    fill: none;
+    stroke: steelblue; 
     stroke-width: 5px;
+}
+
+.line-g {
+  fill: none;
+  stroke: orangered;
+  stroke-width: 5px;
 }
 
 #instructions {
@@ -165,13 +217,21 @@ p {
 }
 
 .ylabel {
-    font-size: 25px;
+    font-size: 40px;
     font-weight: bold;
     cursor: pointer;
 }
 
+#ylabell {
+  fill: steelblue;
+}
+
+#ylabelg {
+  fill: orangered;
+}
+
 .xlabel {
-    font-size: 25px;
+    font-size: 40px;
     font-weight: bold;
 }
 
