@@ -647,7 +647,7 @@ $( document ).ready(function() {
 	    // add annotations
 	   
 	    d3.select("#annodiv").append("svg")
-	    		.attr("width", modal_main_view_width*0.8)
+	    		.attr("width", modal_main_view_width)
 	    		.attr("height", modal_main_view_height*0.1)
 	    	.selectAll("text#anno")
            	.data(imgdata).enter()
@@ -658,10 +658,12 @@ $( document ).ready(function() {
                 .attr("x", modal_main_view_width*0.8*0.5)
                 .attr("y", modal_main_view_height*0.1*0.5)
                 .attr("dx", "1em")
-                .text(function(d) { return d.annotation; })
                 .style("opacity", 0)
                 // .style("text-anchor","middle")
-            .call(wrap_anno, 100);
+                .text(function(d) { return d.annotation; });
+	            
+	     d3.select("#annodiv").selectAll("text").call(wrap_anno, modal_main_view_width*0.8);
+
 
 	    // add prelim instructions where annotated text will be after hovering/clicking bars
 	    // anno.append("text")
@@ -814,8 +816,8 @@ $( document ).ready(function() {
 		        lineNumber = 0,
 		        lineHeight = 1.1, // ems
 		        y = text.attr("y"),
-		        dx = parseFloat(text.attr("dx")),
-		        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dx", dx + "em");
+		        dy = parseFloat(text.attr("dy")),
+		        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
 		    while (word = words.pop()) {
 		      line.push(word);
 		      tspan.text(line.join(" "));
@@ -823,11 +825,10 @@ $( document ).ready(function() {
 		        line.pop();
 		        tspan.text(line.join(" "));
 		        line = [word];
-		        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dx", ++lineNumber * lineHeight + dx + "em").text(word);
+		        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
 		      }
 		    }
 		  });
 		}
-
 
 }); //end of document ready
