@@ -213,10 +213,10 @@ $( document ).ready(function() {
 
     $("body").on('keydown', function(e) {
         if (e.keyCode==39) {
-            //document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-6 gray2 gi-3x";
+            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray2 gi-3x";
         }
         if (e.keyCode==37) {
-            //document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-6 gray2 gi-3x";
+            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray2 gi-3x";
         }
         if (e.keyCode==38) {
             document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray2 gi-5x";
@@ -228,10 +228,10 @@ $( document ).ready(function() {
 
     $("body").on('keyup', function(e) {
         if (e.keyCode==39) {
-            //document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-6 gray1 gi-3x";
+            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-3x";
         }
         if (e.keyCode==37) {
-            //document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-6 gray1 gi-3x";
+            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-3x";
         }
         if (e.keyCode==38) {
             document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray1 gi-5x";
@@ -274,12 +274,12 @@ $( document ).ready(function() {
 	var activebarcolor = "Gray";
 	var inactivebarcolor = "LightGray";
 
-        // --- Define global plot variables
-        var margin = {top:50, right:110, bottom:50, left:55};
+	// --- Define global plot variables
+	var margin = {top:50, right:110, bottom:50, left:75};
 
 	function show_info_inside_modal(current_location) {
 
-            $("#modal-title").html("");
+        $("#modal-title").html("");
 	    $("#imgdiv").html("");
 	    $("#plotdiv").html("");
 	    $("#moreinfodiv").html("");
@@ -578,7 +578,7 @@ $( document ).ready(function() {
 	    yg.domain(d3.extent(fulldata, function(d) { return d.globaldata; }));
 
 	    // draw rectangles in background
-            var barwidth = plotwidth/50;
+        var barwidth = plotwidth/50;
 	    var bars = d3.select("#plotdiv").select("svg#plot").selectAll("rect")
 	            .data(imgdata).enter()
 	            .append("rect")
@@ -650,26 +650,33 @@ $( document ).ready(function() {
 
 	                                                        
 	    // add annotations
-	    var anno = svg.selectAll("text#anno")
-	            .data(imgdata).enter()
-	            .append("text") 
-	                .attr("id", function(d) { return "annoID" + d.id; })
-	                .attr("class", "annoID")
-	                .attr("class", "annotation") // from css
-	                .attr("x", (plotwidth)/2)
-	                .attr("y", margin.top/2)
-	                .text(function(d) { return d.annotation; })
-	                .style("opacity", 0)
-	                .style("text-anchor","middle");
+	   
+	    d3.select("#annodiv").append("svg")
+	    		.attr("width", modal_main_view_width*0.8)
+	    		.attr("height", modal_main_view_height*0.1)
+	    	.selectAll("text#anno")
+           	.data(imgdata).enter()
+            .append("text")
+                .attr("id", function(d) { return "annoID" + d.id; })
+                .attr("class", "annoID")
+                .attr("class", "annotation") // from css
+                .attr("x", modal_main_view_width*0.8*0.5)
+                .attr("y", modal_main_view_height*0.1*0.5)
+                .attr("dx", "1em")
+                .text(function(d) { return d.annotation; })
+                .style("opacity", 0)
+                .style("text-anchor","middle")
+            	.call(wrap_anno, modal_main_view_width*0.8);
 
 	    // add prelim instructions where annotated text will be after hovering/clicking bars
-	    svg.append("text")
-	            .attr("id", "instructions")
-	            .attr("x", (plotwidth)/2)
-	            .attr("y", margin.top/2)
-	            //.attr("transform", "translate("+margin.left+",0)")
-	            .text("Click on plot elements below; use left/right arrow keys to step through time")
-	            .style("fill","black");
+	    // anno.append("text")
+     //        .attr("id", "instructions")
+     //        .attr("x", (plotwidth)/2)
+     //        .attr("y", margin.top/2)
+     //        //.attr("transform", "translate("+margin.left+",0)")
+     //        .text("Click on plot elements below; use left/right arrow keys to step through time")
+     //        .style("fill","black")
+     //        .style("text-anchor","middle");
 
 	    // differently color/size the bars at the very beginning and end of the time series
 	    d3.select("rect#rectID" + min_imgID).style("fill", activebarcolor);
@@ -798,6 +805,30 @@ $( document ).ready(function() {
 		        tspan.text(line.join(" "));
 		        line = [word];
 		        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+		      }
+		    }
+		  });
+		}
+
+		function wrap_anno(text, width) {
+		  text.each(function() {
+		    var text = d3.select(this),
+		        words = text.text().split(/\s+/).reverse(),
+		        word,
+		        line = [],
+		        lineNumber = 0,
+		        lineHeight = .2, // ems
+		        y = text.attr("y"),
+		        dx = parseFloat(text.attr("dx")),
+		        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dx", dx + "em");
+		    while (word = words.pop()) {
+		      line.push(word);
+		      tspan.text(line.join(" "));
+		      if (tspan.node().getComputedTextLength() > width) {
+		        line.pop();
+		        tspan.text(line.join(" "));
+		        line = [word];
+		        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dx", ++lineNumber * lineHeight + dx + "em").text(word);
 		      }
 		    }
 		  });
