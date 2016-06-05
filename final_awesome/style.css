@@ -261,7 +261,7 @@ display: inline;
 .xaxis-bottom text {
   stroke: none;
   fill: black;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .yaxis-g {
@@ -271,7 +271,7 @@ display: inline;
 }
 
 .yaxis-g text {
-  font-size: 10px;
+  font-size: 14px;
   stroke-width: 1px;
 }
 
@@ -282,7 +282,7 @@ display: inline;
 }
 
 .yaxis-l text {
-  font-size: 10px;
+  font-size: 14px;
   stroke-width: 1px;
 }
 
@@ -321,7 +321,7 @@ display: inline;
 }
 
 .ylabel {
-    font-size: 10px;
+    font-size: 14px;
     /*font-weight: bold;*/
     cursor: pointer;
     stroke-width: 1px;
@@ -338,7 +338,7 @@ display: inline;
 }
 
 .moreinfo {
-    font-size: 10px;
+    font-size: 14px;
     /*font-size: 1vw; /*dynamic font resizing*/
     color: black;
     font-family: sans-serif;
