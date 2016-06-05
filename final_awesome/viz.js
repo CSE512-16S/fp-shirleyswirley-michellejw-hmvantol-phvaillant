@@ -9,12 +9,16 @@ $( document ).ready(function() {
 	var width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
 	  , height = width;
 
-	modal_height = screen_height - 55;
+	var modal_height = screen_height - 55;
+	var modal_main_view_height = 0;
+	var modal_main_view_width = 0.5833333333*($("#myModal").width());
 	if (modal_height > 1000) {
-		d3.select('#modal-main-view').style('height',modal_height*0.8 + 'px');
-		d3.select('#modal-secondary-view').style('height',modal_height*0.2 + 'px');
+		modal_main_view_height = modal_height*0.8;
+		d3.select('#modal-main-view').style('height', modal_main_view + 'px');
+		d3.select('#modal-secondary-view').style('height', modal_height*0.2 + 'px');
 	}
 	else {
+		modal_main_view_height = modal_height;
 		d3.select('#modal-main-view').style('height',modal_height + 'px');
 		d3.select('#modal-secondary-view').style('height','200px');
 	}
@@ -119,37 +123,111 @@ $( document ).ready(function() {
 	d3.select(window).on('resize', resize);
 
 	function resize() {
-	    // adjust width and height when the window size changes
-	   screen_width = parseInt(d3.select('#map-container').style('width'))
-	    , screen_height = parseInt(d3.select('#map-container').style('height'))
-	    , width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
-	    , height = width;
+	   
+		   //compute the dimensions of the current div - #map
+		var margin = {top: 10, left: 10, bottom: 10, right: 10}
+		  , screen_width = parseInt(d3.select('#map-container').style('width'))
+		  , screen_height = parseInt(d3.select('#map-container').style('height'));
 
-	    // update projection
+		//set the size of the svg to be the minimum of width and height - map ratio is 1
+		var width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
+		  , height = width;
+
+		// update projection
 	    projection
 	        .translate([width / 2, height / 2])
 	        .scale(width/2);
 
-	    d3.select('#map').style('width',width + 'px');
-	    d3.select('#map').style('height',height + 'px');
+		d3.select('#map').style('width',width + 'px');
+	  	d3.select('#map').style('height',height + 'px');
 
-	    modal_height = screen_height - 45;
-		if (modal_height > 200) {
-			d3.select('#modal-main-view').style('height',modal_height*0.8 + 'px');
-			d3.select('#modal-secondary-view').style('height',modal_height*0.2 + 'px');
-		}
-		else {
-			d3.select('#modal-main-view').style('height',modal_height + 'px');
-			d3.select('#modal-secondary-view').style('height','200px');
-		}
-
-	    // resize the map container
+			    // resize the map id
 	    svg
 	        .style('width', width + 'px')
 	        .style('height', height + 'px');
 
 	    // resize the map
 	    svg.selectAll('path').attr('d', path);
+
+		var modal_height = screen_height - 55;
+		var modal_main_view_height = 0;
+		var modal_main_view_width = 0.5833333333*($("#myModal").width());
+		if (modal_height > 1000) {
+			modal_main_view_height = modal_height*0.8;
+			d3.select('#modal-main-view').style('height', modal_main_view + 'px');
+			d3.select('#modal-secondary-view').style('height', modal_height*0.2 + 'px');
+		}
+		else {
+			modal_main_view_height = modal_height;
+			d3.select('#modal-main-view').style('height',modal_height + 'px');
+			d3.select('#modal-secondary-view').style('height','200px');
+		}
+
+		// width.plot = modal_main_view_width;
+		// height.plot = modal_main_view_height*0.5;
+		// x.range([0,width.plot - margin.left - margin.right]);
+		// yl.range([height.plot - margin.top - margin.bottom, margin.top]);
+		// yg.range([height.plot - margin.top - margin.bottom, margin.top]);
+		// x_axis.scale(x);
+		// y_axisl.scale(yl);
+		// y_axisg.scale(yg);
+
+		//create the variables for the plot - not optimal at all....
+		var x = d3.time.scale()
+		        .range([0,modal_main_view_width - margin.left - margin.right]);
+		    
+		    // l = local data
+		    var yl = d3.scale.linear()
+		        .range([modal_main_view_height*0.5 - margin.top - margin.bottom, margin.top]);
+		    
+		    // g = global data
+		    var yg = d3.scale.linear()
+		        .range([modal_main_view_height*0.5 - margin.top - margin.bottom, margin.top]);
+		    
+		    var x_axis = d3.svg.axis()
+		        .scale(x)
+		        .orient("bottom");
+		    
+		    var y_axisl = d3.svg.axis()
+		        .scale(yl)
+		        .orient("left");
+		         
+		    var y_axisg = d3.svg.axis()
+		        .scale(yg)
+		        .orient("right");
+
+		    var linel = d3.svg.line()
+		        .x(function(d) { return x(d.date); })
+		        .y(function(d) { return yl(d.localdata); });
+		         
+		    var lineg = d3.svg.line()
+		        .x(function(d) { return x(d.date); })
+		        .y(function(d) { return yg(d.globaldata); });
+
+		    		    // define data domains
+		    x.domain(d3.extent(fulldata, function(d) { return d.date; }));
+		    yl.domain(d3.extent(fulldata, function(d) { return d.localdata; }));
+		    yg.domain(d3.extent(fulldata, function(d) { return d.globaldata; }));
+
+	    //resize plot
+	    chart = d3.select("#plot");
+	    chart.selectAll("#xlabel").attr("x", (modal_main_view_width)/2)
+		        .attr("y", margin.top)
+
+		chart.selectAll("#ylabelg").attr("transform","translate("+(modal_main_view_width-margin.left/2)+","+(modal_main_view_height)/2+")rotate(90)");
+		chart.selectAll("#ylabell").attr("transform", "translate("+(margin.left)/2+","+(modal_main_view_height)/4+")rotate(-90)");
+
+		//resize of xaxis bottom does not work;
+		chart.selectAll(".xaxis-bottom").attr("transform", "translate(" + margin.left + "," + [modal_main_view_height*0.5 - margin.top - margin.bottom] + ")")
+		        .call(x_axis);
+		chart.selectAll("#localAxis").call(y_axisl);
+		chart.selectAll("#localLine").attr("d",linel);
+		chart.selectAll("#globalLine").attr("d",lineg);
+		chart.selectAll("rect").attr("x", function(d) { return x(d.date);})
+		            .attr("y", modal_main_view_height*0.5 - margin.top - margin.bottom - 10);
+		chart.selectAll("text#anno").attr("x", (modal_main_view_width)/2);
+
+
   	};
 
   	current_location = 1;
@@ -277,10 +355,14 @@ $( document ).ready(function() {
 
 		    // --- Define margins + plot and image widths/heights
 		    //var margin = {top:100, right:20, bottom:10, left:50};
-		    var margin = {top:100, right:0.2*single_img_width, bottom:10, left:0.2*single_img_width};
-		    var width = {image: single_img_width, plot: single_img_width*2, image_total: total_img_width};
+		    //why the margin depending of img width and height? seems to do weird thing
+		    var margin = {top:10, right:10, bottom:10, left:10};
+		    //var margin = {top:100, right:0.2*single_img_width, bottom:10, left:0.2*single_img_width};
+		    var width = {image: single_img_width, plot: modal_main_view_width, image_total: total_img_width};
+		    var height = {image: single_img_height, plot: 0.5*modal_main_view_height, image_total: total_img_height};
+		    //var width = {image: single_img_width, plot: single_img_width*2, image_total: total_img_width};
 		    // var height = {image: single_img_height, plot: 1.8*single_img_height, image_total: total_img_height};
-		    var height = {image: single_img_height, plot: single_img_height, image_total: total_img_height};
+		    //var height = {image: single_img_height, plot: single_img_height, image_total: total_img_height};
 
 
 		    //----------------------------------
@@ -422,16 +504,20 @@ $( document ).ready(function() {
 		    var svg = d3.select("#plotdiv")
 		        .append("svg")
 		            .attr("id", "plot")
-		            .attr("preserveAspectRatio", "xMinYMin meet")
-		            .attr("viewBox", "0 0 " + width.plot + " " + height.plot)
+		            .attr("width","100%")
+		            .attr("height","100%")
+		            //.attr("preserveAspectRatio", "xMinYMin meet")
+		            //.attr("viewBox", "0 0 " + width.plot + " " + height.plot)
 		            .classed("svg-content", true);
 		    
 		    // label x-axis
 		    svg.append("text")
 		        .attr("class", "xlabel")
+		        .attr("id","xlabel")
 		        .attr("text-anchor", "middle")
 		        .attr("x", (width.plot)/2)
-		        .attr("y", height.plot+margin.bottom*6-margin.top)
+		        .attr("y", margin.top)
+		        //.attr("y", height.plot+margin.bottom*6-margin.top)
 		        .text("Year")
 
 		    // label local data left y-axis
