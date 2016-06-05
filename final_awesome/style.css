@@ -313,6 +313,8 @@ display: inline;
     font-family: sans-serif;
 }
 
+/*Glyphicon styling*/
+
 .glyphicon.gray1 {
   color: LightGray;
 }
