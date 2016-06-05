@@ -374,7 +374,6 @@ $( document ).ready(function() {
 
 		    // add image src info on top of after image
 		    d3.select("#imgsrc")
-		        .append("text")
 		        .text(fulldata[0].imgsrctext);
 		    $("#imgsrc").on('click', function() {
 		        window.open(fulldata[0].imgsrcurl);
