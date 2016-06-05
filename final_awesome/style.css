@@ -59,7 +59,6 @@ body {
 .btn-localdata {
   background-color: #41b6c4;
   border-color: #41b6c4;
-  text-align: left;
 }
 
 .btn-localdata:hover {
@@ -70,7 +69,6 @@ body {
 .btn-globaldata {
   background-color: #253494;
   border-color: #253494;
-  text-align: right;
 }
 
 .btn-globaldata:hover {
