@@ -661,8 +661,8 @@ $( document ).ready(function() {
                 .attr("dx", "1em")
                 .text(function(d) { return d.annotation; })
                 .style("opacity", 0)
-                .style("text-anchor","middle")
-            	.call(wrap_anno, modal_main_view_width*0.8);
+                // .style("text-anchor","middle")
+            .call(wrap_anno, 100);
 
 	    // add prelim instructions where annotated text will be after hovering/clicking bars
 	    // anno.append("text")
@@ -813,7 +813,7 @@ $( document ).ready(function() {
 		        word,
 		        line = [],
 		        lineNumber = 0,
-		        lineHeight = .2, // ems
+		        lineHeight = 1.1, // ems
 		        y = text.attr("y"),
 		        dx = parseFloat(text.attr("dx")),
 		        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dx", dx + "em");
