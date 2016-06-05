@@ -663,7 +663,7 @@ $( document ).ready(function() {
                 // .style("text-anchor","middle")
                 .text(function(d) { return d.annotation; });
 	            
-	     d3.select("#annodiv").selectAll("text").call(wrap_anno, modal_main_view_width*0.8);
+	     d3.select("#annodiv").selectAll("text#anno").call(wrap_anno, modal_main_view_width*0.8);
 
 
 	    // add prelim instructions where annotated text will be after hovering/clicking bars
