@@ -2,11 +2,25 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 
 body {
     background-color: rgba(96, 115, 139, 0.72);
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 .container-fluid{
-  overflow: hidden;
+  overflow: hidden !important;
+}
+
+#modal-up {
+  position: absolute;
+  margin-left: -35px;
+  left: 50%;
+}
+
+#modal-down {
+  position: absolute;
+  margin-left: -35px;
+  left: 50%;
+  top: 100%;
+  margin-top: -70px;
 }
 
 #title {
@@ -204,6 +218,11 @@ display: inline;
     max-height: 100%;
 }
 
+/* doesn't work */
+#before-text {
+    font-size: 100px;
+}
+
 #plot {
 	max-height: 100%;
 }
@@ -232,27 +251,29 @@ display: inline;
 .xaxis-bottom text {
   stroke: none;
   fill: black;
-  font-size: 30px;
+  font-size: 10px;
 }
 
 .yaxis-g {
     fill: none;
-    stroke-width: 3px;
+    stroke-width: 2px;
     shape-rendering: crispEdges;
 }
 
 .yaxis-g text {
-  font-size: 30px;
+  font-size: 10px;
+  stroke-width: 1px;
 }
 
 .yaxis-l {
     fill: none;
-    stroke-width: 3px;
+    stroke-width: 2px;
     shape-rendering: crispEdges;
 }
 
 .yaxis-l text {
-  font-size: 30px;
+  font-size: 10px;
+  stroke-width: 1px;
 }
 
 /*.axis text {
@@ -270,14 +291,14 @@ display: inline;
 }
 
 #instructions {
-    font-size: 25px;
+    font-size: 10px;
     color: black;
     font-family: sans-serif;
     text-anchor: middle;
 }
 
 .annotation {
-    font-size: 25px;
+    font-size: 10px;
     color: black;
     font-family: sans-serif;
 }
@@ -290,14 +311,14 @@ display: inline;
 }
 
 .ylabel {
-    font-size: 40px;
-    font-weight: bold;
+    font-size: 10px;
+    /*font-weight: bold;*/
     cursor: pointer;
+    stroke-width: 1px;
 }
 
-
 .xlabel {
-    font-size: 40px;
+    font-size: 20px;
     font-weight: bold;
     fill: black;
 }
@@ -307,10 +328,24 @@ display: inline;
 }
 
 .moreinfo {
-    font-size: 100px;
-    font-size: 1vw; /*dynamic font resizing*/
+    font-size: 10px;
+    /*font-size: 1vw; /*dynamic font resizing*/
     color: black;
     font-family: sans-serif;
 }
 
+/*Glyphicon styling*/
+
+.glyphicon.gray1 {
+  color: LightGray;
+}
+
+.glyphicon.gray2 {
+  color: Gray;
+}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
 
