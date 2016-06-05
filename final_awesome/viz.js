@@ -332,7 +332,7 @@ $( document ).ready(function() {
 
 	function show_info_inside_modal(current_location) {
 
-		$("#modal-title").html("");
+            $("#modal-title").html("");
 	    $("#imgdiv").html("");
 	    $("#plotdiv").html("");
 	    $("#moreinfodiv").html("");
@@ -356,9 +356,13 @@ $( document ).ready(function() {
 		        d.date = parseDate(d.date);
 		        d.x = +d.x;
 		        d.y = +d.y;
+		        d.singleimgwidth = +d.singleimgwidth;
+		        d.singleimgheight = +d.singleimgheight;
+		        d.totalimgwidth = +d.totalimgwidth;
+		        d.totalimgheight = +d.totalimgheight;
 		    });
 
-		    // --- Subselect the following data: 
+                    // --- Subselect the following data: 
 		    var id = 0;
 		    for (var i = 0; i < fulldata.length; i++) {fulldata[i].id = id++;}
 		    // Data associated with images
@@ -373,13 +377,11 @@ $( document ).ready(function() {
 		    min_imgID = Math.min.apply(null,imgIDarray);
 		    max_imgID = Math.max.apply(null,imgIDarray);
 
-		    // --- Calculate image size attributes
-		    imgxpos = imgdata.map(function(d) { return Math.abs(d.x); });
-		    imgypos = imgdata.map(function(d) { return Math.abs(d.y); });
-		    single_img_width = Math.min.apply(0, imgxpos.filter(Number));
-		    single_img_height = Math.min.apply(0, imgypos.filter(Number));
-		    total_img_width = Math.max.apply(0, imgxpos.filter(Number)) + single_img_width;
-		    total_img_height = Math.max.apply(0, imgypos.filter(Number)) + single_img_height;
+		    // --- Define image size attributes
+                    single_img_width = fulldata[0].singleimgwidth; 
+		    single_img_height = fulldata[0].singleimgheight; 
+                    total_img_width = fulldata[0].totalimgwidth; 
+		    total_img_height = fulldata[0].totalimgheight; 
 
 		    // --- Define margins + plot and image widths/heights
 		    //var margin = {top:100, right:20, bottom:10, left:50};
