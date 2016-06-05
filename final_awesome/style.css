@@ -211,6 +211,7 @@ display: inline;
 /*style for plot
 */
 
+
 #ylabell, .line-l, .yaxis-l {
   stroke: #41b6c4;
   fill: #41b6c4;
@@ -242,8 +243,6 @@ display: inline;
 
 .yaxis-g text {
   font-size: 30px;
-  stroke: none;
-  shape-rendering: crispEdges;
 }
 
 .yaxis-l {
@@ -254,7 +253,6 @@ display: inline;
 
 .yaxis-l text {
   font-size: 30px;
-  stroke: none;
 }
 
 /*.axis text {
