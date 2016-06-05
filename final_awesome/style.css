@@ -115,6 +115,7 @@ body {
 	left: 70%;
   text-align: right;
 	width: 30%;
+  margin: 10px;
 	overflow: auto;
 }
 
@@ -361,7 +362,7 @@ display: inline;
 
 
 
-/*Setting map point colors
+/*Setting map point colors - but not being used (5 June 4:14pm) b/c it breaks point positioning relative to globe.
 */
 
 .activepoint {
