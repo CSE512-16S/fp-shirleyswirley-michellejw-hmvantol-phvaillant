@@ -55,6 +55,8 @@ body {
 	overflow: auto;
 }
 
+
+
 /*Start button styling
 */
 
@@ -357,3 +359,15 @@ display: inline;
 .gi-4x{font-size: 4em;}
 .gi-5x{font-size: 5em;}
 
+
+
+/*Setting map point colors
+*/
+
+.activepoint {
+  fill: orange;
+}
+
+.nonactivepoint {
+  fill: yellow;
+}

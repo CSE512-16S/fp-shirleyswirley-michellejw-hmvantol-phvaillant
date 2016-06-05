@@ -72,6 +72,7 @@ $( document ).ready(function() {
 
 	var coordinates_locations = {};
 	var n_locations = 0;
+	var prevloc = null; // setting global variable for location number used in center_on_location function for setting point path color on the globe
 
 	//When a task completes, it must call the provided callback. The first argument to the callback should be null if the task is successfull, or the error if the task failed.
 	function ready(error, world, locations) {
@@ -101,6 +102,7 @@ $( document ).ready(function() {
 	        .datum({type: "Point", coordinates: [d.lon, d.lat]})
 	        .attr("class", "locations")
 	        .attr("fill","yellow")
+	        // .attr("class","nonactivepoint")
 	        .attr("d", path.pointRadius(8))
 	        //add the attribute for location id
 	        .attr("id","location_" + d.location_id)
@@ -199,6 +201,17 @@ $( document ).ready(function() {
     });
 
     function center_on_location(current_location) {
+      // set fill for previous loc id back to original
+      d3.select(prevloc).attr("fill","yellow");
+      // d3.select(prevloc).attr("class","nonactivepoint");
+      // get new loc id
+      locnum = current_location - 1; // get index
+      locid_str = '#location_' + current_location;
+      d3.select("#map").select(locid_str).attr("fill","orange");
+      // d3.select("#map").select(locid_str).attr("class","activepoint");
+      prevloc = locid_str;
+
+
       d3.transition()
           .duration(1250)
           .tween("rotate", function() {
@@ -209,6 +222,8 @@ $( document ).ready(function() {
                 svg.selectAll("path.locations").attr("d", path);
               };
             })
+
+
     }
 
     $("body").on('keyup', function(e) {
