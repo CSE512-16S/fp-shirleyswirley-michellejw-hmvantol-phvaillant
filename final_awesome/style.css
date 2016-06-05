@@ -55,6 +55,8 @@ body {
 	overflow: auto;
 }
 
+
+
 /*Start button styling
 */
 
@@ -144,8 +146,16 @@ display: inline;
 /*styling modal
 */
 
-#imgdiv, #plotdiv {
-	height: 50%;
+#imgdiv {
+	height: 40%;
+}
+
+#plotdiv {
+  height: 50%;
+}
+
+#annodiv {
+  height: 10%;
 }
 
 .modal-backdrop.in {
@@ -251,7 +261,7 @@ display: inline;
 .xaxis-bottom text {
   stroke: none;
   fill: black;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .yaxis-g {
@@ -261,7 +271,7 @@ display: inline;
 }
 
 .yaxis-g text {
-  font-size: 10px;
+  font-size: 14px;
   stroke-width: 1px;
 }
 
@@ -272,7 +282,7 @@ display: inline;
 }
 
 .yaxis-l text {
-  font-size: 10px;
+  font-size: 14px;
   stroke-width: 1px;
 }
 
@@ -298,7 +308,7 @@ display: inline;
 }
 
 .annotation {
-    font-size: 10px;
+    font-size: 20px;
     color: black;
     font-family: sans-serif;
 }
@@ -311,7 +321,7 @@ display: inline;
 }
 
 .ylabel {
-    font-size: 10px;
+    font-size: 14px;
     /*font-weight: bold;*/
     cursor: pointer;
     stroke-width: 1px;
@@ -328,7 +338,7 @@ display: inline;
 }
 
 .moreinfo {
-    font-size: 10px;
+    font-size: 14px;
     /*font-size: 1vw; /*dynamic font resizing*/
     color: black;
     font-family: sans-serif;
@@ -349,3 +359,15 @@ display: inline;
 .gi-4x{font-size: 4em;}
 .gi-5x{font-size: 5em;}
 
+
+
+/*Setting map point colors
+*/
+
+.activepoint {
+  fill: orange;
+}
+
+.nonactivepoint {
+  fill: yellow;
+}
