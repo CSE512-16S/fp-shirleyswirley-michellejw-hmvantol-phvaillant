@@ -211,21 +211,6 @@ $( document ).ready(function() {
             })
     }
 
-    $("body").on('keydown', function(e) {
-        if (e.keyCode==39) {
-            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray2 gi-3x";
-        }
-        if (e.keyCode==37) {
-            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray2 gi-3x";
-        }
-        if (e.keyCode==38) {
-            document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray2 gi-5x";
-        }
-        if (e.keyCode==40) {
-            document.getElementById("modal-down").className = "glyphicon glyphicon-chevron-down gray2 gi-5x";
-        }
-    });
-
     $("body").on('keyup', function(e) {
         if (e.keyCode==39) {
             document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-3x";
@@ -245,6 +230,7 @@ $( document ).ready(function() {
         keydown: function(d) {
           // when you click the down arrow key, go to next location
           if(d3.event.keyCode == 38) { 
+          	document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray2 gi-5x";
             current_location += 1;
             current_location = current_location % (n_locations+1);
             if (current_location==0) {current_location=1};
@@ -253,6 +239,7 @@ $( document ).ready(function() {
           }
           // when you click the up arrow key, go to prev location
           if (d3.event.keyCode == 40) {
+          	document.getElementById("modal-down").className = "glyphicon glyphicon-chevron-down gray2 gi-5x";
             current_location -= 1;
             current_location = current_location % (n_locations+1);
             if (current_location==0) {current_location=n_locations};
@@ -260,7 +247,12 @@ $( document ).ready(function() {
             show_info_inside_modal(current_location);
           }
           // when you click the right/left arrow keys, step through the timeline
-          if (d3.event.keyCode == 39 || d3.event.keyCode == 37) {
+          if (d3.event.keyCode == 39) {
+          	document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray2 gi-3x";
+          	step_through_time(d3.event.keyCode);
+          } 
+          if (d3.event.keyCode == 37) {
+          	document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray2 gi-3x";
                 // 39 = right arrow key, 37 = left arrow key
         	step_through_time(d3.event.keyCode);
           }
