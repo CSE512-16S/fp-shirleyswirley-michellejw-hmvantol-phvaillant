@@ -142,6 +142,7 @@ display: inline;
 	display: inline-block; 
     position: absolute;
     left: 97%;
+    z-index: 1;
   }
 
 #myModal{
