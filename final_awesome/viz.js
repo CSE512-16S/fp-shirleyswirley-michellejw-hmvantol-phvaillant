@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 
 	//compute the dimensions of the current div - #map
-	var margin_map = {top: 10, left: 10, bottom: 10, right: 10}
+	var margin_map = {top: 70, left: 10, bottom: 70, right: 10}
 	  , screen_width = parseInt(d3.select('#map-container').style('width'))
 	  , screen_height = parseInt(d3.select('#map-container').style('height'));
 
