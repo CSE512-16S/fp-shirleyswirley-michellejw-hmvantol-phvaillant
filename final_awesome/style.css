@@ -2,11 +2,25 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 
 body {
     background-color: rgba(96, 115, 139, 0.72);
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 .container-fluid{
-  overflow: hidden;
+  overflow: hidden !important;
+}
+
+#modal-up {
+  position: absolute;
+  margin-left: -35px;
+  left: 50%;
+}
+
+#modal-down {
+  position: absolute;
+  margin-left: -35px;
+  left: 50%;
+  top: 100%;
+  margin-top: -70px;
 }
 
 #title {
