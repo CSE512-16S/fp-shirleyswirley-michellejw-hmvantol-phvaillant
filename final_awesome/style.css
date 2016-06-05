@@ -59,7 +59,6 @@ body {
 .btn-localdata {
   background-color: #41b6c4;
   border-color: #41b6c4;
-  text-align: left;
 }
 
 .btn-localdata:hover {
@@ -70,7 +69,6 @@ body {
 .btn-globaldata {
   background-color: #253494;
   border-color: #253494;
-  text-align: right;
 }
 
 .btn-globaldata:hover {
@@ -144,6 +142,7 @@ display: inline;
 	display: inline-block; 
     position: absolute;
     left: 97%;
+    z-index: 1;
   }
 
 #myModal{
@@ -212,6 +211,7 @@ display: inline;
 /*style for plot
 */
 
+
 #ylabell, .line-l, .yaxis-l {
   stroke: #41b6c4;
   fill: #41b6c4;
@@ -243,8 +243,6 @@ display: inline;
 
 .yaxis-g text {
   font-size: 30px;
-  stroke: none;
-  shape-rendering: crispEdges;
 }
 
 .yaxis-l {
@@ -255,7 +253,6 @@ display: inline;
 
 .yaxis-l text {
   font-size: 30px;
-  stroke: none;
 }
 
 /*.axis text {
@@ -316,4 +313,18 @@ display: inline;
     font-family: sans-serif;
 }
 
+/*Glyphicon styling*/
+
+.glyphicon.gray1 {
+  color: LightGray;
+}
+
+.glyphicon.gray2 {
+  color: Gray;
+}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
 

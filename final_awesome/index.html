@@ -20,6 +20,10 @@
 
         <div id="map-container" class="col-xs-5">
             <div id="map"></div>
+            <div id="modal-arrows-updown" class="col-xs-offset-4">
+                <div href="#" class="glyphicon glyphicon-chevron-up gray1 gi-5x" id="modal-up" role="button"></div>
+                <div href="#" class="glyphicon glyphicon-chevron-down gray1 gi-5x" id="modal-down" role="button"></div>
+            </div>
         </div>
 
         <div id="information_pane" class="col-xs-7">
@@ -87,11 +91,6 @@
                     
                     <button type="button" class="close btn-modal" data-dismiss="modal">&times;</button>
 
-                    <div id="modal-arrows-updown" class="col-xs-offset-3 col-xs-1">
-                        <a href="#" class="glyphicon glyphicon-chevron-up" id="modal-up" role="button"></a>
-                        <a href="#" class="glyphicon glyphicon-chevron-down" id="modal-down" role="button"></a>
-                    </div>
-
                     <div id="modal-title" class="col-xs-8">
                     </div>
                    
@@ -105,25 +104,29 @@
                         <div id="imgdiv" class="col-xs-12 svg-container">
                         </div>
 
+                        <div href="#" class="glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-5x" id="left" role="button"></div>
+                        <div id="plotdiv" class="col-xs-10 svg-container">
+                        </div>
+                        <div href="#" class="glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-5x" id="right" role="button"></div>
+
+                    </div>
+
+                    <div id="modal-secondary-view">
+
+
                          <div id = "imgsrcdiv" class="col-xs-12 svg-container">
                             <span>Source:</span>
                             <a href="#" class="btn btn-link btn-source" id="imgsrc" role="button"></a>
                         </div>
 
-                        <div id="plotdiv" class="col-xs-12 svg-container">
-                        </div>
-
                         <div id="datasrcdiv" class="col-xs-12 svg-container">
-                            <a href="#" class="btn btn-info btn-sm btn-localdata svg-container" id="localsrc"></a>
-                            <a href="#" class="btn btn-info btn-sm btn-globaldata svg-container" id="globalsrc"></a>
+                            <a href="#" class="btn btn-info btn-sm btn-localdata svg-container pull-left" id="localsrc"></a>
+                            <a href="#" class="btn btn-info btn-sm btn-globaldata svg-container pull-right" id="globalsrc"></a>
                         </div>
 
                         <div id="moreinfodiv" class="col-xs-12 svg-container">
                         </div>
 
-                    </div>
-
-                    <div id="modal-secondary-view">
                     </div>
 
                 </div> <!--end modal-body div-->
