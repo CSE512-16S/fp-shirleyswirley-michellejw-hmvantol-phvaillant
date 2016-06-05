@@ -226,14 +226,10 @@ $( document ).ready(function() {
         }
     });
 
-    // --- Define global variables for keyboard and mouse input
-	var activeidx = 0;
-
     d3.select("body").on({
         keydown: function(d) {
           // when you click the down arrow key, go to next location
           if(d3.event.keyCode == 38) { 
-          	activeidx = 0;
           	document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray2 gi-5x";
             current_location += 1;
             current_location = current_location % (n_locations+1);
@@ -243,7 +239,6 @@ $( document ).ready(function() {
           }
           // when you click the up arrow key, go to prev location
           if (d3.event.keyCode == 40) {
-          	activeidx = 0;
           	document.getElementById("modal-down").className = "glyphicon glyphicon-chevron-down gray2 gi-5x";
             current_location -= 1;
             current_location = current_location % (n_locations+1);
@@ -264,6 +259,8 @@ $( document ).ready(function() {
         }
      }) //end of select body
 
+	// --- Define global variables for keyboard and mouse input
+	var activeidx = 0;
 	var activemouse = null;
 	var allbars = null;
 	var activebarcolor = "Gray";
@@ -278,6 +275,10 @@ $( document ).ready(function() {
 	    $("#imgdiv").html("");
 	    $("#plotdiv").html("");
 	    $("#moreinfodiv").html("");
+
+	    activeidx = 0;
+		activemouse = null;
+		allbars = null;
 
 	    $("#myModal").modal('show');
 
