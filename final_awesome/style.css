@@ -313,4 +313,16 @@ display: inline;
     font-family: sans-serif;
 }
 
+.glyphicon.gray1 {
+  color: LightGray;
+}
+
+.glyphicon.gray2 {
+  color: Gray;
+}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
 

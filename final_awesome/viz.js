@@ -267,6 +267,36 @@ $( document ).ready(function() {
             })
     }
 
+    $("body").on('keydown', function(e) {
+        if (e.keyCode==39) {
+            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray2 gi-5x";
+        }
+        if (e.keyCode==37) {
+            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray2 gi-5x";
+        }
+        if (e.keyCode==38) {
+            document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray2 gi-5x";
+        }
+        if (e.keyCode==40) {
+            document.getElementById("modal-down").className = "glyphicon glyphicon-chevron-down gray2 gi-5x";
+        }
+    });
+
+    $("body").on('keyup', function(e) {
+        if (e.keyCode==39) {
+            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-5x";
+        }
+        if (e.keyCode==37) {
+            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-5x";
+        }
+        if (e.keyCode==38) {
+            document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray1 gi-5x";
+        }
+        if (e.keyCode==40) {
+            document.getElementById("modal-down").className = "glyphicon glyphicon-chevron-down gray1 gi-5x";
+        }
+    });
+
     d3.select("body").on({
         keydown: function(d) {
           // when you click the down arrow key, go to next location
