@@ -378,7 +378,7 @@ $( document ).ready(function() {
 		            .attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
 
 		    // define year label positions on top of images
-		    var xposyrlabel = 0, yposyrlabel = single_img_height;
+		    var xposyrlabel = single_img_width, yposyrlabel = 75;
 
 		    // initially display the earliest image on the left by default
 		    var before = d3.select("#imgdiv")
@@ -398,6 +398,7 @@ $( document ).ready(function() {
 		        .attr("x",xposyrlabel)
 		        .attr("y",yposyrlabel)
 		        .style("font-size", "100px")
+                        .style("text-anchor", "end")
 		        .style("fill","white");
 
 		    // initially display the most recent image on the right by default 
@@ -417,6 +418,7 @@ $( document ).ready(function() {
 		        .attr("x", xposyrlabel)
 		        .attr("y", yposyrlabel)
 		        .style("font-size", "100px")
+                        .style("text-anchor", "end")
 		        .style("fill","white");
 
 		    // add image src info on top of after image
