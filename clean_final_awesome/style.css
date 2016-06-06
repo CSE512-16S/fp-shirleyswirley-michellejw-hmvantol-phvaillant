@@ -1,0 +1,247 @@
+html, body, .container-fluid, #map-container, #information_pane { height: 100%; }
+
+body {
+    background-color: rgba(96, 115, 139, 0.72);
+    overflow: hidden;
+}
+
+/*globe positioning
+*/
+
+#map-container {
+  padding-top: 70px;
+  padding-bottom: 70px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#map {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+/*modal positining styling
+*/
+
+.modal-dialog {
+  width: 58.33333333%;
+  height: 100%;
+  float: right;
+  margin: 0px;
+}
+
+.modal-content {
+  height: 100%;
+  padding-top: 45px;
+  background-color: #FFF;
+}
+
+.modal-header {
+  padding: 5px;
+  margin-top: -45px;
+  height: 45px;
+  overflow: auto;
+}
+
+.modal-body {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0px;
+}
+
+.modal-backdrop.in {
+    opacity: 0;
+}
+
+/*#modal-main-view, #modal-secondary-view {
+  width: 100%;
+}*/
+
+/*main view styling
+*/
+
+#imgdiv-container {
+  height: 40%;
+  padding: 5px;
+}
+
+#imgdiv {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#plotdiv {
+  height: 50%;
+}
+
+#above_plot {
+  height: 10%;
+}
+
+#annodiv {
+  height: 100%;
+}
+
+#row_above_plot {
+  height: 100%;
+}
+
+/*globe styling
+*/
+
+.water {
+  fill: #EEE;
+}
+
+.land {
+  fill: Gray;
+}
+
+/*styling div arrow up and down around the globe
+*/
+
+#modal-up {
+  position: absolute;
+  margin-left: -35px;
+  margin-bottom: -70px;
+  left: 50%;
+}
+
+#modal-down {
+  position: absolute;
+  margin-left: -35px;
+  left: 50%;
+  top: 100%;
+  margin-top: -70px;
+}
+
+#left, #right {
+  padding: 0px;
+}
+
+/*Glyphicon styling*/
+
+.glyphicon.gray1 {
+  color: LightGray;
+}
+
+.glyphicon.gray2 {
+  color: Gray;
+}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+/*Start button styling
+*/
+
+.btn-starttour {
+  background-color: #607D8B;
+  border-color: #607D8B;
+}
+
+.btn-starttour:hover {
+  background-color: #2c7fb8;
+  border-color: #2c7fb8;
+}
+
+/*styling of the information pane
+*/
+
+
+#title {
+  position: absolute;
+  width:90%;
+  height: 15%;
+  top: 10%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 2em;
+  color: #FFF;
+}
+
+#abstract {
+  position: absolute;
+  top: 30%;
+  height: 30%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.2em;
+  width: 90%;
+  color: #FFF;
+  overflow: auto;
+}
+
+#start-tour-container {
+  position: absolute;
+  top: 65%;
+  margin: 0 auto;
+  text-align: center;
+  width: 90%;
+  overflow: auto;
+}
+
+
+#media-icons {
+  position: absolute;
+  top: 85%;
+  height: 15%;
+  margin: 0 auto;
+  text-align: center;
+  width: 90%;
+  overflow: auto;
+}
+
+#github-icon {
+  position: absolute;
+  height: 15%;
+  left: 70%;
+  text-align: right;
+  width: 30%;
+  margin: 10px;
+  overflow: auto;
+}
+
+#media-icons img {
+width: 35px;
+padding: 5px;
+border: 0;
+box-shadow: 0;
+display: inline;
+}
+
+/*style for imgdiv
+*/
+
+.sidebysideimage {
+    max-width: 50%; /*this makes the two side by side before and after sat images take up half the width of the div container they are in each*/
+    max-height: 100%;
+}
+
+/* -- Liquid SVG and images -- */
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    /*width: 100%;*/
+    padding-bottom: 0%; /* aspect ratio, depends on svg ratio, for my zebra height/width = 1.2 so padding-bottom = 50% * 1.2 = 60% */
+    vertical-align: top; /* top | middle | bottom ... do what you want */
+    overflow: hidden;
+}
+
+.svg-content-responsive { /* svg into : object, img or inline */
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    top: 0; /*10px;*/
+    left: 0;
+    width: 100%; /* only required for <img /> */
+}
+
+
+
