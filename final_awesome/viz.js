@@ -673,12 +673,13 @@ $( document ).ready(function() {
                 .attr("class", "annotation") // from css
                 .attr("x", modal_main_view_width*0.8*0.5)
                 .attr("y", modal_main_view_height*0.1*0.5)
-                .attr("dx", "1em")
+                .attr("dy", "0.8em")
                 .style("opacity", 0)
-                // .style("text-anchor","middle")
+                .style("text-anchor","middle")
+                .attr("transform", "translate("+modal_main_view_width*0.8*0.5+",0)")
                 .text(function(d) { return d.annotation; });
 	            
-	     d3.select("#annodiv").selectAll("text#anno").call(wrap_anno, modal_main_view_width*0.8);
+	     d3.select("#annodiv").selectAll("text.annotation").call(wrap_anno, modal_main_view_width*0.8);
 
 
 	    // add prelim instructions where annotated text will be after hovering/clicking bars
@@ -846,5 +847,6 @@ $( document ).ready(function() {
 		    }
 		  });
 		}
+
 
 }); //end of document ready

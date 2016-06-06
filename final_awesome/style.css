@@ -293,12 +293,12 @@ display: inline;
 
 .line-l {
     fill: none;
-    stroke-width: 5px;
+    stroke-width: 3px;
 }
 
 .line-g {
   fill: none;
-  stroke-width: 5px;
+  stroke-width: 3px;
 }
 
 #instructions {
