@@ -1,12 +1,12 @@
 $( document ).ready(function() {
 
 	//compute the dimensions of the current div - #map
-	var margin = {top: 10, left: 10, bottom: 10, right: 10}
+	var margin_map = {top: 70, left: 10, bottom: 70, right: 10}
 	  , screen_width = parseInt(d3.select('#map-container').style('width'))
 	  , screen_height = parseInt(d3.select('#map-container').style('height'));
 
 	//set the size of the svg to be the minimum of width and height - map ratio is 1
-	var width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
+	var width = Math.min(screen_width - margin_map.left - margin_map.right, screen_height - margin_map.top - margin_map.bottom)
 	  , height = width;
 
 	//var modal_height = screen_height - 55;
@@ -72,6 +72,7 @@ $( document ).ready(function() {
 
 	var coordinates_locations = {};
 	var n_locations = 0;
+	var prevloc = null; // setting global variable for location number used in center_on_location function for setting point path color on the globe
 
 	//When a task completes, it must call the provided callback. The first argument to the callback should be null if the task is successfull, or the error if the task failed.
 	function ready(error, world, locations) {
@@ -101,6 +102,7 @@ $( document ).ready(function() {
 	        .datum({type: "Point", coordinates: [d.lon, d.lat]})
 	        .attr("class", "locations")
 	        .attr("fill","yellow")
+	        // .attr("class","nonactivepoint")
 	        .attr("d", path.pointRadius(8))
 	        //add the attribute for location id
 	        .attr("id","location_" + d.location_id)
@@ -132,7 +134,7 @@ $( document ).ready(function() {
 		  , screen_height = parseInt(d3.select('#map-container').style('height'));
 
 		//set the size of the svg to be the minimum of width and height - map ratio is 1
-		var width = Math.min(screen_width - margin.left - margin.right, screen_height - margin.top - margin.bottom)
+		var width = Math.min(screen_width - margin_map.left - margin_map.right, screen_height - margin_map.top - margin_map.bottom)
 		  , height = width;
 
 		// update projection
@@ -170,7 +172,7 @@ $( document ).ready(function() {
 
                 // remake/resize all plot elements                
 	        $("#plotdiv").html("");
-                plotplot(modal_main_view_width,modal_main_view_height);
+        plotplot(modal_main_view_width,modal_main_view_height);
 
   	};
 
@@ -199,6 +201,17 @@ $( document ).ready(function() {
     });
 
     function center_on_location(current_location) {
+      // set fill for previous loc id back to original
+      d3.select(prevloc).attr("fill","yellow");
+      // d3.select(prevloc).attr("class","nonactivepoint");
+      // get new loc id
+      locnum = current_location - 1; // get index
+      locid_str = '#location_' + current_location;
+      d3.select("#map").select(locid_str).attr("fill","orange");
+      // d3.select("#map").select(locid_str).attr("class","activepoint");
+      prevloc = locid_str;
+
+
       d3.transition()
           .duration(1250)
           .tween("rotate", function() {
@@ -209,29 +222,16 @@ $( document ).ready(function() {
                 svg.selectAll("path.locations").attr("d", path);
               };
             })
-    }
 
-    $("body").on('keydown', function(e) {
-        if (e.keyCode==39) {
-            //document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-6 gray2 gi-3x";
-        }
-        if (e.keyCode==37) {
-            //document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-6 gray2 gi-3x";
-        }
-        if (e.keyCode==38) {
-            document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray2 gi-5x";
-        }
-        if (e.keyCode==40) {
-            document.getElementById("modal-down").className = "glyphicon glyphicon-chevron-down gray2 gi-5x";
-        }
-    });
+
+    }
 
     $("body").on('keyup', function(e) {
         if (e.keyCode==39) {
-            //document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-6 gray1 gi-3x";
+            document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-3x";
         }
         if (e.keyCode==37) {
-            //document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-6 gray1 gi-3x";
+            document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-3x";
         }
         if (e.keyCode==38) {
             document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray1 gi-5x";
@@ -245,6 +245,7 @@ $( document ).ready(function() {
         keydown: function(d) {
           // when you click the down arrow key, go to next location
           if(d3.event.keyCode == 38) { 
+          	document.getElementById("modal-up").className = "glyphicon glyphicon-chevron-up gray2 gi-5x";
             current_location += 1;
             current_location = current_location % (n_locations+1);
             if (current_location==0) {current_location=1};
@@ -253,6 +254,7 @@ $( document ).ready(function() {
           }
           // when you click the up arrow key, go to prev location
           if (d3.event.keyCode == 40) {
+          	document.getElementById("modal-down").className = "glyphicon glyphicon-chevron-down gray2 gi-5x";
             current_location -= 1;
             current_location = current_location % (n_locations+1);
             if (current_location==0) {current_location=n_locations};
@@ -260,7 +262,12 @@ $( document ).ready(function() {
             show_info_inside_modal(current_location);
           }
           // when you click the right/left arrow keys, step through the timeline
-          if (d3.event.keyCode == 39 || d3.event.keyCode == 37) {
+          if (d3.event.keyCode == 39) {
+          	document.getElementById("right").className = "glyphicon glyphicon-triangle-right col-xs-1 gray2 gi-3x";
+          	step_through_time(d3.event.keyCode);
+          } 
+          if (d3.event.keyCode == 37) {
+          	document.getElementById("left").className = "glyphicon glyphicon-triangle-left col-xs-1 gray2 gi-3x";
                 // 39 = right arrow key, 37 = left arrow key
         	step_through_time(d3.event.keyCode);
           }
@@ -274,15 +281,19 @@ $( document ).ready(function() {
 	var activebarcolor = "Gray";
 	var inactivebarcolor = "LightGray";
 
-        // --- Define global plot variables
-        var margin = {top:50, right:110, bottom:50, left:55};
+	// --- Define global plot variables
+	var margin = {top:50, right:110, bottom:50, left:75};
 
 	function show_info_inside_modal(current_location) {
 
-            $("#modal-title").html("");
+        $("#modal-title").html("");
 	    $("#imgdiv").html("");
 	    $("#plotdiv").html("");
 	    $("#moreinfodiv").html("");
+
+	    activeidx = 0;
+		activemouse = null;
+		allbars = null;
 
 	    $("#myModal").modal('show');
 
@@ -578,7 +589,7 @@ $( document ).ready(function() {
 	    yg.domain(d3.extent(fulldata, function(d) { return d.globaldata; }));
 
 	    // draw rectangles in background
-            var barwidth = plotwidth/50;
+        var barwidth = plotwidth/50;
 	    var bars = d3.select("#plotdiv").select("svg#plot").selectAll("rect")
 	            .data(imgdata).enter()
 	            .append("rect")
@@ -650,26 +661,35 @@ $( document ).ready(function() {
 
 	                                                        
 	    // add annotations
-	    var anno = svg.selectAll("text#anno")
-	            .data(imgdata).enter()
-	            .append("text") 
-	                .attr("id", function(d) { return "annoID" + d.id; })
-	                .attr("class", "annoID")
-	                .attr("class", "annotation") // from css
-	                .attr("x", (plotwidth)/2)
-	                .attr("y", margin.top/2)
-	                .text(function(d) { return d.annotation; })
-	                .style("opacity", 0)
-	                .style("text-anchor","middle");
+	   
+	    d3.select("#annodiv").append("svg")
+	    		.attr("width", modal_main_view_width)
+	    		.attr("height", modal_main_view_height*0.1)
+	    	.selectAll("text#anno")
+           	.data(imgdata).enter()
+            .append("text")
+                .attr("id", function(d) { return "annoID" + d.id; })
+                .attr("class", "annoID")
+                .attr("class", "annotation") // from css
+                .attr("x", modal_main_view_width*0.8*0.5)
+                .attr("y", modal_main_view_height*0.1*0.5)
+                .attr("dx", "1em")
+                .style("opacity", 0)
+                // .style("text-anchor","middle")
+                .text(function(d) { return d.annotation; });
+	            
+	     d3.select("#annodiv").selectAll("text#anno").call(wrap_anno, modal_main_view_width*0.8);
+
 
 	    // add prelim instructions where annotated text will be after hovering/clicking bars
-	    svg.append("text")
-	            .attr("id", "instructions")
-	            .attr("x", (plotwidth)/2)
-	            .attr("y", margin.top/2)
-	            //.attr("transform", "translate("+margin.left+",0)")
-	            .text("Click on plot elements below; use left/right arrow keys to step through time")
-	            .style("fill","black");
+	    // anno.append("text")
+     //        .attr("id", "instructions")
+     //        .attr("x", (plotwidth)/2)
+     //        .attr("y", margin.top/2)
+     //        //.attr("transform", "translate("+margin.left+",0)")
+     //        .text("Click on plot elements below; use left/right arrow keys to step through time")
+     //        .style("fill","black")
+     //        .style("text-anchor","middle");
 
 	    // differently color/size the bars at the very beginning and end of the time series
 	    d3.select("rect#rectID" + min_imgID).style("fill", activebarcolor);
@@ -803,5 +823,28 @@ $( document ).ready(function() {
 		  });
 		}
 
+		function wrap_anno(text, width) {
+		  text.each(function() {
+		    var text = d3.select(this),
+		        words = text.text().split(/\s+/).reverse(),
+		        word,
+		        line = [],
+		        lineNumber = 0,
+		        lineHeight = 1.1, // ems
+		        y = text.attr("y"),
+		        dy = parseFloat(text.attr("dy")),
+		        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+		    while (word = words.pop()) {
+		      line.push(word);
+		      tspan.text(line.join(" "));
+		      if (tspan.node().getComputedTextLength() > width) {
+		        line.pop();
+		        tspan.text(line.join(" "));
+		        line = [word];
+		        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+		      }
+		    }
+		  });
+		}
 
 }); //end of document ready

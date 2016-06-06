@@ -2,11 +2,25 @@ html, body, .container-fluid, #map-container, #information_pane { height: 100%; 
 
 body {
     background-color: rgba(96, 115, 139, 0.72);
-    overflow: hidden;
 }
 
+
 .container-fluid{
-  overflow: hidden;
+  overflow: auto;
+}
+
+#modal-up {
+  position: absolute;
+  margin-left: -35px;
+  left: 50%;
+}
+
+#modal-down {
+  position: absolute;
+  margin-left: -35px;
+  left: 50%;
+  top: 100%;
+  margin-top: -70px;
 }
 
 #title {
@@ -16,7 +30,7 @@ body {
 	top: 10%;
 	margin: 0 auto;
 	text-align: center;
-	overflow: scroll;
+  overflow: auto;
   font-size: 30px;
   color: #FFF;
 }
@@ -28,7 +42,7 @@ body {
 	margin: 0 auto;
 	text-align: center;
 	width: 90%;
-	overflow: scroll;
+	overflow: auto;
   color: #FFF;
 }
 
@@ -38,8 +52,10 @@ body {
 	margin: 0 auto;
 	text-align: center;
 	width: 90%;
-	overflow: scroll;
+	overflow: auto;
 }
+
+
 
 /*Start button styling
 */
@@ -90,7 +106,7 @@ body {
 	margin: 0 auto;
 	text-align: center;
 	width: 90%;
-	overflow: scroll;
+	overflow: auto;
 }
 
 #github-icon {
@@ -99,7 +115,8 @@ body {
 	left: 70%;
   text-align: right;
 	width: 30%;
-	overflow: scroll;
+  margin: 10px;
+	overflow: auto;
 }
 
 #media-icons img {
@@ -130,8 +147,16 @@ display: inline;
 /*styling modal
 */
 
-#imgdiv, #plotdiv {
-	height: 50%;
+#imgdiv {
+	height: 40%;
+}
+
+#plotdiv {
+  height: 50%;
+}
+
+#annodiv {
+  height: 10%;
 }
 
 .modal-backdrop.in {
@@ -169,12 +194,12 @@ display: inline;
   padding: 5px;
   margin-top: -45px;
   height: 45px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .modal-body {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 5px;
 }
 
@@ -237,7 +262,7 @@ display: inline;
 .xaxis-bottom text {
   stroke: none;
   fill: black;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .yaxis-g {
@@ -247,7 +272,7 @@ display: inline;
 }
 
 .yaxis-g text {
-  font-size: 10px;
+  font-size: 14px;
   stroke-width: 1px;
 }
 
@@ -258,7 +283,7 @@ display: inline;
 }
 
 .yaxis-l text {
-  font-size: 10px;
+  font-size: 14px;
   stroke-width: 1px;
 }
 
@@ -284,7 +309,7 @@ display: inline;
 }
 
 .annotation {
-    font-size: 10px;
+    font-size: 20px;
     color: black;
     font-family: sans-serif;
 }
@@ -297,7 +322,7 @@ display: inline;
 }
 
 .ylabel {
-    font-size: 10px;
+    font-size: 14px;
     /*font-weight: bold;*/
     cursor: pointer;
     stroke-width: 1px;
@@ -314,7 +339,7 @@ display: inline;
 }
 
 .moreinfo {
-    font-size: 10px;
+    font-size: 14px;
     /*font-size: 1vw; /*dynamic font resizing*/
     color: black;
     font-family: sans-serif;
@@ -335,3 +360,15 @@ display: inline;
 .gi-4x{font-size: 4em;}
 .gi-5x{font-size: 5em;}
 
+
+
+/*Setting map point colors - but not being used (5 June 4:14pm) b/c it breaks point positioning relative to globe.
+*/
+
+.activepoint {
+  fill: orange;
+}
+
+.nonactivepoint {
+  fill: yellow;
+}
