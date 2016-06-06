@@ -672,7 +672,7 @@ $( document ).ready(function() {
                 .attr("class", "annoID")
                 .attr("class", "annotation") // from css
                 .attr("x", modal_main_view_width*0.8*0.5)
-                .attr("y", modal_main_view_height*0.1*0.5)
+                .attr("y", modal_main_view_height*0.1*0.1)
                 .attr("dy", "0.8em")
                 .style("opacity", 0)
                 .style("text-anchor","middle")
