@@ -68,12 +68,19 @@ body {
 }
 
 #imgdiv {
+  max-height: 100%;
   top: 50%;
   transform: translateY(-50%);
 }
 
 #plotdiv {
   height: 50%;
+}
+
+#plot {
+  width: 100%;
+  height: 100%;
+  top: 0;
 }
 
 #above_plot {
@@ -231,7 +238,7 @@ display: inline;
     /*width: 100%;*/
     padding-bottom: 0%; /* aspect ratio, depends on svg ratio, for my zebra height/width = 1.2 so padding-bottom = 50% * 1.2 = 60% */
     vertical-align: top; /* top | middle | bottom ... do what you want */
-    overflow: hidden;
+    overflow: auto;
 }
 
 .svg-content-responsive { /* svg into : object, img or inline */
@@ -244,4 +251,102 @@ display: inline;
 }
 
 
+/*font styling
+*/
 
+.title-modal {
+    font-size: 2vw; /*dynamic font resizing*/
+    color: #333333;
+    font-family: sans-serif;
+}
+
+
+/*plot styling
+*/
+
+.xlabel {
+    font-size: 20px;
+    font-weight: bold;
+    fill: black;
+}
+
+#ylabell, .line-l, .yaxis-l {
+  stroke: #41b6c4;
+  fill: #41b6c4;
+}
+
+#ylabelg, .line-g, .yaxis-g {
+  stroke: #253494;
+  fill: #253494;
+}
+
+.yaxis-g {
+    fill: none;
+    stroke-width: 2px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-g text {
+  font-size: 14px;
+  stroke-width: 1px;
+}
+
+.yaxis-l {
+    fill: none;
+    stroke-width: 2px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-l text {
+  font-size: 14px;
+  stroke-width: 1px;
+}
+
+.ylabel {
+    font-size: 14px;
+    /*font-weight: bold;*/
+    cursor: pointer;
+    stroke-width: 1px;
+}
+
+.xlabel {
+    font-size: 20px;
+    font-weight: bold;
+    fill: black;
+}
+
+.xaxis-bottom {
+    fill: none;
+    stroke: black;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.xaxis-bottom text {
+  stroke: none;
+  fill: black;
+  font-size: 14px;
+}
+
+.line-l {
+    fill: none;
+    stroke-width: 3px;
+}
+
+.line-g {
+  fill: none;
+  stroke-width: 3px;
+}
+
+/*annotations*/
+
+.annotation {
+    font-size: 20px;
+    color: black;
+    font-family: sans-serif;
+}
+
+#anno_svg {
+  width: 100%;
+  height: 100%;
+}
