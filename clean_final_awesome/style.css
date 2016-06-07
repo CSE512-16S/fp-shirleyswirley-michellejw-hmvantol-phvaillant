@@ -192,7 +192,7 @@ body {
   position: absolute;
   width:90%;
   height: 15%;
-  top: 10%;
+  top: 8%;
   margin: 0 auto;
   text-align: center;
   font-size: 2em;
@@ -201,8 +201,8 @@ body {
 
 #abstract {
   position: absolute;
-  top: 30%;
-  height: 30%;
+  top: 25%;
+  height: 45%;
   margin: 0 auto;
   text-align: center;
   font-size: 1.2em;
@@ -213,7 +213,7 @@ body {
 
 #start-tour-container {
   position: absolute;
-  top: 65%;
+  top: 72%;
   margin: 0 auto;
   text-align: center;
   width: 90%;
@@ -223,8 +223,8 @@ body {
 
 #media-icons {
   position: absolute;
-  top: 85%;
-  height: 15%;
+  top: 87%;
+  height: 10%;
   margin: 0 auto;
   text-align: center;
   width: 90%;

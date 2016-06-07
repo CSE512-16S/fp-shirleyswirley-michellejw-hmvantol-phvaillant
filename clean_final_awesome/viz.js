@@ -46,6 +46,7 @@ $( document ).ready(function() {
 
 	//create the global variables for plot size
 	var x, yl, yg, x_axis, y_axisl, y_axisg, linel, lineg, svg_plot, bar, barwidth, width, height, labely_local, labely_global;
+	var years_img = [];
 
 	    //different d3 projections. https://github.com/d3/d3/wiki/Geo-Projections
 	var projection = d3.geo.orthographic()
@@ -381,9 +382,11 @@ $( document ).ready(function() {
 
 		d3.csv("timeline/location" + current_location + ".csv", function(chart_data) {
 
+			console.log(years_img);
+
 			// --- Make data into numbers    
 		    var parseDate = d3.time.format("%m/%d/%Y").parse;
-		    chart_data.forEach(function(d) {
+		    chart_data.forEach(function(d,i) {
 		        d.localdata = +d.localdata;
 		        d.globaldata = +d.globaldata;
 		        d.date = parseDate(d.date);
@@ -393,6 +396,7 @@ $( document ).ready(function() {
 		        d.singleimgheight = +d.singleimgheight;
 		        d.totalimgwidth = +d.totalimgwidth;
 		        d.totalimgheight = +d.totalimgheight;
+		        years_img[i] = chart_data[i].date.getFullYear();
 		    });	
 
 		            // --- Subselect the following data: 
@@ -486,7 +490,7 @@ $( document ).ready(function() {
 			    d3.select("#svgbefore")
 			        .append("text")
 			        .attr("id", "before-text")
-			        .text(chart_data[min_imgID].date.getFullYear())
+			        .text(years_img[min_imgID])
 			        .attr("x",xposyrlabel)
 			        .attr("y",yposyrlabel)
 			        .style("font-size", "100px")
@@ -769,7 +773,7 @@ $( document ).ready(function() {
 		      d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
 		      d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 		      d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
-		      d3.select("#before-text").text(chart_data[allbars[0][activeidx].id.substring(6)].date.getFullYear());
+		      d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
 		  }; //end step_through_time function
 
 	//-----------------
@@ -842,7 +846,7 @@ $( document ).ready(function() {
 	    d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 	    d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
-	    d3.select("#before-text").text(chart_data[allbars[0][activeidx].id.substring(6)].date.getFullYear());
+	    d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
 	}
 		
 	function wrap(text, width, ems) {
