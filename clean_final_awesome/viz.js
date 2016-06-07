@@ -372,6 +372,7 @@ $( document ).ready(function() {
 	    $("#moreinfodiv").html("");
 	    $("#annodiv").html("");
 
+
 	    activeidx = 0;
 		activemouse = null;
 		allbars = null;
@@ -724,22 +725,24 @@ $( document ).ready(function() {
 		    draw_imgdiv();
 		    draw_plotdiv();
 
-		    // add image src info on top of after image
-		    d3.select("#imgsrc")
-		        .text(chart_data[0].imgsrctext);
-		    $("#imgsrc").on('click', function() {
-		        	window.open(chart_data[0].imgsrcurl);
-		    	});
+		    // add image src info and data src info buttons
 
-	         d3.select("#localsrc").text(chart_data[0].localdatasrctext);
-	         $("#localsrc").on('click', function() {
-	         	window.open(chart_data[0].localdatasrcurl);
-	         });
+		    d3.select("#imgsrc").text(chart_data[0].imgsrctext)
+		    	.on('click', function() {
+					window.open(chart_data[0].imgsrcurl);
+				});
 
-		     d3.select("#globalsrc").text(chart_data[0].globaldatasrctext);
- 	         $("#globalsrc").on('click', function() {
-	         	window.open(chart_data[0].globaldatasrcurl);
-	         });
+	        d3.select("#localsrc").text(chart_data[0].localdatasrctext)
+	        	.on('click', function() {
+	         		window.open(chart_data[0].localdatasrcurl);
+	       		});
+
+		    d3.select("#globalsrc").text(chart_data[0].globaldatasrctext)
+		    	.on('click', function() {
+	         		window.open(chart_data[0].globaldatasrcurl);
+	        	});
+
+
 
 		    //---------------------------------
 			 // Add more info to div=moreinfodiv 
