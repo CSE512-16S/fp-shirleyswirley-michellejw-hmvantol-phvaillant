@@ -64,10 +64,10 @@ $( document ).ready(function() {
 	//create path variable and plan the location click behavior.
 	var path = d3.geo.path()
     	.projection(projection)
-    	.pointRadius(8);
+    	.pointRadius(7);
     var path_clicked = d3.geo.path()
     	.projection(projection)
-    	.pointRadius(12);
+    	.pointRadius(13);
     var current_location = 0;
 
     //adding water
