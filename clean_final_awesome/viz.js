@@ -475,18 +475,20 @@ $( document ).ready(function() {
 			            .attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
 
 			    // define year label positions on top of images
-			    var xposyrlabel = single_img_width, yposyrlabel = 75;
+			    var xposyrlabel = single_img_width, yposyrlabel = 60;
 
 			    // initially display the earliest image on the left by default
 			    var before = d3.select("#imgdiv")
 			        .append("svg")
 			            .attr("viewBox", "0 0 " + width.image + " " + height.image)
+			            //.attr("viewBox", "0 0 " + width.image + " " + modal_main_view_height)
 			            .attr("id", "svgbefore")
 			            .style("display", "inline")
 			            .classed("sidebysideimage", true)
 			        .append("use")
 			            .attr("id", "imagebefore")
 			            .attr("xlink:href", "#imgID" + min_imgID);
+                                    //.style("height",modal_main_view_height);
 
 			    d3.select("#svgbefore")
 			        .append("text")
@@ -494,27 +496,40 @@ $( document ).ready(function() {
 			        .text(years_img[min_imgID])
 			        .attr("x",xposyrlabel)
 			        .attr("y",yposyrlabel)
-			        .style("font-size", "100px")
+                                //.attr("transform","scale("+ (width.image/modal_main_view_width) +"," + (height.image/modal_main_view_width)+")")
+			        .style("font-size", "80px")
+			        //.style("stroke-width", "3px")
+			        //.style("vector-effect", "non-scaling-stroke")
 	                        .style("text-anchor", "end")
 			        .style("fill","white");
+                            console.log(modal_main_view_width);
+                            console.log(height.image);
+                            console.log(width.image);
 
-			    // initially display the most recent image on the right by default 
+                            // TRYING TO GET RID OF IMAGE SCROLL BARS
+                            //$("div#imgdiv").css('max-height', 0.4*modal_main_view_height+'px');
+                            //$("div#imgdiv").css('max-height', '10%');
+                            //$("div#imgdiv").css('max-width', '500px');
+
+                            // initially display the most recent image on the right by default 
 			    var after = d3.select("#imgdiv")
 			        .append("svg")
 			            .attr("viewBox", "0 0 " + width.image + " " + height.image)
+			            //.attr("viewBox", "0 0 " + width.image + " " + modal_main_view_height)
 			            .attr("id", "svgafter")
 			            .style("display", "inline")
 			            .classed("sidebysideimage", true)
 			        .append("use")
 			            .attr("id", "imageafter")
 			            .attr("xlink:href", "#imgID" + max_imgID);
+                                    //.style("height",modal_main_view_height);
 			    
 			    d3.select("#svgafter")
 			        .append("text")
 			        .text(chart_data[max_imgID].date.getFullYear())
 			        .attr("x", xposyrlabel)
 			        .attr("y", yposyrlabel)
-			        .style("font-size", "100px")
+			        .style("font-size", "80px")
 	                        .style("text-anchor", "end")
 			        .style("fill","white");
 
@@ -626,7 +641,7 @@ $( document ).ready(function() {
 				    yg.domain(d3.extent(chart_data, function(d) { return d.globaldata; }));
 
 				    // draw rectangles in background
-			        barwidth = width.plot/50;
+			        barwidth = width.plot/100;
 				    bars = svg_plot.selectAll("rect")
 				            .data(imgdata).enter()
 				            .append("rect")
