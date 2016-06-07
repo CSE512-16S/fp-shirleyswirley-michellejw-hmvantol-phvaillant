@@ -140,8 +140,8 @@ $( document ).ready(function() {
                         return parseInt(d);
                     });
                     tooltip.classed('hidden', false)
-                        .attr('style', 'left:' + (mouse[0] + screen_width/2) +
-                                'px; top:' + (mouse[1] + screen_height/3) + 'px')
+                        .attr('style', 'left:' + (mouse[0] + 15) +
+                                'px; top:' + (mouse[1] - 35) + 'px')
                         .html(d.location_name);
                 })
             .on('mouseout', function() {
@@ -381,8 +381,8 @@ $( document ).ready(function() {
 
       // screen width and screen height for positioning
       tooltip.classed('hidden', false)
-                        .attr('style', 'left:' + (screen_width/2) +
-                                'px; top:' + (screen_height/3) + 'px')
+                        .attr('style', 'left:' + (screen_width/2 + 15) +
+                                'px; top:' + (screen_height/2 - 105) + 'px')
                         .html(coordinates_locations[current_location][2]);
 
     } //end of center_on_location function
