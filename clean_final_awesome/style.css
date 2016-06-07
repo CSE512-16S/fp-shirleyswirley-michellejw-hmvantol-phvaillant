@@ -13,6 +13,7 @@ body {
   padding-bottom: 70px;
   padding-left: 0px;
   padding-right: 0px;
+  margin-left:-7.5px;
 }
 
 #map {
@@ -255,7 +256,7 @@ display: inline;
 */
 
 .title-modal {
-    font-size: 2vw; /*dynamic font resizing*/
+    font-size: 1.8em; /*dynamic font resizing*/
     color: #333333;
     font-family: sans-serif;
 }
@@ -341,7 +342,7 @@ display: inline;
 /*annotations*/
 
 .annotation {
-    font-size: 20px;
+    font-size: 1.5em;
     color: black;
     font-family: sans-serif;
 }
@@ -349,4 +350,5 @@ display: inline;
 #anno_svg {
   width: 100%;
   height: 100%;
+  padding-left: 10px;
 }
