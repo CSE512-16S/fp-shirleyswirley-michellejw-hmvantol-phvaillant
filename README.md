@@ -17,6 +17,7 @@ Visualizing Climate Change
 - Shirley collected the data and images for Arctic sea ice and the California drought
 - Michelle collected the data and images for the Gansu Solar Park
 - Philippe collected the data and images for the Great Barrier Reef
+- All group members worked on debugging and finalizing the details for the poster session
 
 ## Research and development
 
