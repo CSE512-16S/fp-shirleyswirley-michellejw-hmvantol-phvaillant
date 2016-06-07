@@ -194,7 +194,6 @@ $( document ).ready(function() {
 			}
 
 			//resize the plot
-			console.log(width);
 			width.plot = modal_main_view_width;
 			height.plot = ratio_plotdiv*modal_main_view_height;
 			x.range([0,width.plot - margin_plot.left - margin_plot.right]);
@@ -204,6 +203,8 @@ $( document ).ready(function() {
 			y_axisl.scale(yl);
 			y_axisg.scale(yg);
 
+			svg_plot.select("#xlabel").attr("x", (width.plot)/2)
+				        .attr("y", height.plot-margin_plot.top/4)
 			svg_plot.select("#ylabell").attr("transform", "translate(0,"+(height.plot-margin_plot.bottom)/2 +")rotate(-90)");
 			svg_plot.select("#ylabelg").attr("transform", "translate("+(width.plot-0.65*margin_plot.left)+","+(height.plot-margin_plot.bottom)/2+")rotate(90)");
 
@@ -215,8 +216,8 @@ $( document ).ready(function() {
 					            .attr("height", [height.plot-margin_plot.top*2-margin_plot.bottom].toString() + "px")
 			svg_plot.select(".xaxis-bottom").attr("transform", "translate(" + margin_plot.left + "," + [height.plot - margin_plot.top - margin_plot.bottom] + ")")
 				        .call(x_axis);
-			svg_plot.select("#yaxis-l").attr("transform", "translate(" + (margin_plot.left-barwidth/2) + ",0)").call(y_axisl);
-			svg_plot.select("#yaxis-g").attr("transform", "translate(" + (width.plot-margin_plot.right+barwidth/2) + ",0)").call(y_axisg);
+			svg_plot.select("#localAxis").attr("transform", "translate(" + (margin_plot.left-barwidth/2) + ",0)").call(y_axisl);
+			svg_plot.select("#globalAxis").attr("transform", "translate(" + (width.plot-margin_plot.right+barwidth/2) + ",0)").call(y_axisg);
 			svg_plot.select("#localLine").attr("transform", "translate(" + margin_plot.left + ",0)")
 				            .attr("d",linel);
 			svg_plot.select("#globalLine").attr("transform", "translate(" + margin_plot.left + ",0)")
@@ -224,8 +225,8 @@ $( document ).ready(function() {
 
 			d3.selectAll("tspan").remove();
 			d3.select("#annodiv").selectAll(".annotation").text(function(d) { return d.annotation; }).call(wrap, modal_main_view_width*5/6-20, 1.1);
-			svg_plot.selectAll("#ylabell").text(labely_local).call(wrap, yg.range()[0]-yg.range()[1],0.2);
-			svg_plot.selectAll("#ylabelg").text(labely_global).call(wrap, yg.range()[0]-yg.range()[1],0.2);
+			svg_plot.selectAll("#ylabell").text(labely_local).call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
+			svg_plot.selectAll("#ylabelg").text(labely_global).call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
 
 
 
@@ -361,7 +362,7 @@ $( document ).ready(function() {
 	var inactivebarcolor = "LightGray";
 
 	// --- Define global plot variables
-	var margin_plot = {top:50, right:110, bottom:50, left:75};
+	var margin_plot = {top:0, right:110, bottom:50, left:75};
 
     function show_info_inside_modal(current_location) {
 
@@ -693,8 +694,8 @@ $( document ).ready(function() {
 			                
 			        setTimeout(function() {
 			        	d3.selectAll(".annotation").call(wrap, modal_main_view_width*5/6-20, 1.1);
-			        	svg_plot.selectAll("#ylabell").call(wrap, yg.range()[0]-yg.range()[1],0.2);
-			        	svg_plot.selectAll("#ylabelg").call(wrap, yg.range()[0]-yg.range()[1],0.2);
+			        	svg_plot.selectAll("#ylabell").call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
+			        	svg_plot.selectAll("#ylabelg").call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
 			        }, 200);
 
 				    // differently color/size the bars at the very beginning and end of the time series
