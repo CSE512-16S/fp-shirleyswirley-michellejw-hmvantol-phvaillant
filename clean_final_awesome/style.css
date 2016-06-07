@@ -381,3 +381,9 @@ display: inline;
   height: 100%;
   padding-left: 10px;
 }
+
+/*moreinfo*/
+
+#moreinfodiv {
+  text-align: left;
+}
