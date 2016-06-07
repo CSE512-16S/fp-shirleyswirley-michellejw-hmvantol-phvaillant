@@ -290,6 +290,7 @@ display: inline;
 .yaxis-g text {
   font-size: 14px;
   stroke-width: 1px;
+  fill: #253494;
 }
 
 .yaxis-l {
@@ -301,6 +302,7 @@ display: inline;
 .yaxis-l text {
   font-size: 14px;
   stroke-width: 1px;
+  fill: #41b6c4;
 }
 
 .ylabel {
