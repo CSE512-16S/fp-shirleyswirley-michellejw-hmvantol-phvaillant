@@ -362,7 +362,7 @@ $( document ).ready(function() {
 	var inactivebarcolor = "LightGray";
 
 	// --- Define global plot variables
-	var margin_plot = {top:0, right:110, bottom:50, left:75};
+	var margin_plot = {top:0, right:110, bottom:60, left:75};
 
     function show_info_inside_modal(current_location) {
 
@@ -567,7 +567,7 @@ $( document ).ready(function() {
 				        .attr("id","xlabel")
 				        .attr("text-anchor", "middle")
 				        .attr("x", (width.plot)/2)
-				        .attr("y", height.plot-margin_plot.top/4)
+				        .attr("y", height.plot-margin_plot.bottom/7)
 				        .text("Year");
 
 				    // label local data left y-axis
@@ -640,7 +640,7 @@ $( document ).ready(function() {
 				        .attr("transform", "translate(" + margin_plot.left + "," + [height.plot - margin_plot.top - margin_plot.bottom] + ")")
 				        .call(x_axis)
 			                .selectAll("text")
-				            .attr("transform", "rotate(-65)")
+				            .attr("transform", "rotate(-40)")
 			                    .attr("dx", "-.8em")
 			                    .attr("dy", ".15em")
 			                    .style("text-anchor", "end");
