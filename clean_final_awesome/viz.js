@@ -43,6 +43,7 @@ $( document ).ready(function() {
 		.attr("class","map_svg")
 	    .attr("width", width_map)
 	    .attr("height", height_map);
+	var tooltip;
 
 	//create the global variables for plot size
 	var x, yl, yg, x_axis, y_axisl, y_axisg, linel, lineg, svg_plot, bar, barwidth, width, height, labely_local, labely_global;
@@ -110,6 +111,9 @@ $( document ).ready(function() {
 	      .attr("class", "land")
 	      .attr("d", path);
 
+	  tooltip = d3.select('#map').append('div')
+            .attr('class', 'hidden tooltip');
+
 	    //draw the locations path
 	  locations.forEach(function(d) {
 	  	n_locations += 1;
@@ -131,7 +135,19 @@ $( document ).ready(function() {
 	        	center_on_location(current_location);
 	        	show_info_inside_modal(current_location);
 	        })
-	    coordinates_locations[d.location_id] = [d.lon,d.lat];
+	        .on('mousemove', function() {
+                    var mouse = d3.mouse(map_svg.node()).map(function(d) {
+                        return parseInt(d);
+                    });
+                    tooltip.classed('hidden', false)
+                        .attr('style', 'left:' + (mouse[0] + screen_width/2) +
+                                'px; top:' + (mouse[1] + screen_height/3) + 'px')
+                        .html(d.location_name);
+                })
+            .on('mouseout', function() {
+                    tooltip.classed('hidden', true);
+                });
+	    coordinates_locations[d.location_id] = [d.lon,d.lat,d.location_name];
 	  });
 
 
@@ -178,6 +194,10 @@ $( document ).ready(function() {
 		    // resize the map - beware that the clicked location has a particular path
 	    	map_svg.selectAll("path").attr("d", path);
 	    	map_svg.select("#location_" + current_location).attr("d", path_clicked);
+
+	    	//resize the tooltip when shown (modal on)
+	    	tooltip.attr('style', 'left:' + (screen_width/2) +
+                                'px; top:' + (screen_height/3) + 'px')
 
 	    	//resize img div
 	    	//compute modal dimensions
@@ -246,6 +266,12 @@ $( document ).ready(function() {
         center_on_location(current_location);
         show_info_inside_modal(current_location);
     });
+
+    //make sure that no locations are selected when modal closes
+    $('#myModal').on('hidden.bs.modal', function () {
+    	map_svg.select("#location_" + current_location).attr("fill","yellow").attr("d",path);
+    	tooltip.classed('hidden', true)
+	});
 
     d3.select("#modal-down").on('click', function() {
     	map_svg.select("#location_" + current_location).attr("fill","yellow").attr("d",path);
@@ -352,6 +378,12 @@ $( document ).ready(function() {
                 map_svg.select("#location_" + current_location).attr("d", path_clicked);
               };
             })
+
+      // screen width and screen height for positioning
+      tooltip.classed('hidden', false)
+                        .attr('style', 'left:' + (screen_width/2) +
+                                'px; top:' + (screen_height/3) + 'px')
+                        .html(coordinates_locations[current_location][2]);
 
     } //end of center_on_location function
 
@@ -502,9 +534,6 @@ $( document ).ready(function() {
 			        //.style("vector-effect", "non-scaling-stroke")
 	                        .style("text-anchor", "end")
 			        .style("fill","white");
-                            console.log(modal_main_view_width);
-                            console.log(height.image);
-                            console.log(width.image);
 
                             // TRYING TO GET RID OF IMAGE SCROLL BARS
                             //$("div#imgdiv").css('max-height', 0.4*modal_main_view_height+'px');
