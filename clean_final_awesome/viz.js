@@ -150,9 +150,6 @@ $( document ).ready(function() {
 	    coordinates_locations[d.location_id] = [d.lon,d.lat,d.location_name];
 	  });
 
-
-
-
 	  //Drag event
 	  map_svg.selectAll("path").call(d3.behavior.drag()
 	        .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
@@ -248,9 +245,9 @@ $( document ).ready(function() {
 				            .attr("d",lineg);
 
 			d3.selectAll("tspan").remove();
-			d3.select("#annodiv").selectAll(".annotation").text(function(d) { return d.annotation; }).call(wrap, modal_main_view_width*5/6-20, 1.1);
-			svg_plot.selectAll("#ylabell").text(labely_local).call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
-			svg_plot.selectAll("#ylabelg").text(labely_global).call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
+			d3.select("#annodiv").selectAll(".annotation").text(function(d) { return d.annotation; }).call(wrap, modal_main_view_width*5/6-20, 1.1, true);
+			svg_plot.selectAll("#ylabell").text(labely_local).call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2, false);
+			svg_plot.selectAll("#ylabelg").text(labely_global).call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2, false);
 
 
 
@@ -402,7 +399,7 @@ $( document ).ready(function() {
 
     function show_info_inside_modal(current_location) {
 
-    	$("#modal-title").html("");
+    	$("#modal-title").html("<button type='button' class='close btn-modal' data-dismiss='modal'>&times;</button>");
 	    $("#imgdiv").html("");
 	    $("#plotdiv").html("");
 	    $("#moreinfodiv").html("");
@@ -463,7 +460,6 @@ $( document ).ready(function() {
 			    //----------------------------------
 			    var title = d3.select("#modal-title")
 			        .append("text")
-			        .attr("class","title-modal")
 			        .text(chart_data[0].title);
 
 			    //----------------------------------
@@ -727,7 +723,7 @@ $( document ).ready(function() {
 				            .attr("transform", "translate(" + margin_plot.left + ",0)")
 				            .attr("d",lineg);
 
-				    // add annotations // CHANGE A LOT OF THINGS HERE
+				    // add annotations
 				    d3.select("#annodiv").append("svg")
 				    		.attr("id","anno_svg")
 				    		.attr("class","svg-content-responsive")
@@ -736,16 +732,17 @@ $( document ).ready(function() {
 			            .append("text")
 			                .attr("id", function(d) { return "annoID" + d.id; })
 			                .attr("class", "annotation") // from css
-			                .attr("x",0)
-			                .attr("y",0)
 			                .attr("dy", "0.8em")
 			                .style("opacity", 0)
 			                .text(function(d) { return d.annotation; })
+			                .attr("x","50%")
+			                .attr("y","25%")
+			                .style("text-anchor","middle")
 			                
 			        setTimeout(function() {
-			        	d3.selectAll(".annotation").call(wrap, modal_main_view_width*5/6-20, 1.1);
-			        	svg_plot.selectAll("#ylabell").call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
-			        	svg_plot.selectAll("#ylabelg").call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
+			        	d3.selectAll(".annotation").call(wrap, modal_main_view_width*5/6-20, 1.1, true);
+			        	svg_plot.selectAll("#ylabell").call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2, false);
+			        	svg_plot.selectAll("#ylabelg").call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2, false);
 			        }, 200);
 
 				    // differently color/size the bars at the very beginning and end of the time series
@@ -894,7 +891,8 @@ $( document ).ready(function() {
 	    d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
 	}
 		
-	function wrap(text, width, ems) {
+	function wrap(text, width, ems, init_x) {
+		  var x;
 		  text.each(function() {
 			    var text = d3.select(this),
 			        words = text.text().split(/\s+/).reverse(),
@@ -903,8 +901,10 @@ $( document ).ready(function() {
 			        lineNumber = 0,
 			        lineHeight = ems, // ems
 			        y = text.attr("y"),
-			        dy = parseFloat(text.attr("dy")),
-			        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+			        dy = parseFloat(text.attr("dy"));
+			    if (init_x) {x = text.attr("x")} else { x = 0};
+			        //change 0 to x
+			    var tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
 			    while (word = words.pop()) {
 			      line.push(word);
 			      tspan.text(line.join(" "));
@@ -912,7 +912,8 @@ $( document ).ready(function() {
 			        line.pop();
 			        tspan.text(line.join(" "));
 			        line = [word];
-			        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+			        //change 0 to x
+			        tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
 		      }
 		    }
 		  });

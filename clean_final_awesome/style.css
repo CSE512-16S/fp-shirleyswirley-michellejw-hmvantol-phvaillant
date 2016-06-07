@@ -60,6 +60,10 @@ div.tooltip {
   margin-top: -45px;
   height: 45px;
   overflow: auto;
+  font-size: 3.5vh; /*dynamic font resizing*/
+  color: #333333;
+  font-family: sans-serif;
+  text-align: center;
 }
 
 .modal-body {
@@ -116,6 +120,8 @@ div.tooltip {
 
 #annodiv {
   height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 #row_above_plot {
@@ -217,17 +223,22 @@ div.tooltip {
 #title {
   position: absolute;
   width:90%;
-  height: 15%;
-  top: 8%;
-  margin: 0 auto;
-  text-align: center;
+  height: 14%;
+  top: 6%;
   font-size: 2em;
   color: #FFF;
+  display: table;
+}
+
+#title p {
+  display: table-cell;
+  vertical-align: middle; 
+  text-align: center;
 }
 
 #abstract {
   position: absolute;
-  top: 25%;
+  top: 22%;
   height: 45%;
   margin: 0 auto;
   text-align: center;
@@ -310,20 +321,6 @@ display: inline;
     left: 0;
     width: 100%; /* only required for <img /> */
 }
-
-
-/*font styling
-*/
-
-.title-modal {
-    /*font-size: 1.8em;*/
-    font-size: 3.5vh; /*dynamic font resizing*/
-    /*font-size: 2vw;*/ /*dynamic font resizing*/
-    color: #333333;
-    font-family: sans-serif;
-    overflow: hidden;
-}
-
 
 /*plot styling
 */
