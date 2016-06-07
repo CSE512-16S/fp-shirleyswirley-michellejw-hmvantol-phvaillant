@@ -28,8 +28,8 @@ Data collection and curation was a major component of our project. We wanted to 
 
 One of the greatest challenges in visualizing climate change is how to accurately display multiple sources of variable data in a way that is convincing to the general public. Most audiences have difficulty interpreting the difference between variability and uncertainty and may not grasp what constitutes major change on a global scale. One solution to this problem would be to show data from the past and present accompanied by photographic images of landscapes that represent these changes. This visualization strategy necessarily requires curation by experts and could be supported by embedding links to the raw data or relevant publications into the graphic.
 
-[Poster](link),
-[Final Paper](link)
+[Poster](http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/clean_final_awesome/poster-shirleyswirley-michellejw-hmvantol-phvaillant.pdf),
+[Final Paper](http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/clean_final_awesome/paper-shirleyswirley-michellejw-hmvantol-phvaillant.pdf)
 
 ## Acknowledgements
 
@@ -37,4 +37,4 @@ We would like to thank Dargan Frierson for helping us brainstorm about the overa
 
 ## Running Instructions
 
-Access our visualization at http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/final_awesome/ or download this repository and run `python -m SimpleHTTPServer 9000` and access this from http://localhost:9000/.
+Access our visualization at http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/clean_final_awesome/ or download this repository and run `python -m SimpleHTTPServer 9000` and access this from http://localhost:9000/.

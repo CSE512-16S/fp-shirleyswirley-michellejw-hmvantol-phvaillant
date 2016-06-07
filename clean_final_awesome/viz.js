@@ -134,6 +134,9 @@ $( document ).ready(function() {
 	    coordinates_locations[d.location_id] = [d.lon,d.lat];
 	  });
 
+
+
+
 	  //Drag event
 	  map_svg.selectAll("path").call(d3.behavior.drag()
 	        .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
@@ -363,7 +366,7 @@ $( document ).ready(function() {
 	var inactivebarcolor = "LightGray";
 
 	// --- Define global plot variables
-	var margin_plot = {top:0, right:110, bottom:60, left:75};
+	var margin_plot = {top:5, right:110, bottom:60, left:75};
 
     function show_info_inside_modal(current_location) {
 
@@ -399,7 +402,7 @@ $( document ).ready(function() {
 		        years_img[i] = chart_data[i].date.getFullYear();
 		    });	
 
-		            // --- Subselect the following data: 
+		    // --- Subselect the following data: 
 		    var id = 0;
 		    for (var i = 0; i < chart_data.length; i++) {chart_data[i].id = id++;}
 		    // Data associated with images
