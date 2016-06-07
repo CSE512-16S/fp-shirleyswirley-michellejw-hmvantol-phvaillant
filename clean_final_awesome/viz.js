@@ -44,6 +44,9 @@ $( document ).ready(function() {
 	    .attr("width", width_map)
 	    .attr("height", height_map);
 
+	//create the global variables for plot size
+	var x, yl, yg, x_axis, y_axisl, y_axisg, linel, lineg, svg_plot, bar, barwidth, width, height, labely_local, labely_global;
+
 	    //different d3 projections. https://github.com/d3/d3/wiki/Geo-Projections
 	var projection = d3.geo.orthographic()
 	    //If scale is specified, sets the projection’s scale factor to the specified value and returns the projection. If scale is not specified, returns the current scale factor which defaults to 150. The scale factor corresponds linearly to the distance between projected points.
@@ -125,6 +128,7 @@ $( document ).ready(function() {
 	        					.attr("d", path_clicked);
 	        	current_location = d.location_id;
 	        	center_on_location(current_location);
+	        	show_info_inside_modal(current_location);
 	        })
 	    coordinates_locations[d.location_id] = [d.lon,d.lat];
 	  });
@@ -189,12 +193,75 @@ $( document ).ready(function() {
 				d3.select('#modal-secondary-view').style('height','200px');
 			}
 
+			//resize the plot
+			console.log(width);
+			width.plot = modal_main_view_width;
+			height.plot = ratio_plotdiv*modal_main_view_height;
+			x.range([0,width.plot - margin_plot.left - margin_plot.right]);
+			yl.range([height.plot - margin_plot.top - margin_plot.bottom, margin_plot.top]);
+			yg.range([height.plot - margin_plot.top - margin_plot.bottom, margin_plot.top]);
+			x_axis.scale(x);
+			y_axisl.scale(yl);
+			y_axisg.scale(yg);
+
+			svg_plot.select("#ylabell").attr("transform", "translate(0,"+(height.plot-margin_plot.bottom)/2 +")rotate(-90)");
+			svg_plot.select("#ylabelg").attr("transform", "translate("+(width.plot-0.65*margin_plot.left)+","+(height.plot-margin_plot.bottom)/2+")rotate(90)");
+
+			barwidth = width.plot/50;
+			bars.attr("x", function(d) { return x(d.date) - (barwidth/2);})
+					            .attr("y", margin_plot.top)
+					            .attr("transform", "translate("+margin_plot.left+",0)")
+					            .attr("width", barwidth+"px")
+					            .attr("height", [height.plot-margin_plot.top*2-margin_plot.bottom].toString() + "px")
+			svg_plot.select(".xaxis-bottom").attr("transform", "translate(" + margin_plot.left + "," + [height.plot - margin_plot.top - margin_plot.bottom] + ")")
+				        .call(x_axis);
+			svg_plot.select("#yaxis-l").attr("transform", "translate(" + (margin_plot.left-barwidth/2) + ",0)").call(y_axisl);
+			svg_plot.select("#yaxis-g").attr("transform", "translate(" + (width.plot-margin_plot.right+barwidth/2) + ",0)").call(y_axisg);
+			svg_plot.select("#localLine").attr("transform", "translate(" + margin_plot.left + ",0)")
+				            .attr("d",linel);
+			svg_plot.select("#globalLine").attr("transform", "translate(" + margin_plot.left + ",0)")
+				            .attr("d",lineg);
+
+			d3.selectAll("tspan").remove();
+			d3.select("#annodiv").selectAll(".annotation").text(function(d) { return d.annotation; }).call(wrap, modal_main_view_width*5/6-20, 1.1);
+			svg_plot.selectAll("#ylabell").text(labely_local).call(wrap, yg.range()[0]-yg.range()[1],0.2);
+			svg_plot.selectAll("#ylabelg").text(labely_global).call(wrap, yg.range()[0]-yg.range()[1],0.2);
+
+
+
 	} // end of resize function
 
 	//click events functions
+	d3.select("#modal-up").on('click', function() {
+    	map_svg.select("#location_" + current_location).attr("fill","yellow").attr("d",path);
+        current_location += 1;
+        current_location = current_location % (n_locations+1);
+        if (current_location==0) {current_location=1};
+        map_svg.select("#location_" + current_location).attr("fill","orange").attr("d",path_clicked);
+        center_on_location(current_location);
+        show_info_inside_modal(current_location);
+    });
+
+    d3.select("#modal-down").on('click', function() {
+    	map_svg.select("#location_" + current_location).attr("fill","yellow").attr("d",path);
+        current_location -= 1;
+        current_location = current_location % (n_locations+1);
+        if (current_location<=0) {current_location=n_locations};
+        map_svg.select("#location_" + current_location).attr("fill","orange").attr("d",path_clicked);
+        center_on_location(current_location);
+        show_info_inside_modal(current_location);
+    });
+
+    d3.select("#left").on('click', function() {
+    	step_through_time(37);
+    })
+
+     d3.select("#right").on('click', function() {
+    	step_through_time(39);
+    })
 
 	//start tour - showing modal
-    $("#start_tour").on('click', function() {
+    d3.select("#start_tour").on('click', function() {
     	map_svg.select("#location_" + current_location).attr("fill","yellow").attr("d",path);
 	    current_location = 1;
 	    map_svg.select("#location_" + current_location).attr("fill","orange").attr("d",path_clicked);
@@ -202,6 +269,8 @@ $( document ).ready(function() {
       	center_on_location(current_location);
       	show_info_inside_modal(current_location);
     });
+
+    //up and down chevrons
 
     //disable default behavior: moves the window
     window.addEventListener("keydown", function(e) {
@@ -300,6 +369,7 @@ $( document ).ready(function() {
 	    $("#imgdiv").html("");
 	    $("#plotdiv").html("");
 	    $("#moreinfodiv").html("");
+	    $("#annodiv").html("");
 
 	    activeidx = 0;
 		activemouse = null;
@@ -345,8 +415,8 @@ $( document ).ready(function() {
 		    total_img_height = chart_data[0].totalimgheight; 
 
 		    // --- Define margins + plot and image widths/heights
-		    var width = {image: single_img_width, plot: modal_main_view_width, image_total: total_img_width};
-		    var height = {image: single_img_height, plot: ratio_plotdiv*modal_main_view_height, image_total: total_img_height};
+		    width = {image: single_img_width, plot: modal_main_view_width, image_total: total_img_width};
+		    height = {image: single_img_height, plot: ratio_plotdiv*modal_main_view_height, image_total: total_img_height};
 
 		    function draw_imgdiv() {
 			    	//----------------------------------
@@ -450,41 +520,41 @@ $( document ).ready(function() {
 				    // then plot lines within div=plotdiv
 				    //----------------------------------
 
-				    var x = d3.time.scale()
+				    x = d3.time.scale()
 				        .range([0,width.plot - margin_plot.left - margin_plot.right]);
 				    
 				    // l = local data
-				    var yl = d3.scale.linear()
+				    yl = d3.scale.linear()
 				        .range([height.plot - margin_plot.top - margin_plot.bottom, margin_plot.top]);
 				    
 				    // g = global data
-				    var yg = d3.scale.linear()
+				    yg = d3.scale.linear()
 				        .range([height.plot - margin_plot.top - margin_plot.bottom, margin_plot.top]);
 				    
-				    var x_axis = d3.svg.axis()
+				    x_axis = d3.svg.axis()
 				        .scale(x)
 				        .orient("bottom");
 				    
-				    var y_axisl = d3.svg.axis()
+				    y_axisl = d3.svg.axis()
 				        .scale(yl)
 			                .ticks(5)
 				        .orient("left");
 				         
-				    var y_axisg = d3.svg.axis()
+				    y_axisg = d3.svg.axis()
 				        .scale(yg)
 			                .ticks(5)
 				        .orient("right");
 				    
-				    var linel = d3.svg.line()
+				    linel = d3.svg.line()
 				        .x(function(d) { return x(d.date); })
 				        .y(function(d) { return yl(d.localdata); });
 				         
-				    var lineg = d3.svg.line()
+				    lineg = d3.svg.line()
 				        .x(function(d) { return x(d.date); })
 				        .y(function(d) { return yg(d.globaldata); });
 
 				    // set up plot area 
-				    var svg_plot = d3.select("#plotdiv")
+				    svg_plot = d3.select("#plotdiv")
 				        .append("svg")
 				            .attr("id", "plot")
 				            .classed("svg-container", true);
@@ -499,6 +569,7 @@ $( document ).ready(function() {
 				        .text("Year");
 
 				    // label local data left y-axis
+				    labely_local = chart_data[0].localylabel;
 				    svg_plot.append("text")
 				        .attr("class", "ylabel")
 				        .attr("id", "ylabell")
@@ -517,11 +588,10 @@ $( document ).ready(function() {
 				                ylabell.active = activeline;
 				            } //,
 				        })
-				        .text(chart_data[0].localylabel)
-				        //PROBLEM: WRAPPING FUNCTION IS NOT WORKING RIGHT NOW;
-				        .call(wrap, yl.range()[0]-yl.range()[1],0.2);
+				        .text(labely_local)
 
 				    // label global data right y-axis
+				    labely_global = chart_data[0].globalylabel;
 				    svg_plot.append("text")
 				        .attr("class", "ylabel")
 				        .attr("id", "ylabelg")
@@ -541,23 +611,16 @@ $( document ).ready(function() {
 				                ylabelg.active = activeline;
 				            }
 				        })
-				        .text(chart_data[0].globalylabel)
-				        .call(wrap, yg.range()[0]-yg.range()[1],0.2);
-
-				        //WRAP TO FIX
-				        //console.log(svg_plot.selectAll("#ylabelg"));
-				        //console.log(d3.select("#ylabell")
-				       // console.log(d3.select("#ylabell").selectAll("text"));
-				        //console.log(d3.select("#ylabell").selectAll("text").call(wrap,yg.range()[0]-yg.range()[1]))
-
+				        .text(labely_global)
+				    
 				    // define data domains
 				    x.domain(d3.extent(chart_data, function(d) { return d.date; }));
 				    yl.domain(d3.extent(chart_data, function(d) { return d.localdata; }));
 				    yg.domain(d3.extent(chart_data, function(d) { return d.globaldata; }));
 
 				    // draw rectangles in background
-			        var barwidth = width.plot/50;
-				    var bars = svg_plot.selectAll("rect")
+			        barwidth = width.plot/50;
+				    bars = svg_plot.selectAll("rect")
 				            .data(imgdata).enter()
 				            .append("rect")
 					            .attr("id", function(d) { return "rectID" + d.id; })
@@ -621,31 +684,21 @@ $( document ).ready(function() {
 			           	.data(imgdata).enter()
 			            .append("text")
 			                .attr("id", function(d) { return "annoID" + d.id; })
-			                //.attr("class", "annoID")
 			                .attr("class", "annotation") // from css
-			                // .attr("x", modal_main_view_width*0.8*0.5)
-			                // .attr("y", modal_main_view_height*0.1*0.1)
-			                // .attr("dy", "0.8em")
-			                .attr("x","50%")
-			                .attr("y","50%")
+			                .attr("x",0)
+			                .attr("y",0)
+			                .attr("dy", "0.8em")
 			                .style("opacity", 0)
-			                //.style("text-align","center")
-			                .style("text-anchor","middle")
-			                //.style("alignment-baseline","middle")
-			                //.attr("transform", "translate("+modal_main_view_width*0.8*0.5+",0)")
 			                .text(function(d) { return d.annotation; })
-			                //.attr("d", function(d) { return console.log(d.annotation);})
-			                .call(wrap, modal_main_view_width*5/6, 1.1);
-
-			                //console.log(modal_main_view_width*5/6);
-			                //console.log(d3.selectAll(".annotation"));
-			                //console.log(wrap(d3.selectAll(".annotation"),modal_main_view_width*5/6,1.1));
-				     
-
-				    //d3.select("#annodiv").selectAll("text.annotation").call(wrap_anno, modal_main_view_width*0.8);
-				    //console.log(d3.select("#annodiv").selectAll("text.annotation"))
+			                
+			        setTimeout(function() {
+			        	d3.selectAll(".annotation").call(wrap, modal_main_view_width*5/6-20, 1.1);
+			        	svg_plot.selectAll("#ylabell").call(wrap, yg.range()[0]-yg.range()[1],0.2);
+			        	svg_plot.selectAll("#ylabelg").call(wrap, yg.range()[0]-yg.range()[1],0.2);
+			        }, 200);
 
 				    // differently color/size the bars at the very beginning and end of the time series
+				    d3.select("#annoID" + min_imgID).style("opacity", 1);
 				    d3.select("rect#rectID" + min_imgID).style("fill", activebarcolor);
 				    d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor);
 
@@ -702,7 +755,7 @@ $( document ).ready(function() {
 		      d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
 		      d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 		      d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
-		      d3.select("#before-text").text(fulldata[allbars[0][activeidx].id.substring(6)].date.getFullYear());
+		      d3.select("#before-text").text(chart_data[allbars[0][activeidx].id.substring(6)].date.getFullYear());
 		  }; //end step_through_time function
 
 	//-----------------
@@ -775,11 +828,10 @@ $( document ).ready(function() {
 	    d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 	    d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
-	    d3.select("#before-text").text(fulldata[allbars[0][activeidx].id.substring(6)].date.getFullYear());
+	    d3.select("#before-text").text(chart_data[allbars[0][activeidx].id.substring(6)].date.getFullYear());
 	}
 		
 	function wrap(text, width, ems) {
-		console.log(text,width,ems);
 		  text.each(function() {
 			    var text = d3.select(this),
 			        words = text.text().split(/\s+/).reverse(),
@@ -790,15 +842,9 @@ $( document ).ready(function() {
 			        y = text.attr("y"),
 			        dy = parseFloat(text.attr("dy")),
 			        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-			        console.log(text,words, words.pop(),word);
-			        console.log(word);
-			        console.log(word = words.pop())
 			    while (word = words.pop()) {
 			      line.push(word);
-			      console.log(word);
 			      tspan.text(line.join(" "));
-			      console.log(line, tspan.node());
-			      console.log(tspan, tspan.node().getComputedTextLength(), width);
 			      if (tspan.node().getComputedTextLength() > width) {
 			        line.pop();
 			        tspan.text(line.join(" "));
