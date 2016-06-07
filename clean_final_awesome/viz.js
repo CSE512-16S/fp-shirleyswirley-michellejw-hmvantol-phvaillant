@@ -385,8 +385,6 @@ $( document ).ready(function() {
 
 		d3.csv("timeline/location" + current_location + ".csv", function(chart_data) {
 
-			console.log(years_img);
-
 			// --- Make data into numbers    
 		    var parseDate = d3.time.format("%m/%d/%Y").parse;
 		    chart_data.forEach(function(d,i) {
