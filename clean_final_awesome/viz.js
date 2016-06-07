@@ -46,6 +46,7 @@ $( document ).ready(function() {
 
 	//create the global variables for plot size
 	var x, yl, yg, x_axis, y_axisl, y_axisg, linel, lineg, svg_plot, bar, barwidth, width, height, labely_local, labely_global;
+	var years_img = [];
 
 	    //different d3 projections. https://github.com/d3/d3/wiki/Geo-Projections
 	var projection = d3.geo.orthographic()
@@ -64,10 +65,10 @@ $( document ).ready(function() {
 	//create path variable and plan the location click behavior.
 	var path = d3.geo.path()
     	.projection(projection)
-    	.pointRadius(8);
+    	.pointRadius(7);
     var path_clicked = d3.geo.path()
     	.projection(projection)
-    	.pointRadius(12);
+    	.pointRadius(13);
     var current_location = 0;
 
     //adding water
@@ -194,7 +195,6 @@ $( document ).ready(function() {
 			}
 
 			//resize the plot
-			console.log(width);
 			width.plot = modal_main_view_width;
 			height.plot = ratio_plotdiv*modal_main_view_height;
 			x.range([0,width.plot - margin_plot.left - margin_plot.right]);
@@ -204,6 +204,8 @@ $( document ).ready(function() {
 			y_axisl.scale(yl);
 			y_axisg.scale(yg);
 
+			svg_plot.select("#xlabel").attr("x", (width.plot)/2)
+				        .attr("y", height.plot-margin_plot.top/4)
 			svg_plot.select("#ylabell").attr("transform", "translate(0,"+(height.plot-margin_plot.bottom)/2 +")rotate(-90)");
 			svg_plot.select("#ylabelg").attr("transform", "translate("+(width.plot-0.65*margin_plot.left)+","+(height.plot-margin_plot.bottom)/2+")rotate(90)");
 
@@ -215,8 +217,8 @@ $( document ).ready(function() {
 					            .attr("height", [height.plot-margin_plot.top*2-margin_plot.bottom].toString() + "px")
 			svg_plot.select(".xaxis-bottom").attr("transform", "translate(" + margin_plot.left + "," + [height.plot - margin_plot.top - margin_plot.bottom] + ")")
 				        .call(x_axis);
-			svg_plot.select("#yaxis-l").attr("transform", "translate(" + (margin_plot.left-barwidth/2) + ",0)").call(y_axisl);
-			svg_plot.select("#yaxis-g").attr("transform", "translate(" + (width.plot-margin_plot.right+barwidth/2) + ",0)").call(y_axisg);
+			svg_plot.select("#localAxis").attr("transform", "translate(" + (margin_plot.left-barwidth/2) + ",0)").call(y_axisl);
+			svg_plot.select("#globalAxis").attr("transform", "translate(" + (width.plot-margin_plot.right+barwidth/2) + ",0)").call(y_axisg);
 			svg_plot.select("#localLine").attr("transform", "translate(" + margin_plot.left + ",0)")
 				            .attr("d",linel);
 			svg_plot.select("#globalLine").attr("transform", "translate(" + margin_plot.left + ",0)")
@@ -224,8 +226,8 @@ $( document ).ready(function() {
 
 			d3.selectAll("tspan").remove();
 			d3.select("#annodiv").selectAll(".annotation").text(function(d) { return d.annotation; }).call(wrap, modal_main_view_width*5/6-20, 1.1);
-			svg_plot.selectAll("#ylabell").text(labely_local).call(wrap, yg.range()[0]-yg.range()[1],0.2);
-			svg_plot.selectAll("#ylabelg").text(labely_global).call(wrap, yg.range()[0]-yg.range()[1],0.2);
+			svg_plot.selectAll("#ylabell").text(labely_local).call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
+			svg_plot.selectAll("#ylabelg").text(labely_global).call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
 
 
 
@@ -361,7 +363,7 @@ $( document ).ready(function() {
 	var inactivebarcolor = "LightGray";
 
 	// --- Define global plot variables
-	var margin_plot = {top:50, right:110, bottom:50, left:75};
+	var margin_plot = {top:0, right:110, bottom:60, left:75};
 
     function show_info_inside_modal(current_location) {
 
@@ -371,6 +373,7 @@ $( document ).ready(function() {
 	    $("#moreinfodiv").html("");
 	    $("#annodiv").html("");
 
+
 	    activeidx = 0;
 		activemouse = null;
 		allbars = null;
@@ -379,9 +382,11 @@ $( document ).ready(function() {
 
 		d3.csv("timeline/location" + current_location + ".csv", function(chart_data) {
 
+			console.log(years_img);
+
 			// --- Make data into numbers    
 		    var parseDate = d3.time.format("%m/%d/%Y").parse;
-		    chart_data.forEach(function(d) {
+		    chart_data.forEach(function(d,i) {
 		        d.localdata = +d.localdata;
 		        d.globaldata = +d.globaldata;
 		        d.date = parseDate(d.date);
@@ -391,6 +396,7 @@ $( document ).ready(function() {
 		        d.singleimgheight = +d.singleimgheight;
 		        d.totalimgwidth = +d.totalimgwidth;
 		        d.totalimgheight = +d.totalimgheight;
+		        years_img[i] = chart_data[i].date.getFullYear();
 		    });	
 
 		            // --- Subselect the following data: 
@@ -484,7 +490,7 @@ $( document ).ready(function() {
 			    d3.select("#svgbefore")
 			        .append("text")
 			        .attr("id", "before-text")
-			        .text(chart_data[min_imgID].date.getFullYear())
+			        .text(years_img[min_imgID])
 			        .attr("x",xposyrlabel)
 			        .attr("y",yposyrlabel)
 			        .style("font-size", "100px")
@@ -565,7 +571,7 @@ $( document ).ready(function() {
 				        .attr("id","xlabel")
 				        .attr("text-anchor", "middle")
 				        .attr("x", (width.plot)/2)
-				        .attr("y", height.plot-margin_plot.top/4)
+				        .attr("y", height.plot-margin_plot.bottom/7)
 				        .text("Year");
 
 				    // label local data left y-axis
@@ -638,7 +644,7 @@ $( document ).ready(function() {
 				        .attr("transform", "translate(" + margin_plot.left + "," + [height.plot - margin_plot.top - margin_plot.bottom] + ")")
 				        .call(x_axis)
 			                .selectAll("text")
-				            .attr("transform", "rotate(-65)")
+				            .attr("transform", "rotate(-40)")
 			                    .attr("dx", "-.8em")
 			                    .attr("dy", ".15em")
 			                    .style("text-anchor", "end");
@@ -693,8 +699,8 @@ $( document ).ready(function() {
 			                
 			        setTimeout(function() {
 			        	d3.selectAll(".annotation").call(wrap, modal_main_view_width*5/6-20, 1.1);
-			        	svg_plot.selectAll("#ylabell").call(wrap, yg.range()[0]-yg.range()[1],0.2);
-			        	svg_plot.selectAll("#ylabelg").call(wrap, yg.range()[0]-yg.range()[1],0.2);
+			        	svg_plot.selectAll("#ylabell").call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
+			        	svg_plot.selectAll("#ylabelg").call(wrap, modal_main_view_height*ratio_plotdiv-margin_plot.bottom,0.2);
 			        }, 200);
 
 				    // differently color/size the bars at the very beginning and end of the time series
@@ -723,12 +729,24 @@ $( document ).ready(function() {
 		    draw_imgdiv();
 		    draw_plotdiv();
 
-		    // add image src info on top of after image
-		    d3.select("#imgsrc")
-		        .text(chart_data[0].imgsrctext);
-		    $("#imgsrc").on('click', function() {
-		        	window.open(chart_data[0].imgsrcurl);
-		    	});
+		    // add image src info and data src info buttons
+
+		    d3.select("#imgsrc").text(chart_data[0].imgsrctext)
+		    	.on('click', function() {
+					window.open(chart_data[0].imgsrcurl);
+				});
+
+	        d3.select("#localsrc").text(chart_data[0].localdatasrctext)
+	        	.on('click', function() {
+	         		window.open(chart_data[0].localdatasrcurl);
+	       		});
+
+		    d3.select("#globalsrc").text(chart_data[0].globaldatasrctext)
+		    	.on('click', function() {
+	         		window.open(chart_data[0].globaldatasrcurl);
+	        	});
+
+
 
 		    //---------------------------------
 			 // Add more info to div=moreinfodiv 
@@ -755,7 +773,7 @@ $( document ).ready(function() {
 		      d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
 		      d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 		      d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
-		      d3.select("#before-text").text(chart_data[allbars[0][activeidx].id.substring(6)].date.getFullYear());
+		      d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
 		  }; //end step_through_time function
 
 	//-----------------
@@ -828,7 +846,7 @@ $( document ).ready(function() {
 	    d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 	    d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
-	    d3.select("#before-text").text(chart_data[allbars[0][activeidx].id.substring(6)].date.getFullYear());
+	    d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
 	}
 		
 	function wrap(text, width, ems) {

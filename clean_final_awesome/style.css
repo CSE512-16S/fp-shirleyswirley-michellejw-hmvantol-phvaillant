@@ -144,6 +144,33 @@ body {
 .gi-4x{font-size: 4em;}
 .gi-5x{font-size: 5em;}
 
+
+/*Data source button styling*/
+
+.btn-localdata {
+  background-color: #41b6c4;
+  border-color: #41b6c4;
+}
+
+.btn-localdata:hover {
+  background-color: #2c7fb8;
+  border-color: #2c7fb8;
+}
+
+.btn-globaldata {
+  background-color: #253494;
+  border-color: #253494;
+}
+
+.btn-globaldata:hover {
+  background-color: #2c7fb8;
+  border-color: #2c7fb8;
+}
+
+#imgsrcdiv {
+  text-align: left;
+}
+
 /*Start button styling
 */
 
@@ -165,7 +192,7 @@ body {
   position: absolute;
   width:90%;
   height: 15%;
-  top: 10%;
+  top: 8%;
   margin: 0 auto;
   text-align: center;
   font-size: 2em;
@@ -174,8 +201,8 @@ body {
 
 #abstract {
   position: absolute;
-  top: 30%;
-  height: 30%;
+  top: 25%;
+  height: 45%;
   margin: 0 auto;
   text-align: center;
   font-size: 1.2em;
@@ -186,7 +213,7 @@ body {
 
 #start-tour-container {
   position: absolute;
-  top: 65%;
+  top: 72%;
   margin: 0 auto;
   text-align: center;
   width: 90%;
@@ -196,8 +223,8 @@ body {
 
 #media-icons {
   position: absolute;
-  top: 85%;
-  height: 15%;
+  top: 87%;
+  height: 10%;
   margin: 0 auto;
   text-align: center;
   width: 90%;
@@ -290,6 +317,7 @@ display: inline;
 .yaxis-g text {
   font-size: 14px;
   stroke-width: 1px;
+  fill: #253494;
 }
 
 .yaxis-l {
@@ -301,6 +329,7 @@ display: inline;
 .yaxis-l text {
   font-size: 14px;
   stroke-width: 1px;
+  fill: #41b6c4;
 }
 
 .ylabel {
@@ -342,7 +371,7 @@ display: inline;
 /*annotations*/
 
 .annotation {
-    font-size: 1.5em;
+    font-size: 1.1em;
     color: black;
     font-family: sans-serif;
 }
@@ -351,4 +380,10 @@ display: inline;
   width: 100%;
   height: 100%;
   padding-left: 10px;
+}
+
+/*moreinfo*/
+
+#moreinfodiv {
+  text-align: left;
 }
