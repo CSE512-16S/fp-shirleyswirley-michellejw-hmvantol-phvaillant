@@ -723,10 +723,7 @@ $( document ).ready(function() {
 				            .attr("transform", "translate(" + margin_plot.left + ",0)")
 				            .attr("d",lineg);
 
-				    //add annotations
-				    //d3.select("#annodiv").select("p").html()
-
-				    // add annotations // CHANGE A LOT OF THINGS HERE
+				    // add annotations
 				    d3.select("#annodiv").append("svg")
 				    		.attr("id","anno_svg")
 				    		.attr("class","svg-content-responsive")
@@ -739,7 +736,7 @@ $( document ).ready(function() {
 			                .style("opacity", 0)
 			                .text(function(d) { return d.annotation; })
 			                .attr("x","50%")
-			                .attr("y","30%")
+			                .attr("y","25%")
 			                .style("text-anchor","middle")
 			                
 			        setTimeout(function() {
