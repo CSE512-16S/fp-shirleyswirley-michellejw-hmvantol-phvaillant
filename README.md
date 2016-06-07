@@ -37,4 +37,4 @@ We would like to thank Dargan Frierson for helping us brainstorm about the overa
 
 ## Running Instructions
 
-Access our visualization at http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/final_awesome/ or download this repository and run `python -m SimpleHTTPServer 9000` and access this from http://localhost:9000/.
+Access our visualization at http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/clean_final_awesome/ or download this repository and run `python -m SimpleHTTPServer 9000` and access this from http://localhost:9000/.
