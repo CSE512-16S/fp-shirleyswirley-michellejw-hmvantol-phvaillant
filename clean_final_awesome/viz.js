@@ -731,6 +731,16 @@ $( document ).ready(function() {
 		        	window.open(chart_data[0].imgsrcurl);
 		    	});
 
+	         d3.select("#localsrc").text(chart_data[0].localdatasrctext);
+	         $("#localsrc").on('click', function() {
+	         	window.open(chart_data[0].localdatasrcurl);
+	         });
+
+		     d3.select("#globalsrc").text(chart_data[0].globaldatasrctext);
+ 	         $("#globalsrc").on('click', function() {
+	         	window.open(chart_data[0].globaldatasrcurl);
+	         });
+
 		    //---------------------------------
 			 // Add more info to div=moreinfodiv 
 			//---------------------------------
