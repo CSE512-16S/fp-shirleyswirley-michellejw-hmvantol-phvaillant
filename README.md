@@ -20,7 +20,7 @@ Visualizing Climate Change
 
 ## Research and development
 
-For our research process we surveyed existing climate change visualizations and the literature on climate change visualization. We interviewed Dargan Frierson for his vision of what features a climate change graphic should have and we brainstormed with him to develop those ideas into our current version. We decided to initally split up and work in pairs to develop different components of the graphic, but continued to communicate about major design decisions. In the end we merged our code and worked on integrating aesthetics.
+For our research process we surveyed existing climate change visualizations and the literature on climate change visualization. We interviewed Dargan Frierson for his vision of what features a climate change graphic should have and we brainstormed with him to develop those ideas into our current version. We decided to initally split up and work in pairs to develop different components of the graphic, but continued to communicate about major design decisions. In the end we merged our code and worked on integration and overall aesthetics.
 
 Data collection and curation was a major component of our project. We wanted to find examples of global change where climate change was a major contributing factor. The data needed to be easy to understand without too much background information and also needed to be accompanied by satellite images. We looked for sites that were broadly distributed across the globe to show a variety of different effects.
 
@@ -31,10 +31,10 @@ One of the greatest challenges in visualizing climate change is how to accuratel
 [Poster](link),
 [Final Paper](link)
 
-(Acknowledgements: ???)
+## Acknowledgements
+
+We would like to thank Dargan Frierson for helping us brainstorm about the overall design and message, and for assisting in the selection of potential locations.
 
 ## Running Instructions
 
-Access our visualization at http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/final_awesome/ or download this repository and run `python -m SimpleHTTPServer 9000` and access this from http://localhost:9000/.
-
-**(To do: "If you put your work online, please also write a [one-line description and add a link to your final work](http://note.io/1n3u46s) so people can access it directly from CSE512-16S page.")**
+Access our visualization at http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/clean_final_awesome/ or download this repository and run `python -m SimpleHTTPServer 9000` and access this from http://localhost:9000/.
