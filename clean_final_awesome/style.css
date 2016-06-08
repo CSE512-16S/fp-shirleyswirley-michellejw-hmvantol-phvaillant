@@ -393,12 +393,12 @@ display: inline;
 
 .line-l {
     fill: none;
-    stroke-width: 3px;
+    stroke-width: 2px;
 }
 
 .line-g {
   fill: none;
-  stroke-width: 3px;
+  stroke-width: 2px;
 }
 
 /*annotations*/
