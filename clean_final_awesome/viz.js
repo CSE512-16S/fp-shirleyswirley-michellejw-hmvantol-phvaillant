@@ -38,16 +38,20 @@ $( document ).ready(function() {
 	d3.select('#map').style('width', width_map + 'px');
 	d3.select('#map').style('height', height_map + 'px');
 
-	//create the svg element
+	//create the map svg element and the tooltip
 	var map_svg = d3.select("#map").append("svg")
 		.attr("class","map_svg")
 	    .attr("width", width_map)
 	    .attr("height", height_map);
-	var tooltip;
+	var tooltip = d3.select('#map').append('div')
+            .attr('class', 'hidden tooltip');
 
 	//create the global variables for plot size
 	var x, yl, yg, x_axis, y_axisl, y_axisg, linel, lineg, svg_plot, bar, barwidth, width, height, labely_local, labely_global;
 	var years_img = [];
+
+	//binary for firing mouseout event or not
+	var mouseout = true;
 
 	    //different d3 projections. https://github.com/d3/d3/wiki/Geo-Projections
 	var projection = d3.geo.orthographic()
@@ -111,9 +115,6 @@ $( document ).ready(function() {
 	      .attr("class", "land")
 	      .attr("d", path);
 
-	  tooltip = d3.select('#map').append('div')
-            .attr('class', 'hidden tooltip');
-
 	    //draw the locations path
 	  locations.forEach(function(d) {
 	  	n_locations += 1;
@@ -126,12 +127,13 @@ $( document ).ready(function() {
 	        .attr("d", path)
 	        //add the attribute for location id
 	        .attr("id","location_" + d.location_id)
-	        .on("click", function() {
+	        .on("click", function(e) {
 	        	map_svg.select("#location_" + current_location).attr("fill","yellow")
 	        								.attr("d", path);
 	        	d3.select(this).attr("fill","orange")
 	        					.attr("d", path_clicked);
 	        	current_location = d.location_id;
+	        	mouseout = false;
 	        	center_on_location(current_location);
 	        	show_info_inside_modal(current_location);
 	        })
@@ -145,7 +147,9 @@ $( document ).ready(function() {
                         .html(d.location_name);
                 })
             .on('mouseout', function() {
-                    tooltip.classed('hidden', true);
+	            	if (mouseout) {
+	                    tooltip.classed('hidden', true);
+	                }
                 });
 	    coordinates_locations[d.location_id] = [d.lon,d.lat,d.location_name];
 	  });
@@ -267,7 +271,9 @@ $( document ).ready(function() {
     //make sure that no locations are selected when modal closes
     $('#myModal').on('hidden.bs.modal', function () {
     	map_svg.select("#location_" + current_location).attr("fill","yellow").attr("d",path);
-    	tooltip.classed('hidden', true)
+    	current_location = 0;
+    	tooltip.classed('hidden', true);
+    	mouseout = true;
 	});
 
     d3.select("#modal-down").on('click', function() {
@@ -377,10 +383,12 @@ $( document ).ready(function() {
             })
 
       // screen width and screen height for positioning
-      tooltip.classed('hidden', false)
-                        .attr('style', 'left:' + (screen_width/2 + 15) +
+      //setTimeout(function() {
+		tooltip.classed('hidden', false)
+                .attr('style', 'left:' + (screen_width/2 + 15) +
                                 'px; top:' + (screen_height/2 - 105) + 'px')
-                        .html(coordinates_locations[current_location][2]);
+                .html(coordinates_locations[current_location][2]);
+			        //}, 1000);
 
     } //end of center_on_location function
 
