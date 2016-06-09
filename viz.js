@@ -558,12 +558,6 @@ $( document ).ready(function() {
 			        .attr("y",yposyrlabel)
 			        .style("font-size", yrlabelfontsize+"px")
 
-                                console.log("imght: ", height.image)
-                                console.log("imgwt: ", width.image)
-                                console.log("modalheight: ", modal_main_view_height)
-                                console.log("modalwt: ", modal_main_view_width)
-                                console.log("imgmaxwidth%: ", imgmaxwidth)
-
                             // initially display the most recent image on the right by default 
 			    var after = d3.select("#imgdiv")
 			        .append("svg")
