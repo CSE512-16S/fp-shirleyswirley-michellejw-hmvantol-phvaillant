@@ -1,0 +1,149 @@
+/* glue: 0.11.1 hash: 672ff29404 */
+        .sprite-flooding_allyears-waxlake_1984312,
+.sprite-flooding_allyears-waxlake_1986237,
+.sprite-flooding_allyears-waxlake_1987288,
+.sprite-flooding_allyears-waxlake_1989261,
+.sprite-flooding_allyears-waxlake_1991283,
+.sprite-flooding_allyears-waxlake_1993272,
+.sprite-flooding_allyears-waxlake_1994323,
+.sprite-flooding_allyears-waxlake_1996297,
+.sprite-flooding_allyears-waxlake_1999297,
+.sprite-flooding_allyears-waxlake_2001302,
+.sprite-flooding_allyears-waxlake_2004271,
+.sprite-flooding_allyears-waxlake_2006308,
+.sprite-flooding_allyears-waxlake_2007263,
+.sprite-flooding_allyears-waxlake_2009236,
+.sprite-flooding_allyears-waxlake_2011274,
+.sprite-flooding_allyears-waxlake_2014298,
+.sprite-flooding_allyears-waxlake_2015285 {
+            background-image: url('flooding_allyears.png');
+            background-repeat: no-repeat;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1984312 {
+            background-position: 0 0;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1986237 {
+            background-position: -720px 0;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1987288 {
+            background-position: 0 -480px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1989261 {
+            background-position: -720px -480px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1991283 {
+            background-position: 0 -960px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1993272 {
+            background-position: -720px -960px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1994323 {
+            background-position: -1440px 0;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1996297 {
+            background-position: -1440px -480px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_1999297 {
+            background-position: -1440px -960px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_2001302 {
+            background-position: 0 -1440px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_2004271 {
+            background-position: -720px -1440px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_2006308 {
+            background-position: -1440px -1440px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_2007263 {
+            background-position: -2160px 0;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_2009236 {
+            background-position: -2160px -480px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_2011274 {
+            background-position: -2160px -960px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_2014298 {
+            background-position: -2160px -1440px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        .sprite-flooding_allyears-waxlake_2015285 {
+            background-position: 0 -1920px;
+            width: 720px;
+            height: 480px;
+        }
+        
+        @media screen and (-webkit-min-device-pixel-ratio: 1.0), screen and (min--moz-device-pixel-ratio: 1.0), screen and (-o-min-device-pixel-ratio: 100/100), screen and (min-device-pixel-ratio: 1.0), screen and (min-resolution: 1.0dppx) {
+            .sprite-flooding_allyears-waxlake_1984312,
+    .sprite-flooding_allyears-waxlake_1986237,
+    .sprite-flooding_allyears-waxlake_1987288,
+    .sprite-flooding_allyears-waxlake_1989261,
+    .sprite-flooding_allyears-waxlake_1991283,
+    .sprite-flooding_allyears-waxlake_1993272,
+    .sprite-flooding_allyears-waxlake_1994323,
+    .sprite-flooding_allyears-waxlake_1996297,
+    .sprite-flooding_allyears-waxlake_1999297,
+    .sprite-flooding_allyears-waxlake_2001302,
+    .sprite-flooding_allyears-waxlake_2004271,
+    .sprite-flooding_allyears-waxlake_2006308,
+    .sprite-flooding_allyears-waxlake_2007263,
+    .sprite-flooding_allyears-waxlake_2009236,
+    .sprite-flooding_allyears-waxlake_2011274,
+    .sprite-flooding_allyears-waxlake_2014298,
+    .sprite-flooding_allyears-waxlake_2015285 {
+                background-image: url('flooding_allyears.png');
+                -webkit-background-size: 2880px 2400px;
+                -moz-background-size: 2880px 2400px;
+                background-size: 2880px 2400px;
+            }
+        }
+        

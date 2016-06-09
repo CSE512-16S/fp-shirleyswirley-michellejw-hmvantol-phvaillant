@@ -1,0 +1,271 @@
+html, body, .container-fluid, #map-container, #information_pane { height: 100%; }
+
+/*body.modal-open {
+    overflow: hidden;
+}*/
+
+#map-container {
+  padding: 10px;
+  position: relative;
+}
+
+#map {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.water {
+  fill: LightGrey;
+}
+
+.land {
+  fill: Gray;
+}
+
+
+.btn-starttour {
+  background-color: lightgray;
+  border-color: lightgray;
+}
+
+.btn-starttour:hover {
+  background-color: lightgreen;
+  border-color: lightgreen;
+}
+
+.btn-source {
+  font-size: 15px;
+}
+
+h1 {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+p {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+
+
+/* -- Modal Stuff -- */
+
+.modal-backdrop.in {
+    opacity: 0;
+}
+
+.btn-modal { display: inline-block; 
+    position: absolute;
+  }
+
+#myModal{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+.modal-dialog {
+  width: 60%;
+  height: 100%;
+  float: right;
+  margin: 0px;
+}
+
+.modal-content {
+  height: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.modal-header {
+  padding: 10px;
+  margin-top: -45px;
+  height: 45px;
+}
+
+.modal-body {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.modal-footer {
+  padding: 10px;
+  margin-bottom: -50px;
+  height: 50px;
+}
+
+/* -- -- -- -- -- --*/
+
+
+
+/* -- Glyphs -- */
+
+.glyphicon.gray1 {
+  color: LightGray;
+}
+
+.glyphicon.gray2 {
+  color: Gray;
+}
+
+.glyphicon.glyphicon-chevron-up {
+  display: block;
+  text-align: center;
+}
+
+.glyphicon.glyphicon-chevron-down {
+  display: block;
+  text-align: center;
+}
+
+.glyphicon.glyphicon-triangle-right {
+  display: block;
+  vertical-align: middle;
+}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+/* -- -- -- -- -- --*/
+
+/* -- Styles orignally defined for info inside modal -- */
+
+/*.axis-path,
+.axis-line {
+    fill: none;
+    stroke: black;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}*/
+
+.xaxis-bottom {
+    fill: none;
+    stroke: black;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.xaxis-bottom text {
+  stroke: none;
+  fill: black;
+  font-size: 30px;
+}
+
+.yaxis-g {
+    fill: none;
+    stroke: orangered;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-g text {
+  font-size: 30px;
+  stroke: none;
+  fill: orangered;
+}
+
+.yaxis-l {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 3px;
+    shape-rendering: crispEdges;
+}
+
+.yaxis-l text {
+  font-size: 30px;
+  stroke: none;
+  fill: steelblue;
+}
+
+/*.axis text {
+  font-size: 40px;
+}*/
+
+.line-l {
+    fill: none;
+    stroke: steelblue; 
+    stroke-width: 5px;
+}
+
+.line-g {
+  fill: none;
+  stroke: orangered;
+  stroke-width: 5px;
+}
+
+#instructions {
+    font-size: 25px;
+    color: black;
+    font-family: sans-serif;
+    text-anchor: middle;
+}
+
+.annotation {
+    font-size: 25px;
+    color: black;
+    font-family: sans-serif;
+}
+
+.title {
+    font-size: 40px;
+    font-size: 2vw; /*dynamic font resizing*/
+    color: black;
+    font-family: sans-serif;
+}
+
+.ylabel {
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#ylabell {
+  fill: steelblue;
+}
+
+#ylabelg {
+  fill: orangered;
+}
+
+.xlabel {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.moreinfo {
+    font-size: 100px;
+    font-size: 1vw; /*dynamic font resizing*/
+    color: black;
+    font-family: sans-serif;
+}
+
+/* -- -- -- -- -- --*/
+
+/* -- Liquid SVG and images -- */
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 0%; /* aspect ratio, depends on svg ratio, for my zebra height/width = 1.2 so padding-bottom = 50% * 1.2 = 60% */
+    vertical-align: top; /* top | middle | bottom ... do what you want */
+    overflow: hidden;
+}
+
+.svg-content-responsive { /* svg into : object, img or inline */
+    display: inline-block;
+    position: absolute;
+    top: 0; /*10px;*/
+    left: 0;
+    width: 100%; /* only required for <img /> */
+}
+
+.sidebysideimage {
+    max-width: 50%; /*this makes the two side by side before and after sat images take up half the width of the div container they are in each*/
+    max-height: 100%;
+}
+
+/* -- -- -- -- -- --*/

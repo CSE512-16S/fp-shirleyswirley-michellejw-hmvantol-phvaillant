@@ -1,0 +1,101 @@
+/* glue: 0.11.1 hash: a9aba8105a */
+        .sprite-sierranevadaimgs-sierranevada2006,
+.sprite-sierranevadaimgs-sierranevada2007,
+.sprite-sierranevadaimgs-sierranevada2008,
+.sprite-sierranevadaimgs-sierranevada2009,
+.sprite-sierranevadaimgs-sierranevada2010,
+.sprite-sierranevadaimgs-sierranevada2011,
+.sprite-sierranevadaimgs-sierranevada2012,
+.sprite-sierranevadaimgs-sierranevada2013,
+.sprite-sierranevadaimgs-sierranevada2014,
+.sprite-sierranevadaimgs-sierranevada2015,
+.sprite-sierranevadaimgs-sierranevada2016 {
+            background-image: url('sierranevadaimgs.png');
+            background-repeat: no-repeat;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2006 {
+            background-position: 0 0;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2007 {
+            background-position: -720px 0;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2008 {
+            background-position: 0 -720px;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2009 {
+            background-position: -720px -720px;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2010 {
+            background-position: -1440px 0;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2011 {
+            background-position: -1440px -720px;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2012 {
+            background-position: 0 -1440px;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2013 {
+            background-position: -720px -1440px;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2014 {
+            background-position: -1440px -1440px;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2015 {
+            background-position: -2160px 0;
+            width: 720px;
+            height: 720px;
+        }
+        
+        .sprite-sierranevadaimgs-sierranevada2016 {
+            background-position: -2160px -720px;
+            width: 720px;
+            height: 720px;
+        }
+        
+        @media screen and (-webkit-min-device-pixel-ratio: 1.0), screen and (min--moz-device-pixel-ratio: 1.0), screen and (-o-min-device-pixel-ratio: 100/100), screen and (min-device-pixel-ratio: 1.0), screen and (min-resolution: 1.0dppx) {
+            .sprite-sierranevadaimgs-sierranevada2006,
+    .sprite-sierranevadaimgs-sierranevada2007,
+    .sprite-sierranevadaimgs-sierranevada2008,
+    .sprite-sierranevadaimgs-sierranevada2009,
+    .sprite-sierranevadaimgs-sierranevada2010,
+    .sprite-sierranevadaimgs-sierranevada2011,
+    .sprite-sierranevadaimgs-sierranevada2012,
+    .sprite-sierranevadaimgs-sierranevada2013,
+    .sprite-sierranevadaimgs-sierranevada2014,
+    .sprite-sierranevadaimgs-sierranevada2015,
+    .sprite-sierranevadaimgs-sierranevada2016 {
+                background-image: url('sierranevadaimgs.png');
+                -webkit-background-size: 2880px 2160px;
+                -moz-background-size: 2880px 2160px;
+                background-size: 2880px 2160px;
+            }
+        }
+        
