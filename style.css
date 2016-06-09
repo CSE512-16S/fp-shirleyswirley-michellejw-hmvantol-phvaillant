@@ -96,12 +96,17 @@ div.tooltip {
   max-height: 100%;
   top: 50%;
   transform: translateY(-50%);
-  /*max-width: 100%;*/
+  /*max-width: 50%;*/
   /*object-fit: contain;*/
   /*display: block;*/
   /*display: inline-block;*/
   /*padding: 100px;*/
   /*overflow: hidden;*/
+}
+
+.imgtext {
+    text-anchor: end;
+    fill: white;
 }
 
 #plotdiv {
@@ -285,21 +290,6 @@ border: 0;
 box-shadow: 0;
 display: inline;
 }
-
-/*style for imgdiv*/
-
-.sidebysideimage {
-    max-width: 50%; /*this makes the two side by side before and after sat images take up half the width of the div container they are in each*/
-    /*max-height: 100%;*/
-    /*display: inline-block;*/
-    /*object-fit: contain;*/
-}
-
-/*
-#before-text {
-    font-size: 20px; 
-}
-*/
 
 /* -- Liquid SVG and images -- */
 
