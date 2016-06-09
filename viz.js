@@ -834,7 +834,9 @@ $( document ).ready(function() {
 	function step_through_time(keyCode) {
 		      d3.select("text#instructions").style("opacity",0);
 		      d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",0);
-		      d3.select(allbars[0][activeidx]).classed("activebar", false);
+		      if (activeidx+1 < allbars[0].length) {
+		      	d3.select(allbars[0][activeidx]).classed("activebar", false);
+		  	  }
 		      if (keyCode == 39 && activeidx<allbars.size()-1) { // right arrow key
 		          activeidx++; // don't go further right than there are pts
 		      }
