@@ -142,6 +142,7 @@ $( document ).ready(function() {
                     //var mouse = d3.mouse(map_svg.node()).map(function(d) {
                     //    return parseInt(d);
                     //});
+	        		//console.log(mouse);
                     tooltip.classed('hidden', false)
                         .attr('style', 'left:' + (d3.event.pageX + 15) +
                                 'px; top:' + (d3.event.pageY - 35) + 'px')
@@ -398,8 +399,9 @@ $( document ).ready(function() {
 	var activeidx = 0;
 	var activemouse = null;
 	var allbars = null;
-	var activebarcolor = "Gray";
-	var inactivebarcolor = "LightGray";
+	var activebarcolor = "#6E6E6E";
+	var annotedbarcolor = "#BDBDBD";
+	var inactivebarcolor = "#E6E6E6";
 
 	// --- Define global plot variables
 	var margin_plot = {top:5, right:110, bottom:60, left:75};
@@ -695,13 +697,17 @@ $( document ).ready(function() {
 				            .data(imgdata).enter()
 				            .append("rect")
 					            .attr("id", function(d) { return "rectID" + d.id; })
+					            .attr("class", "barinplot")
 					            .attr("x", function(d) { return x(d.date) - (barwidth/2);})
 					            .attr("y", margin_plot.top)
 					            .attr("transform", "translate("+margin_plot.left+",0)")
 					            .attr("width", barwidth+"px")
 					            .attr("height", [height.plot-margin_plot.top*2-margin_plot.bottom].toString() + "px")
 					            .style("stroke-width", "3px")
-					            .style("fill", inactivebarcolor);
+					            .style("fill", function(d) {
+					            	if (!!d.annotation) {return annotedbarcolor}
+					            	else {return inactivebarcolor}
+					            });
 
 					// draw x-axis
 				    svg_plot.append("g")
@@ -771,8 +777,7 @@ $( document ).ready(function() {
 
 				    // differently color/size the bars at the very beginning and end of the time series
 				    d3.select("#annoID" + min_imgID).style("opacity", 1);
-				    d3.select("rect#rectID" + min_imgID).style("fill", activebarcolor);
-				    d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor);
+				    d3.select("rect#rectID" + min_imgID).classed("activebar",true);
 
 				    //---------------------------------
 				    // Add interactivity to bars along the x-axis corresponding
@@ -786,7 +791,7 @@ $( document ).ready(function() {
 				        .on("mouseout", mouseout_timeline);
 
 				    //color the last bar
-				    d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor);
+				    d3.select("rect#rectID" + max_imgID).classed("activebar",true);
 
 
 		    } //end of draw_plotdiv
@@ -829,14 +834,14 @@ $( document ).ready(function() {
 	function step_through_time(keyCode) {
 		      d3.select("text#instructions").style("opacity",0);
 		      d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",0);
+		      d3.select(allbars[0][activeidx]).classed("activebar", false);
 		      if (keyCode == 39 && activeidx<allbars.size()-1) { // right arrow key
 		          activeidx++; // don't go further right than there are pts
 		      }
 		      if (keyCode == 37 && activeidx>0) { // left arrow key
 		          activeidx--; // don't go further left than there are pts
 		      }
-		      d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivebarcolor);
-		      d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
+		      d3.select(allbars[0][activeidx]).classed("activebar", true);
 		      d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 		      d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
 		      d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
@@ -885,7 +890,7 @@ $( document ).ready(function() {
 	function mouseover_timeline() {
 	    // NOTE: activemouse.id.substring(6) is the selected number following "rectID" 
 	    d3.select("text#instructions").style("opacity",0);
-	    d3.select(this).style("fill", activebarcolor);
+	    d3.select(this).classed("activebar",true);
 	    this.style.cursor = "pointer";
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",0);
 	    d3.select("text#annoID" + this.id.substring(6)).style("opacity",1);
@@ -894,10 +899,10 @@ $( document ).ready(function() {
 	function mouseout_timeline() {
 	    // NOTE: activemouse.id.substring(6) is the selected number following "rectID" 
 	    if (findindexbyid(allbars,this.id) != activeidx) {
-	        d3.select(this).style("fill", inactivebarcolor);
+	    	d3.select(this).classed("activebar", false);
 	        d3.select("text#annoID" + this.id.substring(6)).style("opacity",0);
 	        d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
-	        d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor); // this is needed to keep last dot white after hovering over it
+	        d3.select("rect#rectID" + max_imgID).classed("activebar",true);
 	    }
 	}
 
@@ -905,11 +910,11 @@ $( document ).ready(function() {
 	    // NOTE: activemouse.id.substring(6) is the selected number following "rectID" 
 	    d3.select("text#instructions").style("opacity",0);
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",0);
-	    d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivebarcolor);
-	    d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor);
+	    d3.select("#plotdiv").select("svg#plot").selectAll("rect").classed("activebar", false);
+	    d3.select("rect#rectID" + max_imgID).classed("activebar",true);
 	    activemouse = this;
 	    activeidx = findindexbyid(allbars,activemouse.id);
-	    d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
+	    d3.select(allbars[0][activeidx]).classed("activebar",true);
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 	    d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
 	    d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
