@@ -35,7 +35,7 @@ div.tooltip {
         position: absolute;
     }
 
-.locations {
+.locations, .barinplot {
   pointer-events: all;
 }
 
@@ -96,12 +96,17 @@ div.tooltip {
   max-height: 100%;
   top: 50%;
   transform: translateY(-50%);
-  /*max-width: 100%;*/
+  /*max-width: 50%;*/
   /*object-fit: contain;*/
   /*display: block;*/
   /*display: inline-block;*/
   /*padding: 100px;*/
   /*overflow: hidden;*/
+}
+
+.imgtext {
+    text-anchor: end;
+    fill: white;
 }
 
 #plotdiv {
@@ -286,21 +291,6 @@ box-shadow: 0;
 display: inline;
 }
 
-/*style for imgdiv*/
-
-.sidebysideimage {
-    max-width: 50%; /*this makes the two side by side before and after sat images take up half the width of the div container they are in each*/
-    /*max-height: 100%;*/
-    /*display: inline-block;*/
-    /*object-fit: contain;*/
-}
-
-/*
-#before-text {
-    font-size: 20px; 
-}
-*/
-
 /* -- Liquid SVG and images -- */
 
 .svg-container {
@@ -324,6 +314,10 @@ display: inline;
 
 /*plot styling
 */
+
+.activebar {
+    fill: #6E6E6E !important;
+};
 
 .xlabel {
     font-size: 20px;
@@ -419,4 +413,5 @@ display: inline;
 
 #moreinfodiv {
   text-align: left;
+  margin-top: 10px; 
 }

@@ -43,7 +43,7 @@ $( document ).ready(function() {
 		.attr("class","map_svg")
 	    .attr("width", width_map)
 	    .attr("height", height_map);
-	var tooltip = d3.select('#map').append('div')
+	var tooltip = d3.select('#map-container').append('div')
             .attr('class', 'hidden tooltip');
 
 	//create the global variables for plot size
@@ -138,12 +138,14 @@ $( document ).ready(function() {
 	        	show_info_inside_modal(current_location);
 	        })
 	        .on('mousemove', function() {
-                    var mouse = d3.mouse(map_svg.node()).map(function(d) {
-                        return parseInt(d);
-                    });
+	        		//The mouse variable below does not have the same value whether we use chrome or firefox: why??
+                    //var mouse = d3.mouse(map_svg.node()).map(function(d) {
+                    //    return parseInt(d);
+                    //});
+	        		//console.log(mouse);
                     tooltip.classed('hidden', false)
-                        .attr('style', 'left:' + (mouse[0] + 15) +
-                                'px; top:' + (mouse[1] - 35) + 'px')
+                        .attr('style', 'left:' + (d3.event.pageX + 15) +
+                                'px; top:' + (d3.event.pageY - 35) + 'px')
                         .html(d.location_name);
                 })
             .on('mouseout', function() {
@@ -197,8 +199,8 @@ $( document ).ready(function() {
 	    	map_svg.select("#location_" + current_location).attr("d", path_clicked);
 
 	    	//resize the tooltip when shown (modal on)
-	    	tooltip.attr('style', 'left:' + (screen_width/2) +
-                                'px; top:' + (screen_height/3) + 'px')
+	    	tooltip.attr('style', 'left:' + (screen_width/2 + 15) +
+                                'px; top:' + (screen_height/2 - 35) + 'px')
 
 	    	//resize img div
 	    	//compute modal dimensions
@@ -383,12 +385,10 @@ $( document ).ready(function() {
             })
 
       // screen width and screen height for positioning
-      //setTimeout(function() {
 		tooltip.classed('hidden', false)
                 .attr('style', 'left:' + (screen_width/2 + 15) +
-                                'px; top:' + (screen_height/2 - 105) + 'px')
+                                'px; top:' + (screen_height/2 - 35) + 'px')
                 .html(coordinates_locations[current_location][2]);
-			        //}, 1000);
 
     } //end of center_on_location function
 
@@ -399,8 +399,9 @@ $( document ).ready(function() {
 	var activeidx = 0;
 	var activemouse = null;
 	var allbars = null;
-	var activebarcolor = "Gray";
-	var inactivebarcolor = "LightGray";
+	var activebarcolor = "#6E6E6E";
+	var annotedbarcolor = "#BDBDBD";
+	var inactivebarcolor = "#E6E6E6";
 
 	// --- Define global plot variables
 	var margin_plot = {top:5, right:110, bottom:60, left:75};
@@ -510,61 +511,72 @@ $( document ).ready(function() {
 			            .attr("xlink:href", "#satellite")
 			            .attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
 
-			    // define year label positions on top of images
-			    var xposyrlabel = single_img_width, yposyrlabel = 60;
+			    // define default font size for year labels on top of images (px)
+			    // (will be rescaled)
+			    var yrlabelfontsize = (height.image)/3;
+			    //var yrlabelfontsize = 150;
+
+                            // define max widths inside imgdiv of each img (%)
+                            // (default to 50% to take up entire div width)
+                            var imgmaxwidth = 50;
+
+                            // prevent img scrolling by calculating the img ht
+                            // needed to fit inside the allotted imgdiv
+                            var ratio_imgdiv = 0.4; // defined in style.css as img-div container height
+                            var scalefactor = modal_main_view_width/(2*width.image);
+                            var newimght = height.image*scalefactor; 
+                            if (ratio_imgdiv*modal_main_view_height < newimght) {
+                                var newscalefactor=ratio_imgdiv*modal_main_view_height/newimght;
+                                imgmaxwidth = newscalefactor*imgmaxwidth; 
+                            } else {
+                                var newscalefactor=scalefactor;
+                            }
+
+                            // rescale yr label font size appropriately
+                            yrlabelfontsize = scalefactor*yrlabelfontsize;
+
+                            // define year label positions
+			    var xposyrlabel = width.image;
+                            var yposyrlabel = yrlabelfontsize/1.2;
 
 			    // initially display the earliest image on the left by default
-			    var before = d3.select("#imgdiv")
+                            var before = d3.select("#imgdiv")
 			        .append("svg")
 			            .attr("viewBox", "0 0 " + width.image + " " + height.image)
-			            //.attr("viewBox", "0 0 " + width.image + " " + modal_main_view_height)
 			            .attr("id", "svgbefore")
 			            .style("display", "inline")
-			            .classed("sidebysideimage", true)
+                                    .style("max-width", imgmaxwidth+"%")
 			        .append("use")
 			            .attr("id", "imagebefore")
 			            .attr("xlink:href", "#imgID" + min_imgID);
-                                    //.style("height",modal_main_view_height);
 
 			    d3.select("#svgbefore")
 			        .append("text")
+			        .attr("class", "imgtext")
 			        .attr("id", "before-text")
 			        .text(years_img[min_imgID])
 			        .attr("x",xposyrlabel)
 			        .attr("y",yposyrlabel)
-                                //.attr("transform","scale("+ (width.image/modal_main_view_width) +"," + (height.image/modal_main_view_width)+")")
-			        .style("font-size", "80px")
-			        //.style("stroke-width", "3px")
-			        //.style("vector-effect", "non-scaling-stroke")
-	                        .style("text-anchor", "end")
-			        .style("fill","white");
-
-                            // TRYING TO GET RID OF IMAGE SCROLL BARS
-                            //$("div#imgdiv").css('max-height', 0.4*modal_main_view_height+'px');
-                            //$("div#imgdiv").css('max-height', '10%');
-                            //$("div#imgdiv").css('max-width', '500px');
+			        .style("font-size", yrlabelfontsize+"px")
 
                             // initially display the most recent image on the right by default 
 			    var after = d3.select("#imgdiv")
 			        .append("svg")
 			            .attr("viewBox", "0 0 " + width.image + " " + height.image)
-			            //.attr("viewBox", "0 0 " + width.image + " " + modal_main_view_height)
 			            .attr("id", "svgafter")
 			            .style("display", "inline")
-			            .classed("sidebysideimage", true)
+                                    .style("max-width", imgmaxwidth+"%")
 			        .append("use")
 			            .attr("id", "imageafter")
 			            .attr("xlink:href", "#imgID" + max_imgID);
-                                    //.style("height",modal_main_view_height);
 			    
 			    d3.select("#svgafter")
 			        .append("text")
-			        .text(chart_data[max_imgID].date.getFullYear())
+			        .attr("class", "imgtext")
+			        .text(years_img[max_imgID])
 			        .attr("x", xposyrlabel)
 			        .attr("y", yposyrlabel)
-			        .style("font-size", "80px")
-	                        .style("text-anchor", "end")
-			        .style("fill","white");
+			        .style("font-size", yrlabelfontsize+"px")
 
 		    } //end of function draw_imgdiv
 
@@ -669,9 +681,15 @@ $( document ).ready(function() {
 				        .text(labely_global)
 				    
 				    // define data domains
+				    if (chart_data[0].ymin == 'null') {
+				    	yl.domain(d3.extent(chart_data, function(d) { return d.localdata; }));
+				    	yg.domain(d3.extent(chart_data, function(d) { return d.globaldata; }));
+				    }
+				    else {
+				    	yl.domain([chart_data[0].ymin,chart_data[0].ymax]);
+				    	yg.domain([chart_data[0].ymin,chart_data[0].ymax]);
+				    }
 				    x.domain(d3.extent(chart_data, function(d) { return d.date; }));
-				    yl.domain(d3.extent(chart_data, function(d) { return d.localdata; }));
-				    yg.domain(d3.extent(chart_data, function(d) { return d.globaldata; }));
 
 				    // draw rectangles in background
 			        barwidth = width.plot/100;
@@ -679,13 +697,17 @@ $( document ).ready(function() {
 				            .data(imgdata).enter()
 				            .append("rect")
 					            .attr("id", function(d) { return "rectID" + d.id; })
+					            .attr("class", "barinplot")
 					            .attr("x", function(d) { return x(d.date) - (barwidth/2);})
 					            .attr("y", margin_plot.top)
 					            .attr("transform", "translate("+margin_plot.left+",0)")
 					            .attr("width", barwidth+"px")
 					            .attr("height", [height.plot-margin_plot.top*2-margin_plot.bottom].toString() + "px")
 					            .style("stroke-width", "3px")
-					            .style("fill", inactivebarcolor);
+					            .style("fill", function(d) {
+					            	if (!!d.annotation) {return annotedbarcolor}
+					            	else {return inactivebarcolor}
+					            });
 
 					// draw x-axis
 				    svg_plot.append("g")
@@ -755,8 +777,7 @@ $( document ).ready(function() {
 
 				    // differently color/size the bars at the very beginning and end of the time series
 				    d3.select("#annoID" + min_imgID).style("opacity", 1);
-				    d3.select("rect#rectID" + min_imgID).style("fill", activebarcolor);
-				    d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor);
+				    d3.select("rect#rectID" + min_imgID).classed("activebar",true);
 
 				    //---------------------------------
 				    // Add interactivity to bars along the x-axis corresponding
@@ -770,7 +791,7 @@ $( document ).ready(function() {
 				        .on("mouseout", mouseout_timeline);
 
 				    //color the last bar
-				    d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor);
+				    d3.select("rect#rectID" + max_imgID).classed("activebar",true);
 
 
 		    } //end of draw_plotdiv
@@ -813,14 +834,16 @@ $( document ).ready(function() {
 	function step_through_time(keyCode) {
 		      d3.select("text#instructions").style("opacity",0);
 		      d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",0);
+		      if (activeidx+1 < allbars[0].length) {
+		      	d3.select(allbars[0][activeidx]).classed("activebar", false);
+		  	  }
 		      if (keyCode == 39 && activeidx<allbars.size()-1) { // right arrow key
 		          activeidx++; // don't go further right than there are pts
 		      }
 		      if (keyCode == 37 && activeidx>0) { // left arrow key
 		          activeidx--; // don't go further left than there are pts
 		      }
-		      d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivebarcolor);
-		      d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
+		      d3.select(allbars[0][activeidx]).classed("activebar", true);
 		      d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 		      d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
 		      d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
@@ -869,7 +892,7 @@ $( document ).ready(function() {
 	function mouseover_timeline() {
 	    // NOTE: activemouse.id.substring(6) is the selected number following "rectID" 
 	    d3.select("text#instructions").style("opacity",0);
-	    d3.select(this).style("fill", activebarcolor);
+	    d3.select(this).classed("activebar",true);
 	    this.style.cursor = "pointer";
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",0);
 	    d3.select("text#annoID" + this.id.substring(6)).style("opacity",1);
@@ -878,10 +901,10 @@ $( document ).ready(function() {
 	function mouseout_timeline() {
 	    // NOTE: activemouse.id.substring(6) is the selected number following "rectID" 
 	    if (findindexbyid(allbars,this.id) != activeidx) {
-	        d3.select(this).style("fill", inactivebarcolor);
+	    	d3.select(this).classed("activebar", false);
 	        d3.select("text#annoID" + this.id.substring(6)).style("opacity",0);
 	        d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
-	        d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor); // this is needed to keep last dot white after hovering over it
+	        d3.select("rect#rectID" + max_imgID).classed("activebar",true);
 	    }
 	}
 
@@ -889,11 +912,11 @@ $( document ).ready(function() {
 	    // NOTE: activemouse.id.substring(6) is the selected number following "rectID" 
 	    d3.select("text#instructions").style("opacity",0);
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",0);
-	    d3.select("#plotdiv").select("svg#plot").selectAll("rect").style("fill", inactivebarcolor);
-	    d3.select("rect#rectID" + max_imgID).style("fill", activebarcolor);
+	    d3.select("#plotdiv").select("svg#plot").selectAll("rect").classed("activebar", false);
+	    d3.select("rect#rectID" + max_imgID).classed("activebar",true);
 	    activemouse = this;
 	    activeidx = findindexbyid(allbars,activemouse.id);
-	    d3.select(allbars[0][activeidx]).style("fill", activebarcolor);
+	    d3.select(allbars[0][activeidx]).classed("activebar",true);
 	    d3.select("text#annoID" + allbars[0][activeidx].id.substring(6)).style("opacity",1);
 	    d3.select("use#imagebefore").attr("xlink:href", "#imgID" + allbars[0][activeidx].id.substring(6));
 	    d3.select("#before-text").text(years_img[allbars[0][activeidx].id.substring(6)]);
