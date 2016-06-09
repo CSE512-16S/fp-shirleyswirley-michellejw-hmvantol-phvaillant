@@ -43,7 +43,7 @@ $( document ).ready(function() {
 		.attr("class","map_svg")
 	    .attr("width", width_map)
 	    .attr("height", height_map);
-	var tooltip = d3.select('#map').append('div')
+	var tooltip = d3.select('#map-container').append('div')
             .attr('class', 'hidden tooltip');
 
 	//create the global variables for plot size
@@ -138,12 +138,13 @@ $( document ).ready(function() {
 	        	show_info_inside_modal(current_location);
 	        })
 	        .on('mousemove', function() {
-                    var mouse = d3.mouse(map_svg.node()).map(function(d) {
-                        return parseInt(d);
-                    });
+	        		//The mouse variable below does not have the same value whether we use chrome or firefox: why??
+                    //var mouse = d3.mouse(map_svg.node()).map(function(d) {
+                    //    return parseInt(d);
+                    //});
                     tooltip.classed('hidden', false)
-                        .attr('style', 'left:' + (mouse[0] + 15) +
-                                'px; top:' + (mouse[1] - 35) + 'px')
+                        .attr('style', 'left:' + (d3.event.pageX + 15) +
+                                'px; top:' + (d3.event.pageY - 35) + 'px')
                         .html(d.location_name);
                 })
             .on('mouseout', function() {
@@ -197,8 +198,8 @@ $( document ).ready(function() {
 	    	map_svg.select("#location_" + current_location).attr("d", path_clicked);
 
 	    	//resize the tooltip when shown (modal on)
-	    	tooltip.attr('style', 'left:' + (screen_width/2) +
-                                'px; top:' + (screen_height/3) + 'px')
+	    	tooltip.attr('style', 'left:' + (screen_width/2 + 15) +
+                                'px; top:' + (screen_height/2 - 35) + 'px')
 
 	    	//resize img div
 	    	//compute modal dimensions
@@ -383,12 +384,10 @@ $( document ).ready(function() {
             })
 
       // screen width and screen height for positioning
-      //setTimeout(function() {
 		tooltip.classed('hidden', false)
                 .attr('style', 'left:' + (screen_width/2 + 15) +
-                                'px; top:' + (screen_height/2 - 105) + 'px')
+                                'px; top:' + (screen_height/2 - 35) + 'px')
                 .html(coordinates_locations[current_location][2]);
-			        //}, 1000);
 
     } //end of center_on_location function
 
