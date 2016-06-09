@@ -13,7 +13,7 @@ glue instructions:
 
 6-7. totalimgwidth and totalimgheight are the total width and height of the glued together final image (in px)
 
-8-9. singleimgwidth and singleimgheight are the width and height of one individual image within the stitched together total image (in px)
+8-9. singleimgwidth and singleimgheight are the width and height of one individual image within the stitched together total image (in px). IMPORTANT: note that all individual images should be the same size.
 
 10. localylabel is how you want the local left-side y-axis to be labeled
 
