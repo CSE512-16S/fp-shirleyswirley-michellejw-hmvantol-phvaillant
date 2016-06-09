@@ -680,9 +680,15 @@ $( document ).ready(function() {
 				        .text(labely_global)
 				    
 				    // define data domains
+				    if (chart_data[0].ymin == 'null') {
+				    	yl.domain(d3.extent(chart_data, function(d) { return d.localdata; }));
+				    	yg.domain(d3.extent(chart_data, function(d) { return d.globaldata; }));
+				    }
+				    else {
+				    	yl.domain([chart_data[0].ymin,chart_data[0].ymax]);
+				    	yg.domain([chart_data[0].ymin,chart_data[0].ymax]);
+				    }
 				    x.domain(d3.extent(chart_data, function(d) { return d.date; }));
-				    yl.domain(d3.extent(chart_data, function(d) { return d.localdata; }));
-				    yg.domain(d3.extent(chart_data, function(d) { return d.globaldata; }));
 
 				    // draw rectangles in background
 			        barwidth = width.plot/100;
