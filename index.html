@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Global Environmental Change</title>
+    <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.js"></script>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+    <script src="viz.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container-fluid">
+
+      <div id="map-container" class="col-xs-5">
+
+              <div href="#" class="glyphicon glyphicon-chevron-up gray1 gi-5x" id="modal-up" role="button"></div>
+                  
+              <div href="#" class="glyphicon glyphicon-chevron-down gray1 gi-5x" id="modal-down" role="button"></div>
+
+              <div id="map"></div>
+              
+      </div>
+
+      <div id="information_pane" class="col-xs-7">
+
+            <div id="title">
+                <p>Global Environmental Change</p>
+            </div>
+
+            <div id="abstract">
+               <p align="left">Droughts and flooding, extreme weather, coral bleaching, melting ice sheets and glaciers... The impacts of climate change are predicted to be diverse and global. Satellite images show us that the consequences of fossil fuel consumption have already changed our planet.
+                <br><br>Click 'Start tour' to be guided through examples of climate change impacts across the globe.</p>
+                <br><p align="left">To navigate through the different locations use the up and down arrows on your keyboard. Then to view each location throughout time toggle between the left and right arrows on your keyboard.</p>
+            </div>
+
+            <div id="start-tour-container">
+                <a href="#" class="btn btn-info btn-lg btn-starttour" id="start_tour">
+                  <span class="glyphicon glyphicon-triangle-right" id="startbutton"></span> Start tour
+                </a>
+            </div>
+
+            <div id="media-icons">
+
+                <!-- Facebook -->
+                <a href="http://www.facebook.com/sharer.php?u=http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/final_awesome/" target="_blank">
+                    <img src="share_icons/facebook.png" alt="Facebook" />
+                </a>
+
+                <!-- Twitter -->
+                <a href="https://twitter.com/share?url=http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/final_awesome/&amp;text=Climate%20Change%20Visualization&amp;hashtags=climateviz" target="_blank">
+                    <img src="share_icons/twitter.png" alt="Twitter" />
+                </a>
+
+                <!-- Google+ -->
+                <a href="https://plus.google.com/share?url=http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/final_awesome/" target="_blank">
+                    <img src="share_icons/google.png" alt="Google" />
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:?Subject=Climate Change Visualization&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://cse512-16s.github.io/fp-shirleyswirley-michellejw-hmvantol-phvaillant/final_awesome/">
+                    <img src="share_icons/email.png" alt="Email" />
+                </a>
+
+
+            </div>
+
+            <div id="github-icon">
+
+                <a href="https://github.com/CSE512-16S/fp-shirleyswirley-michellejw-hmvantol-phvaillant">
+                  <img src="share_icons/github-logo.png" alt="Github repo" style="width:50px;height:50px;border:0;">
+                </a>
+
+            </div>
+
+        </div> <!-- end of information pane -->
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog" tabindex="-1">
+
+            <div class="modal-dialog">
+
+              <!-- Modal content -->
+              <div class="modal-content">
+              
+                <!-- Modal header -->
+                <div class="modal-header" id="modal-title">
+                   
+                </div> <!-- end modal-header -->
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div id="modal-main-view">
+
+                        <div id="imgdiv-container" class="col-xs-12 svg-container">
+
+                          <div id="imgdiv" class="col-xs-12">
+                          </div>
+
+                        </div>
+
+                        <div id="above_plot" class="col-xs-12">
+
+                          <div class="row" id="row_above_plot">
+
+                            <div href="#" class="glyphicon glyphicon-triangle-left col-xs-1 gray1 gi-3x" id="left" role="button"></div>
+
+                            <div id="annodiv" class=
+                            "col-xs-10 svg-container">
+
+                            </div>
+
+                            <div href="#" class="glyphicon glyphicon-triangle-right col-xs-1 gray1 gi-3x" id="right" role="button"></div>
+
+                          </div>
+
+                        </div>
+
+                        <div id="plotdiv" class="col-xs-12 svg-container"></div>
+
+                    </div>
+
+                    <div id="modal-secondary-view">
+
+
+                         <div id = "imgsrcdiv" class="col-xs-12 svg-container">
+                            <span>Source:</span>
+                            <a href="#" class="btn btn-link btn-source" id="imgsrc" role="button"></a>
+                        </div>
+
+                        <div id="datasrcdiv" class="col-xs-12 svg-container">
+                            <a href="#" class="btn btn-info btn-sm btn-localdata svg-container pull-left" id="localsrc"></a>
+                            <a href="#" class="btn btn-info btn-sm btn-globaldata svg-container pull-right" id="globalsrc"></a>
+                        </div>
+
+                        <div id="moreinfodiv" class="col-xs-12 svg-container">
+                        </div>
+
+                    </div>
+
+                </div> <!--end modal-body div-->
+
+              </div> <!--end modal-footer div-->
+
+            </div> <!-- end modal-content div -->
+
+          </div> <!-- end modal-dialog div -->
+
+      </div> <!-- end myModal div -->
+
+    </div>
+
+  </body>
+
+</html>
