@@ -510,61 +510,78 @@ $( document ).ready(function() {
 			            .attr("xlink:href", "#satellite")
 			            .attr("transform", function(d) { return "translate("+d.x+","+d.y+")"; });
 
-			    // define year label positions on top of images
-			    var xposyrlabel = single_img_width, yposyrlabel = 60;
+			    // define default font size for year labels on top of images (px)
+			    // (will be rescaled)
+			    var yrlabelfontsize = (height.image)/3;
+			    //var yrlabelfontsize = 150;
+
+                            // define max widths inside imgdiv of each img (%)
+                            // (default to 50% to take up entire div width)
+                            var imgmaxwidth = 50;
+
+                            // prevent img scrolling by calculating the img ht
+                            // needed to fit inside the allotted imgdiv
+                            var ratio_imgdiv = 0.4; // defined in style.css as img-div container height
+                            var scalefactor = modal_main_view_width/(2*width.image);
+                            var newimght = height.image*scalefactor; 
+                            if (ratio_imgdiv*modal_main_view_height < newimght) {
+                                var newscalefactor=ratio_imgdiv*modal_main_view_height/newimght;
+                                imgmaxwidth = newscalefactor*imgmaxwidth; 
+                            } else {
+                                var newscalefactor=scalefactor;
+                            }
+
+                            // rescale yr label font size appropriately
+                            yrlabelfontsize = scalefactor*yrlabelfontsize;
+
+                            // define year label positions
+			    var xposyrlabel = width.image;
+                            var yposyrlabel = yrlabelfontsize/1.2;
 
 			    // initially display the earliest image on the left by default
-			    var before = d3.select("#imgdiv")
+                            var before = d3.select("#imgdiv")
 			        .append("svg")
 			            .attr("viewBox", "0 0 " + width.image + " " + height.image)
-			            //.attr("viewBox", "0 0 " + width.image + " " + modal_main_view_height)
 			            .attr("id", "svgbefore")
 			            .style("display", "inline")
-			            .classed("sidebysideimage", true)
+                                    .style("max-width", imgmaxwidth+"%")
 			        .append("use")
 			            .attr("id", "imagebefore")
 			            .attr("xlink:href", "#imgID" + min_imgID);
-                                    //.style("height",modal_main_view_height);
 
 			    d3.select("#svgbefore")
 			        .append("text")
+			        .attr("class", "imgtext")
 			        .attr("id", "before-text")
 			        .text(years_img[min_imgID])
 			        .attr("x",xposyrlabel)
 			        .attr("y",yposyrlabel)
-                                //.attr("transform","scale("+ (width.image/modal_main_view_width) +"," + (height.image/modal_main_view_width)+")")
-			        .style("font-size", "80px")
-			        //.style("stroke-width", "3px")
-			        //.style("vector-effect", "non-scaling-stroke")
-	                        .style("text-anchor", "end")
-			        .style("fill","white");
+			        .style("font-size", yrlabelfontsize+"px")
 
-                            // TRYING TO GET RID OF IMAGE SCROLL BARS
-                            //$("div#imgdiv").css('max-height', 0.4*modal_main_view_height+'px');
-                            //$("div#imgdiv").css('max-height', '10%');
-                            //$("div#imgdiv").css('max-width', '500px');
+                                console.log("imght: ", height.image)
+                                console.log("imgwt: ", width.image)
+                                console.log("modalheight: ", modal_main_view_height)
+                                console.log("modalwt: ", modal_main_view_width)
+                                console.log("imgmaxwidth%: ", imgmaxwidth)
 
                             // initially display the most recent image on the right by default 
 			    var after = d3.select("#imgdiv")
 			        .append("svg")
 			            .attr("viewBox", "0 0 " + width.image + " " + height.image)
-			            //.attr("viewBox", "0 0 " + width.image + " " + modal_main_view_height)
 			            .attr("id", "svgafter")
 			            .style("display", "inline")
-			            .classed("sidebysideimage", true)
+                                    .style("max-width", imgmaxwidth+"%")
 			        .append("use")
 			            .attr("id", "imageafter")
 			            .attr("xlink:href", "#imgID" + max_imgID);
-                                    //.style("height",modal_main_view_height);
 			    
 			    d3.select("#svgafter")
 			        .append("text")
-			        .text(chart_data[max_imgID].date.getFullYear())
+			        .attr("class", "imgtext")
+			        .text(years_img[max_imgID])
 			        .attr("x", xposyrlabel)
 			        .attr("y", yposyrlabel)
-			        .style("font-size", "80px")
-	                        .style("text-anchor", "end")
-			        .style("fill","white");
+			        .style("font-size", yrlabelfontsize+"px")
 
 		    } //end of function draw_imgdiv
 
