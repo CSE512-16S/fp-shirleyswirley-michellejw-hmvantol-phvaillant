@@ -1,0 +1,13 @@
+# First install glue
+# on mac w/ homebrew:
+
+$ brew install jpeg
+$ pip install glue
+
+# Then put the images you want to stitch together into a folder. In the following example, "athabasca" is the name of the folder containing the images. I don't know what on earth sprites means, but I copied it directly it seems to have worked. It creates a folder called "sprites", which contains a couple of files, including the stitched image and a css file that's automatically generated.
+
+$ glue athabasca sprites --ordering=filename
+
+# Use the python script css2tab, convert the pertinent info from the css file into a csv file
+
+$ python css2tab.py sprites/athabasca
